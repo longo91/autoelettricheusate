@@ -197,61 +197,158 @@
     background: #d67c00;
   }
 
-  /* ---------- PREMIUM SECTION ---------- */
-  .premium-section {
-    max-width: 1400px;
-    margin: 48px auto;
-    padding: 0 24px;
-  }
-  .premium-title {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 1.4rem;
-    font-weight: 800;
-    margin: 0 0 24px;
-  }
-  .premium-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
-  }
-  .card-premium {
+  /* ---------- FILTERS SECTION ---------- */
+  .filters-section {
     background: #fff;
-    border: 2px solid var(--amber);
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 8px 24px rgba(224, 138, 0, 0.15);
-    cursor: pointer;
-    transition: transform 0.22s ease, box-shadow 0.22s ease;
-    position: relative;
+    border-bottom: 1px solid var(--line);
+    padding: 24px;
+    position: sticky;
+    top: 68px;
+    z-index: 99;
+    box-shadow: 0 2px 8px rgba(16,40,30,0.03);
   }
-  .card-premium:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 16px 36px rgba(224, 138, 0, 0.25);
+  .container {
+    max-width: 1180px;
+    margin: 0 auto;
   }
-  .premium-badge {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    background: var(--amber);
-    color: #fff;
-    padding: 6px 12px;
-    border-radius: 999px;
-    font-size: 0.65rem;
-    font-weight: 800;
+  .filters-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin: 0 0 16px;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    z-index: 2;
+    letter-spacing: 0.5px;
+    color: var(--muted);
   }
+  .filters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+  }
+  .filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .filter-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+  .filter-input,
+  .filter-select {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 0.9rem;
+    font-family: inherit;
+    color: var(--ink);
+    background: #f4f7f5;
+    transition: all 0.15s ease;
+  }
+  .filter-input:focus,
+  .filter-select:focus {
+    outline: none;
+    border-color: var(--green);
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(10, 122, 74, 0.1);
+  }
+  .price-range {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+  }
+  .price-range .filter-group {
+    flex: 1;
+  }
+  .price-range-separator {
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin-top: 22px;
+  }
+  .btn-reset {
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--muted);
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    align-self: flex-end;
+  }
+  .btn-reset:hover {
+    border-color: var(--green);
+    color: var(--green);
+  }
+
+  /* ---------- MAIN CONTENT ---------- */
+  .content {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+  .toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 14px 18px;
+    box-shadow: 0 4px 14px rgba(16,40,30,0.05);
+    margin-bottom: 26px;
+  }
+  .toolbar h2 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.05rem; margin: 0; }
+  .toolbar .count { color: var(--muted); font-size: 0.88rem; font-weight: 500; }
+  .sort-control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .sort-control label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--muted);
+  }
+  .sort-select {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-size: 0.85rem;
+    background: #f4f7f5;
+    cursor: pointer;
+  }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 24px; }
+
+  /* ---------- CARD ---------- */
+  .card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 14px rgba(16,40,30,0.05);
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+  }
+  .card:hover { transform: translateY(-6px); box-shadow: 0 18px 38px rgba(16,40,30,0.13); }
   .card-media {
     position: relative;
-    height: 200px;
+    height: 176px;
     background: linear-gradient(135deg, #dff2e8, #b9e4cf);
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 3rem;
   }
-  .card-media img { width: 100%; height: 100%; object-fit: cover; }
+  .card-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .badge {
     position: absolute;
     top: 12px;
@@ -262,9 +359,11 @@
     border-radius: 999px;
     font-size: 0.7rem;
     font-weight: 700;
+    letter-spacing: 0.6px;
     text-transform: uppercase;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
   }
-  .badge.plugin { background: var(--green-light); }
+  .badge.plugin { background: var(--amber); }
   .year-tag {
     position: absolute;
     top: 12px;
@@ -276,911 +375,493 @@
     font-size: 0.75rem;
     font-weight: 700;
   }
-  .card-body {
-    padding: 16px;
-  }
-  .card-body h3 {
+  .card-body { padding: 18px 18px 16px; display: flex; flex-direction: column; flex: 1; }
+  .card h3 {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 1rem;
+    font-size: 1.08rem;
+    line-height: 1.35;
     margin: 0 0 4px;
   }
-  .card-body .version {
-    color: var(--muted);
-    font-size: 0.8rem;
-    margin-bottom: 8px;
-  }
-  .card-price {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 1.3rem;
-    font-weight: 800;
-    color: var(--green);
-    margin-bottom: 8px;
-  }
-  .card-specs-mini {
-    display: flex;
-    gap: 8px;
-    font-size: 0.75rem;
-    color: var(--muted);
-    flex-wrap: wrap;
-  }
-
-  /* ---------- LISTING PAGE ---------- */
-  .listing-container {
-    max-width: 1400px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 280px 1fr;
-    gap: 24px;
-    padding: 24px;
-  }
-
-  /* ---------- SIDEBAR FILTRI ---------- */
-  .sidebar {
-    background: #fff;
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    padding: 20px;
-    height: fit-content;
-    position: sticky;
-    top: 80px;
-    box-shadow: 0 4px 12px rgba(16,40,30,0.05);
-  }
-  .sidebar h3 {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 700;
-    margin: 0 0 16px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: var(--ink);
-  }
-  .filter-group {
-    margin-bottom: 20px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--line);
-  }
-  .filter-group:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
-    padding-bottom: 0;
-  }
-  .filter-label {
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.4px;
-    margin-bottom: 8px;
-    display: block;
-  }
-  .filter-input {
-    width: 100%;
-    padding: 8px 10px;
-    border: 1px solid var(--line);
-    border-radius: 6px;
-    font-size: 0.85rem;
-    margin-bottom: 8px;
-  }
-  .filter-chip {
-    display: inline-block;
-    background: #f4f7f5;
-    color: var(--muted);
-    padding: 6px 12px;
-    border-radius: 6px;
-    font-size: 0.8rem;
-    margin-bottom: 6px;
-    margin-right: 6px;
-    cursor: pointer;
-    transition: all 0.15s ease;
-    border: 1px solid transparent;
-  }
-  .filter-chip:hover {
-    border-color: var(--green);
-    color: var(--green);
-  }
-  .filter-chip.active {
-    background: var(--green);
-    color: #fff;
-    border-color: var(--green);
-  }
-
-  .slider-container {
-    position: relative;
-    margin: 16px 0;
-  }
-  .range-slider {
-    width: 100%;
-    height: 5px;
-    background: var(--line);
-    border-radius: 3px;
-    position: relative;
-    margin-bottom: 6px;
-  }
-  .range-slider-track {
-    position: absolute;
-    height: 100%;
-    background: var(--green);
-    border-radius: 3px;
-    pointer-events: none;
-  }
-  .range-input {
-    width: 100%;
-    height: 5px;
-    margin: 0;
-    padding: 0;
-    pointer-events: none;
-    -webkit-appearance: none;
-    appearance: none;
-    background: transparent;
-  }
-  .range-input::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: var(--green);
-    cursor: pointer;
-    pointer-events: auto;
-    box-shadow: 0 2px 6px rgba(10, 122, 74, 0.3);
-  }
-  .range-input::-moz-range-thumb {
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: var(--green);
-    cursor: pointer;
-    pointer-events: auto;
-    border: none;
-    box-shadow: 0 2px 6px rgba(10, 122, 74, 0.3);
-  }
-  .range-labels {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.7rem;
-    color: var(--muted);
-  }
-
-  .btn-reset-filters {
-    width: 100%;
-    padding: 10px;
-    background: #f4f7f5;
-    border: 1px solid var(--line);
-    border-radius: 6px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.15s ease;
-  }
-  .btn-reset-filters:hover {
-    background: var(--line);
-  }
-
-  /* ---------- MAIN GRID ---------- */
-  .grid-section {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-  }
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 20px;
-  }
-  .card {
-    background: #fff;
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(16,40,30,0.05);
-    transition: transform 0.22s ease, box-shadow 0.22s ease;
-    cursor: pointer;
-  }
-  .card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 12px 28px rgba(16,40,30,0.12);
-  }
-
-  /* ---------- STATES ---------- */
-  .state {
-    grid-column: 1 / -1;
-    text-align: center;
-    padding: 60px 20px;
-    color: var(--muted);
-  }
-  .state .big {
-    font-size: 2rem;
-    display: block;
-    margin-bottom: 12px;
-  }
-
-  /* ---------- PAGES ---------- */
-  .page { display: none; }
-  .page.active { display: block; }
-
-  /* ---------- MODALS ---------- */
-  .modal {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.5);
-    z-index: 1000;
-    align-items: center;
-    justify-content: center;
-  }
-  .modal.active {
-    display: flex;
-  }
-  .modal-content {
-    background: #fff;
-    border-radius: 16px;
-    padding: 32px;
-    max-width: 500px;
-    width: 90%;
-    max-height: 90vh;
-    overflow-y: auto;
-  }
-  .modal h2 {
-    margin: 0 0 20px;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 1.4rem;
-  }
-  .form-group {
-    margin-bottom: 16px;
-  }
-  .form-group label {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 6px;
-    font-size: 0.9rem;
-  }
-  .form-group input,
-  .form-group select,
-  .form-group textarea {
-    width: 100%;
-    padding: 10px 12px;
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    font-family: inherit;
-    font-size: 0.9rem;
-  }
-  .form-group textarea {
-    resize: vertical;
-    min-height: 100px;
-  }
-  .form-group input:focus,
-  .form-group select:focus,
-  .form-group textarea:focus {
-    outline: none;
-    border-color: var(--green);
-    box-shadow: 0 0 0 3px rgba(10, 122, 74, 0.1);
-  }
-  .btn-close {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: var(--muted);
-  }
-  .form-row {
+  .card .version { color: var(--muted); font-size: 0.85rem; margin: 0 0 12px; }
+  .price { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--green); margin-bottom: 14px; }
+  .specs {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    gap: 8px 10px;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 12px 0;
+    margin-bottom: 12px;
   }
-  .form-row .form-group {
-    margin-bottom: 0;
-  }
-
-  .btn-submit {
-    width: 100%;
-    padding: 12px;
-    background: var(--green);
-    color: #fff;
-    border: none;
+  .spec { display: flex; align-items: center; gap: 7px; font-size: 0.85rem; color: #3d4d45; }
+  .spec .ico { font-size: 0.95rem; opacity: 0.75; }
+  .desc { color: #4a5a52; font-size: 0.88rem; line-height: 1.5; margin: 0 0 14px; flex: 1; }
+  .card-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 0.82rem; }
+  .seller { color: var(--muted); display: flex; align-items: center; gap: 6px; min-width: 0; }
+  .seller-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .like-btn {
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--muted);
+    width: 32px;
+    height: 32px;
     border-radius: 8px;
-    font-weight: 600;
-    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
-    transition: background 0.15s ease;
+    transition: all 0.15s ease;
   }
-  .btn-submit:hover {
-    background: var(--green-light);
+  .like-btn:hover { border-color: var(--green); color: var(--green); }
+  .like-btn.liked { background: var(--green); border-color: var(--green); color: #fff; }
+
+  /* ---------- EMPTY STATE ---------- */
+  .empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 64px 24px;
+  }
+  .empty-state h3 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.3rem;
+    margin: 0 0 8px;
+  }
+  .empty-state p {
+    color: var(--muted);
+    margin: 0;
   }
 
   /* ---------- RESPONSIVE ---------- */
-  @media (max-width: 1024px) {
-    .listing-container {
-      grid-template-columns: 1fr;
-    }
-    .sidebar {
-      position: static;
-    }
-  }
-
-  @media (max-width: 640px) {
+  @media (max-width: 768px) {
     header {
       flex-wrap: wrap;
-      gap: 12px;
+      padding: 12px;
     }
     .header-center {
+      max-width: 100%;
       order: 3;
       width: 100%;
     }
-    .header-right {
-      flex: 1;
+    .hero { padding: 40px 24px; }
+    .hero h1 { font-size: 1.7rem; }
+    .hero-search { flex-direction: column; }
+    .filters-grid {
+      grid-template-columns: repeat(2, 1fr);
     }
-    .brand {
-      font-size: 1rem;
-    }
-    .hero {
-      padding: 40px 16px;
-    }
-    .hero h1 {
-      font-size: 1.6rem;
-    }
-    .listing-container {
-      padding: 16px;
-    }
-    .grid {
-      grid-template-columns: 1fr;
-    }
+    .grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
   }
 
-  footer { text-align: center; padding: 24px 20px; color: var(--muted); font-size: 0.85rem; }
-  footer .sep { opacity: 0.5; margin: 0 8px; }
+  @media (max-width: 480px) {
+    .hero h1 { font-size: 1.4rem; }
+    .filters-grid {
+      grid-template-columns: 1fr;
+    }
+    .toolbar { flex-direction: column; align-items: flex-start; }
+  }
 </style>
 </head>
 <body>
 
 <!-- HEADER -->
 <header>
-  <h1 class="brand" id="brand-home"><span class="bolt">⚡</span> Auto Elettriche</h1>
-  
+  <div class="brand">
+    <div class="bolt">⚡</div>
+    <span>Auto EV</span>
+  </div>
   <div class="header-center">
     <div class="search-bar">
       <span>🔍</span>
-      <input type="text" id="header-search" placeholder="Marca, modello...">
+      <input type="text" id="headerSearch" placeholder="Cerca per modello o marca...">
     </div>
   </div>
-
   <div class="header-right">
-    <button class="btn-publish" id="btn-publish-header">+ Pubblica</button>
-    <div id="user-menu" class="user-menu">
-      <button class="btn-auth" id="btn-login">Accedi</button>
+    <button class="btn-publish">+ Pubblica</button>
+    <div class="user-menu">
+      <button class="btn-auth">Accedi</button>
+      <div class="user-profile" style="display: none;">
+        <div class="user-avatar">M</div>
+        <span>Menu</span>
+      </div>
     </div>
   </div>
 </header>
 
-<!-- HOME PAGE -->
-<div id="home-page" class="page active">
-  <div class="hero">
-    <h1>Trova la tua Auto Elettrica Usata</h1>
-    <p>Il mercato più grande di EV e plug-in hybrid di seconda mano</p>
-    <div class="hero-search">
-      <input type="text" id="hero-search" placeholder="Marca, modello o città...">
-      <button id="hero-search-btn">Cerca</button>
-    </div>
+<!-- HERO SECTION -->
+<section class="hero">
+  <h1>Trova la tua Auto Elettrica</h1>
+  <p>Annunci verificati di EV e plug-in hybrid usate da privati e concessionari</p>
+  <div class="hero-search">
+    <input type="text" id="heroSearch" placeholder="Marca o modello...">
+    <button>Cerca</button>
   </div>
+</section>
 
-  <div class="premium-section">
-    <h2 class="premium-title">✨ Annunci Premium</h2>
-    <div id="premium-grid" class="premium-grid">
-      <!-- Caricamento... -->
-    </div>
-  </div>
-
-  <div style="text-align: center; padding: 32px 24px;">
-    <button class="btn-publish" id="btn-view-all">Visualizza tutti gli annunci →</button>
-  </div>
-</div>
-
-<!-- LISTING PAGE -->
-<div id="listing-page" class="page">
-  <div class="listing-container">
-    <!-- SIDEBAR FILTRI -->
-    <aside class="sidebar">
-      <h3>Filtra</h3>
-      
-      <div class="filter-group">
-        <label class="filter-label">Tipo</label>
-        <div id="type-filters">
-          <div class="filter-chip active" data-type="tutti">Tutte</div>
-          <div class="filter-chip" data-type="elettrica">Elettriche</div>
-          <div class="filter-chip" data-type="plug-in">Plug-in</div>
-        </div>
-      </div>
-
+<!-- FILTERS SECTION -->
+<section class="filters-section">
+  <div class="container">
+    <h3 class="filters-title">Filtra Risultati</h3>
+    <div class="filters-grid">
+      <!-- Marca -->
       <div class="filter-group">
         <label class="filter-label">Marca</label>
-        <select id="filter-marca" class="filter-input">
-          <option value="">Tutte</option>
+        <select class="filter-select" id="filterBrand">
+          <option value="">Tutte le marche</option>
+          <option value="tesla">Tesla</option>
+          <option value="nissan">Nissan</option>
+          <option value="renault">Renault</option>
+          <option value="volkswagen">Volkswagen</option>
+          <option value="hyundai">Hyundai</option>
+          <option value="kia">Kia</option>
+          <option value="fiat">Fiat</option>
+          <option value="bmw">BMW</option>
+          <option value="audi">Audi</option>
+          <option value="other">Altra marca</option>
         </select>
       </div>
 
+      <!-- Modello -->
       <div class="filter-group">
-        <label class="filter-label">Anno</label>
-        <div class="form-row">
-          <input type="number" id="filter-anno-min" class="filter-input" placeholder="da" min="2010">
-          <input type="number" id="filter-anno-max" class="filter-input" placeholder="a" max="2030">
-        </div>
+        <label class="filter-label">Modello</label>
+        <input type="text" class="filter-input" id="filterModel" placeholder="Es. Model 3...">
       </div>
 
+      <!-- Tipo -->
+      <div class="filter-group">
+        <label class="filter-label">Tipo</label>
+        <select class="filter-select" id="filterType">
+          <option value="">Tutti i tipi</option>
+          <option value="ev">Elettrica (EV)</option>
+          <option value="phev">Plug-in Hybrid (PHEV)</option>
+        </select>
+      </div>
+
+      <!-- Anno Da -->
+      <div class="filter-group">
+        <label class="filter-label">Anno Da</label>
+        <select class="filter-select" id="filterYearFrom">
+          <option value="">Qualsiasi anno</option>
+          <option value="2024">2024</option>
+          <option value="2023">2023</option>
+          <option value="2022">2022</option>
+          <option value="2021">2021</option>
+          <option value="2020">2020</option>
+          <option value="2019">2019</option>
+          <option value="2018">2018</option>
+          <option value="2017">2017</option>
+          <option value="2016">2016</option>
+        </select>
+      </div>
+
+      <!-- Anno A -->
+      <div class="filter-group">
+        <label class="filter-label">Anno A</label>
+        <select class="filter-select" id="filterYearTo">
+          <option value="">Qualsiasi anno</option>
+          <option value="2024">2024</option>
+          <option value="2023">2023</option>
+          <option value="2022">2022</option>
+          <option value="2021">2021</option>
+          <option value="2020">2020</option>
+          <option value="2019">2019</option>
+          <option value="2018">2018</option>
+          <option value="2017">2017</option>
+          <option value="2016">2016</option>
+        </select>
+      </div>
+
+      <!-- Prezzo Da - A -->
       <div class="filter-group">
         <label class="filter-label">Prezzo (€)</label>
-        <div class="form-row">
-          <input type="number" id="filter-prezzo-min" class="filter-input" placeholder="da" min="0" step="1000">
-          <input type="number" id="filter-prezzo-max" class="filter-input" placeholder="a" min="0" step="1000">
+        <div class="price-range">
+          <div class="filter-group">
+            <input type="number" class="filter-input" id="filterPriceFrom" placeholder="Da">
+          </div>
+          <span class="price-range-separator">-</span>
+          <div class="filter-group">
+            <input type="number" class="filter-input" id="filterPriceTo" placeholder="A">
+          </div>
         </div>
       </div>
 
+      <!-- Km da -->
       <div class="filter-group">
         <label class="filter-label">Km massimi</label>
-        <input type="number" id="filter-km-max" class="filter-input" placeholder="es: 50000" min="0" step="5000">
+        <input type="number" class="filter-input" id="filterKm" placeholder="Es. 50000">
       </div>
 
+      <!-- Stato -->
       <div class="filter-group">
-        <label class="filter-label">Autonomia (km)</label>
-        <div class="slider-container">
-          <div class="range-slider">
-            <div class="range-slider-track" id="autonomia-track"></div>
+        <label class="filter-label">Stato</label>
+        <select class="filter-select" id="filterState">
+          <option value="">Tutti gli stati</option>
+          <option value="excellent">Eccellente</option>
+          <option value="good">Buono</option>
+          <option value="fair">Discreto</option>
+        </select>
+      </div>
+
+      <!-- Reset Button -->
+      <button class="btn-reset" id="btnReset">Ripristina Filtri</button>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN CONTENT -->
+<div class="content">
+  <div class="toolbar">
+    <h2>Annunci</h2>
+    <div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
+      <span class="count"><strong id="adCount">24</strong> annunci trovati</span>
+      <div class="sort-control">
+        <label>Ordina:</label>
+        <select class="sort-select" id="sortBy">
+          <option value="recent">Più recenti</option>
+          <option value="price-asc">Prezzo crescente</option>
+          <option value="price-desc">Prezzo decrescente</option>
+          <option value="km-asc">Km minori</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid" id="grid">
+    <!-- Sample Cards -->
+    <div class="card">
+      <div class="card-media">
+        <span class="badge">EV</span>
+        <span class="year-tag">2023</span>
+      </div>
+      <div class="card-body">
+        <h3>Tesla Model 3</h3>
+        <p class="version">Standard Range</p>
+        <div class="price">€32.500</div>
+        <div class="specs">
+          <div class="spec"><span class="ico">📅</span> 2023</div>
+          <div class="spec"><span class="ico">🛞</span> 15.200 km</div>
+          <div class="spec"><span class="ico">⚡</span> 507 km</div>
+          <div class="spec"><span class="ico">🏎️</span> 6.1s 0-100</div>
+        </div>
+        <p class="desc">Ottima condizione, primo proprietario, manutenzione Tesla. Perfetta per pendolari.</p>
+        <div class="card-foot">
+          <div class="seller">
+            <span>👤</span>
+            <span class="seller-name">Marco R.</span>
           </div>
-          <input type="range" id="filter-autonomia" class="range-input" min="0" max="700" value="0" step="25">
-          <div class="range-labels">
-            <span>0 km</span>
-            <span>350 km</span>
-            <span>700+ km</span>
+          <button class="like-btn" onclick="this.classList.toggle('liked')">❤️</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-media">
+        <span class="badge plugin">PHEV</span>
+        <span class="year-tag">2022</span>
+      </div>
+      <div class="card-body">
+        <h3>BMW X5 45e</h3>
+        <p class="version">xDrive45e Hybrid</p>
+        <div class="price">€48.900</div>
+        <div class="specs">
+          <div class="spec"><span class="ico">📅</span> 2022</div>
+          <div class="spec"><span class="ico">🛞</span> 32.100 km</div>
+          <div class="spec"><span class="ico">⚡</span> 67 km</div>
+          <div class="spec"><span class="ico">🏎️</span> 5.3s 0-100</div>
+        </div>
+        <p class="desc">SUV luxury con batteria ibrida. Consumo ridotto, lussuoso e performante.</p>
+        <div class="card-foot">
+          <div class="seller">
+            <span>👤</span>
+            <span class="seller-name">Concessionario</span>
           </div>
+          <button class="like-btn" onclick="this.classList.toggle('liked')">❤️</button>
         </div>
       </div>
+    </div>
 
-      <button class="btn-reset-filters" id="btn-reset-filters">Azzera filtri</button>
-    </aside>
-
-    <!-- GRID ANNUNCI -->
-    <div class="grid-section">
-      <div id="grid" class="grid"></div>
+    <div class="card">
+      <div class="card-media">
+        <span class="badge">EV</span>
+        <span class="year-tag">2021</span>
+      </div>
+      <div class="card-body">
+        <h3>Renault Zoe</h3>
+        <p class="version">R135</p>
+        <div class="price">€18.500</div>
+        <div class="specs">
+          <div class="spec"><span class="ico">📅</span> 2021</div>
+          <div class="spec"><span class="ico">🛞</span> 45.300 km</div>
+          <div class="spec"><span class="ico">⚡</span> 395 km</div>
+          <div class="spec"><span class="ico">🏎️</span> 8.4s 0-100</div>
+        </div>
+        <p class="desc">Piccola city car economica. Perfetta per l'ambiente urbano, ottimi consumi.</p>
+        <div class="card-foot">
+          <div class="seller">
+            <span>👤</span>
+            <span class="seller-name">Sarah P.</span>
+          </div>
+          <button class="like-btn" onclick="this.classList.toggle('liked')">❤️</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- MODAL LOGIN/REGISTRAZIONE -->
-<div id="auth-modal" class="modal">
-  <div class="modal-content" style="position: relative;">
-    <button class="btn-close" id="btn-close-modal">×</button>
-    <h2 id="auth-title">Accedi</h2>
-    
-    <div id="login-form" class="auth-form active">
-      <form id="form-login">
-        <div class="form-group">
-          <label>Email</label>
-          <input type="email" required placeholder="tua@email.com">
-        </div>
-        <div class="form-group">
-          <label>Password</label>
-          <input type="password" required placeholder="••••••••">
-        </div>
-        <button type="submit" class="btn-submit">Accedi</button>
-        <p style="text-align: center; margin-top: 16px; font-size: 0.9rem;">
-          Non hai un account? <a href="#" id="link-register" style="color: var(--green); font-weight: 600;">Registrati</a>
-        </p>
-      </form>
-    </div>
+<script>
+// Sample data
+const ads = [
+  {
+    id: 1,
+    brand: 'tesla',
+    model: 'Model 3',
+    version: 'Standard Range',
+    type: 'ev',
+    year: 2023,
+    price: 32500,
+    km: 15200,
+    range: 507,
+    acceleration: 6.1,
+    condition: 'excellent',
+    description: 'Ottima condizione, primo proprietario, manutenzione Tesla. Perfetta per pendolari.',
+    seller: 'Marco R.',
+    date: '2 giorni fa'
+  },
+  {
+    id: 2,
+    brand: 'bmw',
+    model: 'X5 45e',
+    version: 'xDrive45e Hybrid',
+    type: 'phev',
+    year: 2022,
+    price: 48900,
+    km: 32100,
+    range: 67,
+    acceleration: 5.3,
+    condition: 'good',
+    description: 'SUV luxury con batteria ibrida. Consumo ridotto, lussuoso e performante.',
+    seller: 'Concessionario',
+    date: '5 giorni fa'
+  },
+  {
+    id: 3,
+    brand: 'renault',
+    model: 'Zoe',
+    version: 'R135',
+    type: 'ev',
+    year: 2021,
+    price: 18500,
+    km: 45300,
+    range: 395,
+    acceleration: 8.4,
+    condition: 'good',
+    description: 'Piccola city car economica. Perfetta per l\'ambiente urbano, ottimi consumi.',
+    seller: 'Sarah P.',
+    date: '1 settimana fa'
+  }
+];
 
-    <div id="register-form" class="auth-form">
-      <form id="form-register">
-        <div class="form-group">
-          <label>Email</label>
-          <input type="email" required placeholder="tua@email.com">
-        </div>
-        <div class="form-group">
-          <label>Password</label>
-          <input type="password" required placeholder="••••••••" minlength="6">
-        </div>
-        <div class="form-group">
-          <label>Tipo Account</label>
-          <select required>
-            <option value="">Scegli...</option>
-            <option value="privato">Privato</option>
-            <option value="rivenditore">Rivenditore</option>
-          </select>
-        </div>
-        <button type="submit" class="btn-submit">Registrati</button>
-        <p style="text-align: center; margin-top: 16px; font-size: 0.9rem;">
-          Hai già un account? <a href="#" id="link-login" style="color: var(--green); font-weight: 600;">Accedi</a>
-        </p>
-      </form>
-    </div>
-  </div>
-</div>
+const typeLabels = {
+  'ev': 'EV',
+  'phev': 'PHEV'
+};
 
-<!-- MODAL PUBBLICA ANNUNCIO -->
-<div id="publish-modal" class="modal">
-  <div class="modal-content" style="position: relative;">
-    <button class="btn-close" id="btn-close-publish">×</button>
-    <h2>Pubblica Annuncio</h2>
-    <form id="form-publish">
-      <div class="form-row">
-        <div class="form-group">
-          <label>Marca*</label>
-          <input type="text" required>
-        </div>
-        <div class="form-group">
-          <label>Modello*</label>
-          <input type="text" required>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>Anno*</label>
-          <input type="number" required min="2010" max="2030">
-        </div>
-        <div class="form-group">
-          <label>Km*</label>
-          <input type="number" required min="0" step="100">
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>Città*</label>
-          <input type="text" required>
-        </div>
-        <div class="form-group">
-          <label>Provincia</label>
-          <input type="text" placeholder="es: MI">
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>Prezzo (€)*</label>
-          <input type="number" required min="0" step="100">
-        </div>
-        <div class="form-group">
-          <label>Alimentazione*</label>
-          <select required>
-            <option value="">Scegli...</option>
-            <option value="elettrica">Elettrica</option>
-            <option value="plug-in">Plug-in Hybrid</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>Batteria (kWh)</label>
-          <input type="number" min="0" step="0.1">
-        </div>
-        <div class="form-group">
-          <label>Potenza (kW)</label>
-          <input type="number" min="0" step="0.1">
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>Autonomia (km)</label>
-          <input type="number" min="0" step="10">
-        </div>
-        <div class="form-group">
-          <label>SOH Batteria (%)</label>
-          <input type="number" min="0" max="100">
-        </div>
-      </div>
-      <div class="form-group">
-        <label>Descrizione</label>
-        <textarea placeholder="Descrivi le condizioni, gli accessori, etc..."></textarea>
-      </div>
-      <button type="submit" class="btn-submit">Pubblica Annuncio</button>
-    </form>
-  </div>
-</div>
+function renderCards(data) {
+  const grid = document.getElementById('grid');
+  const count = document.getElementById('adCount');
+  
+  count.textContent = data.length;
 
-<footer>
-  Auto Elettriche Usate <span class="sep">·</span> annunci privati e professionali
-</footer>
-
-<script type="module">
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
-
-const SUPABASE_URL = 'https://komvmedptbcsiiswoaja.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_W1l56uhiAnI6g7rhvkqtZg_WesZk_rd';
-const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
-
-// DOM Elements
-const homePage = document.getElementById('home-page');
-const listingPage = document.getElementById('listing-page');
-const authModal = document.getElementById('auth-modal');
-const publishModal = document.getElementById('publish-modal');
-const brandHome = document.getElementById('brand-home');
-const btnPublishHeader = document.getElementById('btn-publish-header');
-const btnLogin = document.getElementById('btn-login');
-const userMenu = document.getElementById('user-menu');
-
-// Filtri
-const filterType = document.getElementById('type-filters');
-const filterMarca = document.getElementById('filter-marca');
-const filterAnnoMin = document.getElementById('filter-anno-min');
-const filterAnnoMax = document.getElementById('filter-anno-max');
-const filterPrezzoMin = document.getElementById('filter-prezzo-min');
-const filterPrezzoMax = document.getElementById('filter-prezzo-max');
-const filterKmMax = document.getElementById('filter-km-max');
-const filterAutonomia = document.getElementById('filter-autonomia');
-const autonomiaTrack = document.getElementById('autonomia-track');
-const btnResetFilters = document.getElementById('btn-reset-filters');
-
-const grid = document.getElementById('grid');
-const premiumGrid = document.getElementById('premium-grid');
-const btnViewAll = document.getElementById('btn-view-all');
-const heroSearchBtn = document.getElementById('hero-search-btn');
-const heroSearch = document.getElementById('hero-search');
-const headerSearch = document.getElementById('header-search');
-
-// State
-let annunci = [];
-let filtroTipo = 'tutti';
-let currentUser = null;
-
-const nf = new Intl.NumberFormat('it-IT');
-
-function esc(s) {
-  return String(s == null ? '' : s)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
-}
-
-// Navigation
-function showPage(page) {
-  homePage.classList.remove('active');
-  listingPage.classList.remove('active');
-  if (page === 'home') homePage.classList.add('active');
-  if (page === 'listing') listingPage.classList.add('active');
-}
-
-function showAuthModal(isLogin = true) {
-  document.getElementById('login-form').classList.toggle('active', isLogin);
-  document.getElementById('register-form').classList.toggle('active', !isLogin);
-  document.getElementById('auth-title').textContent = isLogin ? 'Accedi' : 'Registrati';
-  authModal.classList.add('active');
-}
-
-function hideAuthModal() {
-  authModal.classList.remove('active');
-}
-
-function showPublishModal() {
-  if (!currentUser) {
-    showAuthModal(true);
+  if (data.length === 0) {
+    grid.innerHTML = '<div class="empty-state"><h3>Nessun annuncio trovato</h3><p>Prova a modificare i filtri di ricerca</p></div>';
     return;
   }
-  publishModal.classList.add('active');
-}
 
-function hidePublishModal() {
-  publishModal.classList.remove('active');
-}
-
-function updateUserUI() {
-  if (currentUser) {
-    userMenu.innerHTML = `
-      <div class="user-profile">
-        <div class="user-avatar">${currentUser.email.charAt(0).toUpperCase()}</div>
-        <span style="font-size: 0.9rem;">${currentUser.email}</span>
+  grid.innerHTML = data.map(ad => `
+    <div class="card">
+      <div class="card-media">
+        <span class="badge ${ad.type === 'phev' ? 'plugin' : ''}">${typeLabels[ad.type]}</span>
+        <span class="year-tag">${ad.year}</span>
       </div>
-      <button class="btn-auth" id="btn-logout">Esci</button>
-    `;
-    document.getElementById('btn-logout')?.addEventListener('click', () => {
-      currentUser = null;
-      updateUserUI();
-      showPage('home');
-    });
-    btnPublishHeader.textContent = '+ Pubblica';
-  } else {
-    userMenu.innerHTML = '<button class="btn-auth" id="btn-login-new">Accedi</button>';
-    document.getElementById('btn-login-new')?.addEventListener('click', () => showAuthModal(true));
-    btnPublishHeader.textContent = '+ Pubblica';
-  }
-}
-
-// Cards
-function cardHTML(a) {
-  const isPlugin = a.alimentazione === 'plug-in';
-  const media = (a.foto && a.foto.length > 0)
-    ? '<img src="' + esc(a.foto[0]) + '" alt="' + esc(a.marca) + '">'
-    : '&#128663;';
-  return `<article class="card" data-id="${a.id}">
-    <div class="card-media">
-      ${media}
-      <span class="badge${isPlugin ? '.plugin' : ''}">${isPlugin ? 'Plug-in' : 'EV'}</span>
-      <span class="year-tag">${a.anno}</span>
-    </div>
-    <div class="card-body">
-      <h3>${esc(a.marca)} ${esc(a.modello)}</h3>
-      ${a.versione ? '<p class="version">' + esc(a.versione) + '</p>' : ''}
-      <div class="card-price">${nf.format(a.prezzo)} €</div>
-      <div class="card-specs-mini">
-        <span>📍 ${esc(a.citta)}</span>
-        <span>🚗 ${nf.format(a.km)} km</span>
-        ${a.autonomia_km ? '<span>🔋 ' + nf.format(a.autonomia_km) + ' km</span>' : ''}
+      <div class="card-body">
+        <h3>${ad.brand.charAt(0).toUpperCase() + ad.brand.slice(1)} ${ad.model}</h3>
+        <p class="version">${ad.version}</p>
+        <div class="price">€${ad.price.toLocaleString('it-IT')}</div>
+        <div class="specs">
+          <div class="spec"><span class="ico">📅</span> ${ad.year}</div>
+          <div class="spec"><span class="ico">🛞</span> ${ad.km.toLocaleString('it-IT')} km</div>
+          <div class="spec"><span class="ico">⚡</span> ${ad.range} km</div>
+          <div class="spec"><span class="ico">🏎️</span> ${ad.acceleration}s 0-100</div>
+        </div>
+        <p class="desc">${ad.description}</p>
+        <div class="card-foot">
+          <div class="seller">
+            <span>👤</span>
+            <span class="seller-name">${ad.seller}</span>
+          </div>
+          <button class="like-btn" onclick="this.classList.toggle('liked')">❤️</button>
+        </div>
       </div>
     </div>
-  </article>`;
+  `).join('');
 }
 
-function premiumCardHTML(a) {
-  const isPlugin = a.alimentazione === 'plug-in';
-  const media = (a.foto && a.foto.length > 0)
-    ? '<img src="' + esc(a.foto[0]) + '" alt="' + esc(a.marca) + '">'
-    : '&#128663;';
-  return `<article class="card-premium" data-id="${a.id}">
-    <span class="premium-badge">Premium</span>
-    <div class="card-media">
-      ${media}
-      <span class="badge${isPlugin ? ' plugin' : ''}">${isPlugin ? 'Plug-in' : 'EV'}</span>
-    </div>
-    <div class="card-body">
-      <h3>${esc(a.marca)} ${esc(a.modello)}</h3>
-      ${a.versione ? '<p class="version">' + esc(a.versione) + '</p>' : ''}
-      <div class="card-price">${nf.format(a.prezzo)} €</div>
-      <div class="card-specs-mini">
-        <span>${nf.format(a.km)} km</span>
-        <span>${a.anno}</span>
-        ${a.autonomia_km ? '<span>' + nf.format(a.autonomia_km) + ' km</span>' : ''}
-      </div>
-    </div>
-  </article>`;
-}
+function applyFilters() {
+  let filtered = [...ads];
 
-// Filtri
-function updateAutonomiaTrack() {
-  const value = filterAutonomia.value;
-  const max = filterAutonomia.max;
-  const percent = (value / max) * 100;
-  autonomiaTrack.style.width = percent + '%';
-}
+  const brand = document.getElementById('filterBrand').value;
+  const model = document.getElementById('filterModel').value.toLowerCase();
+  const type = document.getElementById('filterType').value;
+  const yearFrom = document.getElementById('filterYearFrom').value;
+  const yearTo = document.getElementById('filterYearTo').value;
+  const priceFrom = parseFloat(document.getElementById('filterPriceFrom').value) || 0;
+  const priceTo = parseFloat(document.getElementById('filterPriceTo').value) || Infinity;
+  const km = parseFloat(document.getElementById('filterKm').value) || Infinity;
+  const state = document.getElementById('filterState').value;
+  const search = document.getElementById('headerSearch').value.toLowerCase();
 
-function updateMarcaSelect() {
-  const marche = [...new Set(annunci.map(a => a.marca).filter(Boolean))].sort();
-  const currentValue = filterMarca.value;
-  filterMarca.innerHTML = '<option value="">Tutte</option>';
-  marche.forEach(marca => {
-    const opt = document.createElement('option');
-    opt.value = marca.toLowerCase();
-    opt.textContent = marca;
-    filterMarca.appendChild(opt);
-  });
-  filterMarca.value = currentValue;
-}
-
-function getFilteredList() {
-  let lista = filtroTipo === 'tutti' ? annunci : annunci.filter(a => a.alimentazione === filtroTipo);
-  
-  const marca = filterMarca.value.toLowerCase();
-  const annoMin = filterAnnoMin.value ? parseInt(filterAnnoMin.value) : null;
-  const annoMax = filterAnnoMax.value ? parseInt(filterAnnoMax.value) : null;
-  const prezzoMin = filterPrezzoMin.value ? parseInt(filterPrezzoMin.value) : null;
-  const prezzoMax = filterPrezzoMax.value ? parseInt(filterPrezzoMax.value) : null;
-  const kmMax = filterKmMax.value ? parseInt(filterKmMax.value) : null;
-  const autonomiaMin = parseInt(filterAutonomia.value);
-
-  return lista.filter(a => {
-    if (marca && !(a.marca?.toLowerCase().includes(marca))) return false;
-    if (annoMin && a.anno < annoMin) return false;
-    if (annoMax && a.anno > annoMax) return false;
-    if (prezzoMin && a.prezzo < prezzoMin) return false;
-    if (prezzoMax && a.prezzo > prezzoMax) return false;
-    if (kmMax && a.km > kmMax) return false;
-    if (autonomiaMin > 0 && (!a.autonomia_km || a.autonomia_km < autonomiaMin)) return false;
+  filtered = filtered.filter(ad => {
+    if (brand && ad.brand !== brand) return false;
+    if (model && !ad.model.toLowerCase().includes(model)) return false;
+    if (type && ad.type !== type) return false;
+    if (yearFrom && ad.year < parseInt(yearFrom)) return false;
+    if (yearTo && ad.year > parseInt(yearTo)) return false;
+    if (ad.price < priceFrom || ad.price > priceTo) return false;
+    if (ad.km > km) return false;
+    if (state && ad.condition !== state) return false;
+    if (search && !ad.model.toLowerCase().includes(search) && !ad.brand.includes(search)) return false;
     return true;
   });
+
+  // Apply sorting
+  const sortBy = document.getElementById('sortBy').value;
+  if (sortBy === 'price-asc') filtered.sort((a, b) => a.price - b.price);
+  if (sortBy === 'price-desc') filtered.sort((a, b) => b.price - a.price);
+  if (sortBy === 'km-asc') filtered.sort((a, b) => a.km - b.km);
+
+  renderCards(filtered);
 }
 
-function renderGrid() {
-  const filtered = getFilteredList();
-  grid.innerHTML = filtered.length ? filtered.map(cardHTML).join('') : '<div class="state"><span class="big">🔍</span>Nessun annuncio trovato</div>';
-}
-
-function renderPremium() {
-  const premium = annunci.filter(a => a.premium).slice(0, 6);
-  premiumGrid.innerHTML = premium.length ? premium.map(premiumCardHTML).join('') : '';
-}
-
-// Event Listeners
-brandHome.addEventListener('click', () => showPage('home'));
-btnViewAll.addEventListener('click', () => showPage('listing'));
-btnPublishHeader.addEventListener('click', showPublishModal);
-btnLogin.addEventListener('click', () => showAuthModal(true));
-document.getElementById('btn-close-modal').addEventListener('click', hideAuthModal);
-document.getElementById('btn-close-publish').addEventListener('click', hidePublishModal);
-document.getElementById('link-register').addEventListener('click', (e) => {
-  e.preventDefault();
-  showAuthModal(false);
-});
-document.getElementById('link-login').addEventListener('click', (e) => {
-  e.preventDefault();
-  showAuthModal(true);
+// Event listeners
+document.getElementById('filterBrand').addEventListener('change', applyFilters);
+document.getElementById('filterModel').addEventListener('input', applyFilters);
+document.getElementById('filterType').addEventListener('change', applyFilters);
+document.getElementById('filterYearFrom').addEventListener('change', applyFilters);
+document.getElementById('filterYearTo').addEventListener('change', applyFilters);
+document.getElementById('filterPriceFrom').addEventListener('input', applyFilters);
+document.getElementById('filterPriceTo').addEventListener('input', applyFilters);
+document.getElementById('filterKm').addEventListener('input', applyFilters);
+document.getElementById('filterState').addEventListener('change', applyFilters);
+document.getElementById('headerSearch').addEventListener('input', applyFilters);
+document.getElementById('sortBy').addEventListener('change', applyFilters);
+document.getElementById('btnReset').addEventListener('click', () => {
+  document.querySelectorAll('.filter-select, .filter-input').forEach(el => el.value = '');
+  document.getElementById('headerSearch').value = '';
+  document.getElementById('sortBy').value = 'recent';
+  applyFilters();
 });
 
-heroSearchBtn.addEventListener('click', () => {
-  if (heroSearch.value) showPage('listing');
-});
-
-// Filtri
-filterType.addEventListener('click', (e) => {
-  if (e.target.classList.contains('filter-chip')) {
-    filterType.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
-    e.target.classList.add('active');
-    filtroTipo = e.target.dataset.type;
-    renderGrid();
-  }
-});
-
-filterMarca.addEventListener('change', renderGrid);
-filterAnnoMin.addEventListener('change', renderGrid);
-filterAnnoMax.addEventListener('change', renderGrid);
-filterPrezzoMin.addEventListener('change', renderGrid);
-filterPrezzoMax.addEventListener('change', renderGrid);
-filterKmMax.addEventListener('change', renderGrid);
-filterAutonomia.addEventListener('input', () => {
-  updateAutonomiaTrack();
-  renderGrid();
-});
-
-btnResetFilters.addEventListener('click', () => {
-  filterMarca.value = '';
-  filterAnnoMin.value = '';
-  filterAnnoMax.value = '';
-  filterPrezzoMin.value = '';
-  filterPrezzoMax.value = '';
-  filterKmMax.value = '';
-  filterAutonomia.value = '0';
-  filtroTipo = 'tutti';
-  filterType.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
-  filterType.querySelector('[data-type="tutti"]').classList.add('active');
-  updateAutonomiaTrack();
-  renderGrid();
-});
-
-document.getElementById('form-login').addEventListener('submit', (e) => {
-  e.preventDefault();
-  currentUser = { email: e.target.querySelector('input[type="email"]').value };
-  updateUserUI();
-  hideAuthModal();
-});
-
-document.getElementById('form-register').addEventListener('submit', (e) => {
-  e.preventDefault();
-  const email = e.target.querySelector('input[type="email"]').value;
-  const tipo = e.target.querySelector('select').value;
-  currentUser = { email, tipo };
-  updateUserUI();
-  hideAuthModal();
-});
-
-document.getElementById('form-publish').addEventListener('submit', (e) => {
-  e.preventDefault();
-  alert('Annuncio pubblicato con successo!');
-  hidePublishModal();
-});
-
-// Load Data
-async function loadAnnunci() {
-  const { data, error } = await supabase
-    .from('annunci')
-    .select('*')
-    .eq('stato', 'attivo')
-    .order('creato_il', { ascending: false });
-
-  if (!error && data) {
-    annunci = data;
-    updateMarcaSelect();
-    renderPremium();
-    renderGrid();
-  }
-}
-
-updateUserUI();
-loadAnnunci();
+// Initial render
+renderCards(ads);
 </script>
+
 </body>
 </html>
