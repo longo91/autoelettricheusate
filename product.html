@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Scheda prodotto - Auto EV</title>
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand"><div class="bolt">⚡</div><span>Auto EV</span></div>
+  </header>
+  <main style="padding:24px;max-width:900px;margin:0 auto;">
+    <div id="product-container"></div>
+    <p><a href="/index.html" class="btn">Torna alla home</a></p>
+  </main>
+  <script>
+    async function loadListings(){
+      try{const r = await fetch('/listings.json'); if(!r.ok) throw new Error('no'); return await r.json();}catch(e){return []}
+    }
+    function getQueryParam(name){return new URLSearchParams(location.search).get(name)}
+    (async ()=>{
+      const listings = await loadListings();
+      const id = Number(getQueryParam('id'));
+      const item = listings.find(x=>x.id===id);
+      const container = document.getElementById('product-container');
+      if(!item){
+        container.innerHTML = '<div class="empty-state"><h3>Scheda non trovata</h3><p>Controlla l\'id o torna alla home.</p></div>';
+        return;
+      }
+      container.innerHTML = `
+        <div class="card" style="display:block">
+          <div class="card-media">${item.img ? `<img src="${item.img}" alt="${item.brand} ${item.model}">` : ''}
+            <span class="badge ${item.type==='phev' ? 'plugin' : ''}">${item.type === 'phev' ? 'PHEV' : 'EV'}</span>
+            <span class="year-tag">${item.year}</span>
+          </div>
+          <div class="card-body">
+            <h2>${item.brand.charAt(0).toUpperCase()+item.brand.slice(1)} ${item.model}</h2>
+            <div class="price">€${Number(item.price).toLocaleString('it-IT')}</div>
+            <p class="muted">${item.km.toLocaleString('it-IT')} km • ${item.date}</p>
+            <p class="desc">${item.description}</p>
+            <div style="margin-top:18px"><button class="btn-publish">Contatta venditore</button></div>
+          </div>
+        </div>
+      `;
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+[
+  {
+    "id": 1,
+    "brand": "tesla",
+    "model": "Model 3",
+    "version": "Standard Range",
+    "type": "ev",
+    "year": 2023,
+    "price": 32500,
+    "km": 15200,
+    "range": 507,
+    "acceleration": 6.1,
+    "condition": "excellent",
+    "description": "Ottima condizione, primo proprietario, manutenzione Tesla. Perfetta per pendolari.",
+    "seller": "Marco R.",
+    "date": "2 giorni fa",
+    "img": "https://picsum.photos/seed/tesla/800/400"
+  },
+  {
+    "id": 2,
+    "brand": "bmw",
+    "model": "X5 45e",
+    "version": "xDrive45e Hybrid",
+    "type": "phev",
+    "year": 2022,
+    "price": 48900,
+    "km": 32100,
+    "range": 67,
+    "acceleration": 5.3,
+    "condition": "good",
+    "description": "SUV luxury con batteria ibrida. Consumo ridotto, lussuoso e performante.",
+    "seller": "Concessionario",
+    "date": "5 giorni fa",
+    "img": "https://picsum.photos/seed/bmw/800/400"
+  },
+  {
+    "id": 3,
+    "brand": "renault",
+    "model": "Zoe",
+    "version": "R135",
+    "type": "ev",
+    "year": 2021,
+    "price": 18500,
+    "km": 45300,
+    "range": 395,
+    "acceleration": 8.4,
+    "condition": "good",
+    "description": "Piccola city car economica. Perfetta per l'ambiente urbano, ottimi consumi.",
+    "seller": "Sarah P.",
+    "date": "1 settimana fa",
+    "img": "https://picsum.photos/seed/renault/800/400"
+  }
+]
