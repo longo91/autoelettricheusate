@@ -29,20 +29,17 @@
 
   /* ---------- HEADER ---------- */
   header {
-    position: relative;
-    background: linear-gradient(135deg, #075c38 0%, #0a7a4a 45%, #12a463 100%);
-    color: #fff;
-    padding: 64px 24px 96px;
-    text-align: center;
-    overflow: hidden;
-  }
-  header::after {
-    content: "";
-    position: absolute;
-    inset: auto -10% -60px -10%;
-    height: 140px;
-    background: #f4f7f5;
-    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #fff;
+    border-bottom: 1px solid var(--line);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    box-shadow: 0 2px 8px rgba(16,40,30,0.05);
   }
   .brand {
     display: inline-flex;
@@ -50,271 +47,211 @@
     gap: 10px;
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-weight: 800;
-    font-size: 2.5rem;
+    font-size: 1.3rem;
     letter-spacing: -1px;
     margin: 0;
-    position: relative;
-    z-index: 1;
     cursor: pointer;
+    white-space: nowrap;
   }
   .brand .bolt {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 46px;
-    height: 46px;
-    border-radius: 14px;
-    background: rgba(255,255,255,0.16);
-    backdrop-filter: blur(4px);
-    font-size: 1.5rem;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #075c38 0%, #0a7a4a 45%, #12a463 100%);
+    color: #fff;
+    font-size: 1.2rem;
   }
-  header p.tagline {
-    margin: 14px 0 0;
+  
+  .header-center {
+    flex: 1;
+    max-width: 500px;
+  }
+  .search-bar {
+    display: flex;
+    align-items: center;
+    background: #f4f7f5;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 8px 12px;
+    gap: 8px;
+  }
+  .search-bar input {
+    border: none;
+    background: transparent;
+    flex: 1;
+    font-size: 0.9rem;
+    outline: none;
+    color: var(--ink);
+  }
+  .search-bar input::placeholder {
+    color: var(--muted);
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .btn-publish {
+    background: var(--green);
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+  .btn-publish:hover {
+    background: var(--green-light);
+  }
+  .user-menu {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-auth {
+    background: #f4f7f5;
+    color: var(--ink);
+    border: 1px solid var(--line);
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .btn-auth:hover {
+    background: var(--line);
+  }
+  .user-profile {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+  }
+  .user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--green);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.85rem;
+  }
+
+  /* ---------- HERO SECTION ---------- */
+  .hero {
+    background: linear-gradient(135deg, #075c38 0%, #0a7a4a 45%, #12a463 100%);
+    color: #fff;
+    padding: 64px 24px;
+    text-align: center;
+  }
+  .hero h1 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin: 0 0 12px;
+    letter-spacing: -1px;
+  }
+  .hero p {
     font-size: 1.05rem;
     opacity: 0.92;
-    position: relative;
-    z-index: 1;
+    margin: 0 0 32px;
   }
-  .stats {
-    position: relative;
-    z-index: 1;
-    margin: 26px 0 0;
-    display: inline-flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  .pill {
-    background: rgba(255,255,255,0.16);
-    border: 1px solid rgba(255,255,255,0.22);
-    padding: 7px 16px;
-    border-radius: 999px;
-    font-size: 0.86rem;
-    font-weight: 600;
-  }
-
-  /* ---------- LAYOUT ---------- */
-  .container { max-width: 1180px; margin: -56px auto 0; padding: 0 24px 56px; position: relative; z-index: 2; }
-  .toolbar {
+  .hero-search {
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    align-items: center;
-    justify-content: space-between;
-    background: #fff;
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    padding: 14px 18px;
-    box-shadow: 0 8px 26px rgba(16,40,30,0.07);
-    margin-bottom: 26px;
-  }
-  .toolbar h2 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.05rem; margin: 0; }
-  .toolbar .count { color: var(--muted); font-size: 0.88rem; font-weight: 500; }
-  .filters { display: flex; gap: 8px; flex-wrap: wrap; }
-  .chip {
-    border: 1px solid var(--line);
-    background: #fff;
-    color: var(--muted);
-    border-radius: 999px;
-    padding: 7px 15px;
-    font: inherit;
-    font-size: 0.85rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.15s ease;
-  }
-  .chip:hover { border-color: var(--green); color: var(--green); }
-  .chip.active { background: var(--green); border-color: var(--green); color: #fff; }
-
-  /* ---------- SEARCH PANEL ---------- */
-  .search-panel {
-    background: #fff;
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    padding: 20px 18px;
-    box-shadow: 0 8px 26px rgba(16,40,30,0.07);
-    margin-bottom: 26px;
-  }
-  .search-title {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 1rem;
-    font-weight: 600;
-    margin: 0 0 16px;
-    color: var(--ink);
-  }
-  .search-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     gap: 12px;
-    margin-bottom: 20px;
+    max-width: 600px;
+    margin: 0 auto;
   }
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-  .form-group label {
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.4px;
-  }
-  .form-group input,
-  .form-group select {
-    padding: 8px 12px;
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    font-family: inherit;
-    font-size: 0.9rem;
-    color: var(--ink);
-    background: #fff;
-    transition: border-color 0.15s ease;
-  }
-  .form-group input:focus,
-  .form-group select:focus {
-    outline: none;
-    border-color: var(--green);
-    box-shadow: 0 0 0 3px rgba(10, 122, 74, 0.1);
-  }
-
-  /* ---------- AUTONOMIA SLIDER ---------- */
-  .autonomia-section {
-    margin-top: 20px;
-    padding-top: 20px;
-    border-top: 1px solid var(--line);
-  }
-  .autonomia-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px;
-  }
-  .autonomia-label {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--ink);
-  }
-  .autonomia-value {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--green);
-  }
-  .slider-container {
-    position: relative;
-    margin: 24px 0;
-  }
-  .range-slider {
-    width: 100%;
-    height: 6px;
-    background: var(--line);
-    border-radius: 3px;
-    position: relative;
-    margin-bottom: 8px;
-  }
-  .range-slider-track {
-    position: absolute;
-    height: 100%;
-    background: var(--green);
-    border-radius: 3px;
-    pointer-events: none;
-  }
-  .range-input {
-    position: absolute;
-    width: 100%;
-    height: 6px;
-    top: 0;
-    margin: 0;
-    padding: 0;
-    pointer-events: none;
-    -webkit-appearance: none;
-    appearance: none;
-    background: transparent;
-  }
-  .range-input::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    background: var(--green);
-    cursor: pointer;
-    pointer-events: auto;
-    box-shadow: 0 2px 8px rgba(10, 122, 74, 0.3);
-    transition: box-shadow 0.15s ease;
-  }
-  .range-input::-webkit-slider-thumb:hover {
-    box-shadow: 0 4px 12px rgba(10, 122, 74, 0.5);
-  }
-  .range-input::-moz-range-thumb {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    background: var(--green);
-    cursor: pointer;
-    pointer-events: auto;
-    box-shadow: 0 2px 8px rgba(10, 122, 74, 0.3);
+  .hero-search input {
+    flex: 1;
+    padding: 14px 16px;
     border: none;
-    transition: box-shadow 0.15s ease;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    outline: none;
   }
-  .range-input::-moz-range-thumb:hover {
-    box-shadow: 0 4px 12px rgba(10, 122, 74, 0.5);
-  }
-  .range-labels {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.8rem;
+  .hero-search input::placeholder {
     color: var(--muted);
-    margin-top: 8px;
   }
-
-  .search-actions {
-    display: flex;
-    gap: 8px;
-    margin-top: 12px;
-    flex-wrap: wrap;
-  }
-  .btn-reset {
-    padding: 8px 16px;
-    border: 1px solid var(--line);
-    background: #fff;
-    color: var(--muted);
-    border-radius: 8px;
-    font-size: 0.85rem;
+  .hero-search button {
+    padding: 14px 24px;
+    background: var(--amber);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.15s ease;
+    transition: background 0.15s ease;
   }
-  .btn-reset:hover {
-    border-color: var(--green);
-    color: var(--green);
+  .hero-search button:hover {
+    background: #d67c00;
   }
 
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 24px; }
-
-  /* ---------- CARD ---------- */
-  .card {
+  /* ---------- PREMIUM SECTION ---------- */
+  .premium-section {
+    max-width: 1400px;
+    margin: 48px auto;
+    padding: 0 24px;
+  }
+  .premium-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 800;
+    margin: 0 0 24px;
+  }
+  .premium-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .card-premium {
     background: #fff;
-    border: 1px solid var(--line);
-    border-radius: 18px;
+    border: 2px solid var(--amber);
+    border-radius: 16px;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 4px 14px rgba(16,40,30,0.05);
-    transition: transform 0.22s ease, box-shadow 0.22s ease;
+    box-shadow: 0 8px 24px rgba(224, 138, 0, 0.15);
     cursor: pointer;
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+    position: relative;
   }
-  .card:hover { transform: translateY(-6px); box-shadow: 0 18px 38px rgba(16,40,30,0.13); }
+  .card-premium:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 36px rgba(224, 138, 0, 0.25);
+  }
+  .premium-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: var(--amber);
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    z-index: 2;
+  }
   .card-media {
     position: relative;
-    height: 176px;
+    height: 200px;
     background: linear-gradient(135deg, #dff2e8, #b9e4cf);
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 3rem;
   }
-  .card-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .card-media img { width: 100%; height: 100%; object-fit: cover; }
   .badge {
     position: absolute;
     top: 12px;
@@ -325,11 +262,9 @@
     border-radius: 999px;
     font-size: 0.7rem;
     font-weight: 700;
-    letter-spacing: 0.6px;
     text-transform: uppercase;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
   }
-  .badge.plugin { background: var(--amber); }
+  .badge.plugin { background: var(--green-light); }
   .year-tag {
     position: absolute;
     top: 12px;
@@ -341,428 +276,606 @@
     font-size: 0.75rem;
     font-weight: 700;
   }
-  .card-body { padding: 18px 18px 16px; display: flex; flex-direction: column; flex: 1; }
-  .card h3 {
+  .card-body {
+    padding: 16px;
+  }
+  .card-body h3 {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 1.08rem;
-    line-height: 1.35;
+    font-size: 1rem;
     margin: 0 0 4px;
   }
-  .card .version { color: var(--muted); font-size: 0.85rem; margin: 0 0 12px; }
-  .price { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--green); margin-bottom: 14px; }
-  .specs {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px 10px;
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
-    padding: 12px 0;
-    margin-bottom: 12px;
+  .card-body .version {
+    color: var(--muted);
+    font-size: 0.8rem;
+    margin-bottom: 8px;
   }
-  .spec { display: flex; align-items: center; gap: 7px; font-size: 0.85rem; color: #3d4d45; }
-  .spec .ico { font-size: 0.95rem; opacity: 0.75; }
-  .desc { color: #4a5a52; font-size: 0.88rem; line-height: 1.5; margin: 0 0 14px; flex: 1; }
-  .card-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 0.82rem; }
-  .seller { color: var(--muted); display: flex; align-items: center; gap: 6px; min-width: 0; }
-  .seller strong { color: var(--ink); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .tag { background: #edf6f1; color: var(--green); padding: 4px 10px; border-radius: 8px; font-weight: 700; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.4px; white-space: nowrap; }
-  .tag.priv { background: #f1f3f7; color: #4a5568; }
-
-  /* ---------- DETAIL PAGE ---------- */
-  .detail-page { display: none; }
-  .detail-page.active { display: block; }
-  .detail-header {
-    background: #fff;
-    border-bottom: 1px solid var(--line);
-    padding: 16px 24px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 0;
-  }
-  .detail-header button {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: var(--ink);
-  }
-  .detail-header h1 {
-    margin: 0;
-    font-size: 1.2rem;
+  .card-price {
     font-family: 'Plus Jakarta Sans', sans-serif;
-  }
-  .detail-container {
-    max-width: 1000px;
-    margin: -56px auto 56px;
-    padding: 0 24px;
-    position: relative;
-    z-index: 2;
-  }
-  .detail-gallery {
-    background: #fff;
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    overflow: hidden;
-    margin-bottom: 24px;
-    box-shadow: 0 8px 26px rgba(16,40,30,0.07);
-  }
-  .gallery-main {
-    width: 100%;
-    height: 400px;
-    background: linear-gradient(135deg, #dff2e8, #b9e4cf);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 4rem;
-    position: relative;
-  }
-  .gallery-main img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  .gallery-nav {
-    display: flex;
-    gap: 8px;
-    padding: 12px;
-    overflow-x: auto;
-    background: #f4f7f5;
-  }
-  .gallery-thumb {
-    width: 80px;
-    height: 80px;
-    border: 2px solid var(--line);
-    border-radius: 8px;
-    overflow: hidden;
-    cursor: pointer;
-    flex-shrink: 0;
-    transition: border-color 0.15s ease;
-  }
-  .gallery-thumb img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  .gallery-thumb.active {
-    border-color: var(--green);
-  }
-
-  .detail-content {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 24px;
-  }
-  .detail-info {
-    background: #fff;
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    padding: 24px;
-    box-shadow: 0 8px 26px rgba(16,40,30,0.07);
-  }
-  .detail-title {
-    display: flex;
-    justify-content: space-between;
-    align-items: start;
-    gap: 12px;
-    margin-bottom: 16px;
-  }
-  .detail-title h2 {
-    margin: 0;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 1.8rem;
-    flex: 1;
-  }
-  .detail-badge {
-    background: var(--green);
-    color: #fff;
-    padding: 6px 14px;
-    border-radius: 999px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    height: fit-content;
-  }
-  .detail-badge.plugin { background: var(--amber); }
-  .detail-price {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 2.2rem;
+    font-size: 1.3rem;
     font-weight: 800;
     color: var(--green);
-    margin-bottom: 20px;
+    margin-bottom: 8px;
+  }
+  .card-specs-mini {
+    display: flex;
+    gap: 8px;
+    font-size: 0.75rem;
+    color: var(--muted);
+    flex-wrap: wrap;
   }
 
-  .detail-specs {
+  /* ---------- LISTING PAGE ---------- */
+  .listing-container {
+    max-width: 1400px;
+    margin: 0 auto;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    grid-template-columns: 280px 1fr;
+    gap: 24px;
+    padding: 24px;
+  }
+
+  /* ---------- SIDEBAR FILTRI ---------- */
+  .sidebar {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 20px;
+    height: fit-content;
+    position: sticky;
+    top: 80px;
+    box-shadow: 0 4px 12px rgba(16,40,30,0.05);
+  }
+  .sidebar h3 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin: 0 0 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--ink);
+  }
+  .filter-group {
     margin-bottom: 20px;
     padding-bottom: 20px;
     border-bottom: 1px solid var(--line);
   }
-  .detail-spec-item {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
+  .filter-group:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
   }
-  .detail-spec-label {
+  .filter-label {
     font-size: 0.75rem;
     font-weight: 600;
     color: var(--muted);
     text-transform: uppercase;
     letter-spacing: 0.4px;
+    margin-bottom: 8px;
+    display: block;
   }
-  .detail-spec-value {
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--ink);
+  .filter-input {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+  }
+  .filter-chip {
+    display: inline-block;
+    background: #f4f7f5;
+    color: var(--muted);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    margin-bottom: 6px;
+    margin-right: 6px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    border: 1px solid transparent;
+  }
+  .filter-chip:hover {
+    border-color: var(--green);
+    color: var(--green);
+  }
+  .filter-chip.active {
+    background: var(--green);
+    color: #fff;
+    border-color: var(--green);
   }
 
-  .detail-description {
-    margin-bottom: 20px;
+  .slider-container {
+    position: relative;
+    margin: 16px 0;
   }
-  .detail-description h3 {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    margin: 0 0 12px;
-    font-size: 1rem;
+  .range-slider {
+    width: 100%;
+    height: 5px;
+    background: var(--line);
+    border-radius: 3px;
+    position: relative;
+    margin-bottom: 6px;
   }
-  .detail-description p {
+  .range-slider-track {
+    position: absolute;
+    height: 100%;
+    background: var(--green);
+    border-radius: 3px;
+    pointer-events: none;
+  }
+  .range-input {
+    width: 100%;
+    height: 5px;
     margin: 0;
-    line-height: 1.6;
-    color: #4a5a52;
+    padding: 0;
+    pointer-events: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+  }
+  .range-input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--green);
+    cursor: pointer;
+    pointer-events: auto;
+    box-shadow: 0 2px 6px rgba(10, 122, 74, 0.3);
+  }
+  .range-input::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--green);
+    cursor: pointer;
+    pointer-events: auto;
+    border: none;
+    box-shadow: 0 2px 6px rgba(10, 122, 74, 0.3);
+  }
+  .range-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.7rem;
+    color: var(--muted);
   }
 
-  .detail-sidebar {
+  .btn-reset-filters {
+    width: 100%;
+    padding: 10px;
+    background: #f4f7f5;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .btn-reset-filters:hover {
+    background: var(--line);
+  }
+
+  /* ---------- MAIN GRID ---------- */
+  .grid-section {
     display: flex;
     flex-direction: column;
     gap: 24px;
   }
-  .seller-card {
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+  }
+  .card {
     background: #fff;
     border: 1px solid var(--line);
-    border-radius: 16px;
-    padding: 24px;
-    text-align: center;
-    box-shadow: 0 8px 26px rgba(16,40,30,0.07);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(16,40,30,0.05);
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+    cursor: pointer;
   }
-  .seller-card h3 {
-    margin: 0 0 8px;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 1.1rem;
-  }
-  .seller-badge {
-    display: inline-block;
-    background: #edf6f1;
-    color: var(--green);
-    padding: 4px 10px;
-    border-radius: 8px;
-    font-weight: 700;
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.4px;
-    margin-bottom: 12px;
-  }
-  .seller-badge.rivenditore { background: #f1f3f7; color: #4a5568; }
-  .seller-desc {
-    font-size: 0.85rem;
-    color: var(--muted);
-    line-height: 1.5;
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 28px rgba(16,40,30,0.12);
   }
 
-  .action-buttons {
-    background: #fff;
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    box-shadow: 0 8px 26px rgba(16,40,30,0.07);
+  /* ---------- STATES ---------- */
+  .state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--muted);
   }
-  .btn {
-    padding: 12px 16px;
-    border: none;
+  .state .big {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  /* ---------- PAGES ---------- */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ---------- MODALS ---------- */
+  .modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal.active {
+    display: flex;
+  }
+  .modal-content {
+    background: #fff;
+    border-radius: 16px;
+    padding: 32px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  .modal h2 {
+    margin: 0 0 20px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.4rem;
+  }
+  .form-group {
+    margin-bottom: 16px;
+  }
+  .form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    font-size: 0.9rem;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--line);
     border-radius: 8px;
     font-family: inherit;
     font-size: 0.9rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.15s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
   }
-  .btn-primary {
+  .form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--green);
+    box-shadow: 0 0 0 3px rgba(10, 122, 74, 0.1);
+  }
+  .btn-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--muted);
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .form-row .form-group {
+    margin-bottom: 0;
+  }
+
+  .btn-submit {
+    width: 100%;
+    padding: 12px;
     background: var(--green);
     color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.15s ease;
   }
-  .btn-primary:hover {
+  .btn-submit:hover {
     background: var(--green-light);
   }
-  .btn-secondary {
-    background: #f4f7f5;
-    color: var(--ink);
-    border: 1px solid var(--line);
-  }
-  .btn-secondary:hover {
-    background: var(--line);
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 1024px) {
+    .listing-container {
+      grid-template-columns: 1fr;
+    }
+    .sidebar {
+      position: static;
+    }
   }
 
-  /* ---------- STATES / FOOTER ---------- */
-  .state { grid-column: 1 / -1; text-align: center; padding: 70px 20px; color: var(--muted); }
-  .state .big { font-size: 2.4rem; display: block; margin-bottom: 12px; }
-  .skeleton { background: #fff; border: 1px solid var(--line); border-radius: 18px; height: 380px; overflow: hidden; position: relative; }
-  .skeleton::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(0,0,0,0.045), transparent); animation: shine 1.2s infinite; }
-  @keyframes shine { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
-  footer { text-align: center; padding: 34px 20px 44px; color: var(--muted); font-size: 0.85rem; }
+  @media (max-width: 640px) {
+    header {
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .header-center {
+      order: 3;
+      width: 100%;
+    }
+    .header-right {
+      flex: 1;
+    }
+    .brand {
+      font-size: 1rem;
+    }
+    .hero {
+      padding: 40px 16px;
+    }
+    .hero h1 {
+      font-size: 1.6rem;
+    }
+    .listing-container {
+      padding: 16px;
+    }
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  footer { text-align: center; padding: 24px 20px; color: var(--muted); font-size: 0.85rem; }
   footer .sep { opacity: 0.5; margin: 0 8px; }
-
-  @media (max-width: 768px) {
-    .detail-content { grid-template-columns: 1fr; }
-    .detail-title h2 { font-size: 1.4rem; }
-    .gallery-main { height: 300px; }
-  }
-
-  @media (max-width: 560px) {
-    .brand { font-size: 1.9rem; }
-    header { padding: 48px 18px 84px; }
-    .container { padding: 0 16px 44px; }
-    .toolbar { justify-content: center; text-align: center; }
-    .search-grid { grid-template-columns: 1fr; }
-    .detail-container { padding: 0 16px; }
-    .detail-specs { grid-template-columns: 1fr; }
-  }
 </style>
 </head>
 <body>
+
+<!-- HEADER -->
 <header>
-  <h1 class="brand" id="brand-home"><span class="bolt">&#9889;</span> Auto Elettriche Usate</h1>
-  <p class="tagline" id="tagline">Il mercato delle auto elettriche e plug-in hybrid di seconda mano</p>
-  <div class="stats" id="stats"></div>
+  <h1 class="brand" id="brand-home"><span class="bolt">⚡</span> Auto Elettriche</h1>
+  
+  <div class="header-center">
+    <div class="search-bar">
+      <span>🔍</span>
+      <input type="text" id="header-search" placeholder="Marca, modello...">
+    </div>
+  </div>
+
+  <div class="header-right">
+    <button class="btn-publish" id="btn-publish-header">+ Pubblica</button>
+    <div id="user-menu" class="user-menu">
+      <button class="btn-auth" id="btn-login">Accedi</button>
+    </div>
+  </div>
 </header>
 
 <!-- HOME PAGE -->
-<div id="home-page" class="container">
-  <div class="toolbar">
-    <div>
-      <h2>Annunci disponibili</h2>
-      <div class="count" id="count">Caricamento...</div>
-    </div>
-    <div class="filters" id="filters">
-      <button class="chip active" data-f="tutti">Tutte</button>
-      <button class="chip" data-f="elettrica">Elettriche</button>
-      <button class="chip" data-f="plug-in">Plug-in</button>
+<div id="home-page" class="page active">
+  <div class="hero">
+    <h1>Trova la tua Auto Elettrica Usata</h1>
+    <p>Il mercato più grande di EV e plug-in hybrid di seconda mano</p>
+    <div class="hero-search">
+      <input type="text" id="hero-search" placeholder="Marca, modello o città...">
+      <button id="hero-search-btn">Cerca</button>
     </div>
   </div>
 
-  <div class="search-panel">
-    <h3 class="search-title">🔍 Filtra annunci</h3>
-    <div class="search-grid">
-      <div class="form-group">
-        <label for="search-marca">Marca</label>
-        <select id="search-marca">
+  <div class="premium-section">
+    <h2 class="premium-title">✨ Annunci Premium</h2>
+    <div id="premium-grid" class="premium-grid">
+      <!-- Caricamento... -->
+    </div>
+  </div>
+
+  <div style="text-align: center; padding: 32px 24px;">
+    <button class="btn-publish" id="btn-view-all">Visualizza tutti gli annunci →</button>
+  </div>
+</div>
+
+<!-- LISTING PAGE -->
+<div id="listing-page" class="page">
+  <div class="listing-container">
+    <!-- SIDEBAR FILTRI -->
+    <aside class="sidebar">
+      <h3>Filtra</h3>
+      
+      <div class="filter-group">
+        <label class="filter-label">Tipo</label>
+        <div id="type-filters">
+          <div class="filter-chip active" data-type="tutti">Tutte</div>
+          <div class="filter-chip" data-type="elettrica">Elettriche</div>
+          <div class="filter-chip" data-type="plug-in">Plug-in</div>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <label class="filter-label">Marca</label>
+        <select id="filter-marca" class="filter-input">
           <option value="">Tutte</option>
         </select>
       </div>
-      <div class="form-group">
-        <label for="search-anno-min">Anno da</label>
-        <input type="number" id="search-anno-min" placeholder="es: 2020" min="2010">
-      </div>
-      <div class="form-group">
-        <label for="search-anno-max">Anno a</label>
-        <input type="number" id="search-anno-max" placeholder="es: 2024" max="2030">
-      </div>
-      <div class="form-group">
-        <label for="search-prezzo-min">Prezzo da (€)</label>
-        <input type="number" id="search-prezzo-min" placeholder="es: 10000" min="0" step="1000">
-      </div>
-      <div class="form-group">
-        <label for="search-prezzo-max">Prezzo a (€)</label>
-        <input type="number" id="search-prezzo-max" placeholder="es: 50000" min="0" step="1000">
-      </div>
-      <div class="form-group">
-        <label for="search-km-max">Km massimi</label>
-        <input type="number" id="search-km-max" placeholder="es: 50000" min="0" step="5000">
-      </div>
-    </div>
 
-    <div class="autonomia-section">
-      <div class="autonomia-header">
-        <span class="autonomia-label">Autonomia minima che ti serve</span>
-        <span class="autonomia-value"><span id="autonomia-display">0</span> km dichiarati</span>
-      </div>
-      <div class="slider-container">
-        <div class="range-slider">
-          <div class="range-slider-track" id="track"></div>
+      <div class="filter-group">
+        <label class="filter-label">Anno</label>
+        <div class="form-row">
+          <input type="number" id="filter-anno-min" class="filter-input" placeholder="da" min="2010">
+          <input type="number" id="filter-anno-max" class="filter-input" placeholder="a" max="2030">
         </div>
-        <input type="range" id="search-autonomia-slider" class="range-input" min="0" max="700" value="0" step="25">
       </div>
-      <div class="range-labels">
-        <span>0 km</span>
-        <span>350 km</span>
-        <span>700+ km</span>
-      </div>
-    </div>
 
-    <div class="search-actions">
-      <button class="btn-reset" id="btn-reset">Azzera filtri</button>
+      <div class="filter-group">
+        <label class="filter-label">Prezzo (€)</label>
+        <div class="form-row">
+          <input type="number" id="filter-prezzo-min" class="filter-input" placeholder="da" min="0" step="1000">
+          <input type="number" id="filter-prezzo-max" class="filter-input" placeholder="a" min="0" step="1000">
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <label class="filter-label">Km massimi</label>
+        <input type="number" id="filter-km-max" class="filter-input" placeholder="es: 50000" min="0" step="5000">
+      </div>
+
+      <div class="filter-group">
+        <label class="filter-label">Autonomia (km)</label>
+        <div class="slider-container">
+          <div class="range-slider">
+            <div class="range-slider-track" id="autonomia-track"></div>
+          </div>
+          <input type="range" id="filter-autonomia" class="range-input" min="0" max="700" value="0" step="25">
+          <div class="range-labels">
+            <span>0 km</span>
+            <span>350 km</span>
+            <span>700+ km</span>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-reset-filters" id="btn-reset-filters">Azzera filtri</button>
+    </aside>
+
+    <!-- GRID ANNUNCI -->
+    <div class="grid-section">
+      <div id="grid" class="grid"></div>
     </div>
   </div>
-
-  <div id="app" class="grid"></div>
 </div>
 
-<!-- DETAIL PAGE -->
-<div id="detail-page" class="detail-page">
-  <div class="detail-header">
-    <button id="btn-back">← Indietro</button>
-    <h1 id="detail-header-title"></h1>
+<!-- MODAL LOGIN/REGISTRAZIONE -->
+<div id="auth-modal" class="modal">
+  <div class="modal-content" style="position: relative;">
+    <button class="btn-close" id="btn-close-modal">×</button>
+    <h2 id="auth-title">Accedi</h2>
+    
+    <div id="login-form" class="auth-form active">
+      <form id="form-login">
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" required placeholder="tua@email.com">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" required placeholder="••••••••">
+        </div>
+        <button type="submit" class="btn-submit">Accedi</button>
+        <p style="text-align: center; margin-top: 16px; font-size: 0.9rem;">
+          Non hai un account? <a href="#" id="link-register" style="color: var(--green); font-weight: 600;">Registrati</a>
+        </p>
+      </form>
+    </div>
+
+    <div id="register-form" class="auth-form">
+      <form id="form-register">
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" required placeholder="tua@email.com">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" required placeholder="••••••••" minlength="6">
+        </div>
+        <div class="form-group">
+          <label>Tipo Account</label>
+          <select required>
+            <option value="">Scegli...</option>
+            <option value="privato">Privato</option>
+            <option value="rivenditore">Rivenditore</option>
+          </select>
+        </div>
+        <button type="submit" class="btn-submit">Registrati</button>
+        <p style="text-align: center; margin-top: 16px; font-size: 0.9rem;">
+          Hai già un account? <a href="#" id="link-login" style="color: var(--green); font-weight: 600;">Accedi</a>
+        </p>
+      </form>
+    </div>
   </div>
-  
-  <div class="detail-container">
-    <div class="detail-gallery">
-      <div class="gallery-main" id="gallery-main">
-        &#128663;
-      </div>
-      <div class="gallery-nav" id="gallery-nav"></div>
-    </div>
+</div>
 
-    <div class="detail-content">
-      <div class="detail-info">
-        <div class="detail-title">
-          <h2 id="detail-title"></h2>
-          <span class="detail-badge" id="detail-type"></span>
+<!-- MODAL PUBBLICA ANNUNCIO -->
+<div id="publish-modal" class="modal">
+  <div class="modal-content" style="position: relative;">
+    <button class="btn-close" id="btn-close-publish">×</button>
+    <h2>Pubblica Annuncio</h2>
+    <form id="form-publish">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Marca*</label>
+          <input type="text" required>
         </div>
-        <div class="detail-price" id="detail-price"></div>
-
-        <div class="detail-specs" id="detail-specs-grid"></div>
-
-        <div class="detail-description" id="detail-description"></div>
-      </div>
-
-      <div class="detail-sidebar">
-        <div class="seller-card">
-          <h3 id="seller-name"></h3>
-          <span class="seller-badge" id="seller-type"></span>
-          <p class="seller-desc" id="seller-city"></p>
-        </div>
-
-        <div class="action-buttons">
-          <button class="btn btn-primary" id="btn-contact">
-            ✉️ Contatta venditore
-          </button>
-          <button class="btn btn-secondary" id="btn-share">
-            🔗 Condividi
-          </button>
+        <div class="form-group">
+          <label>Modello*</label>
+          <input type="text" required>
         </div>
       </div>
-    </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Anno*</label>
+          <input type="number" required min="2010" max="2030">
+        </div>
+        <div class="form-group">
+          <label>Km*</label>
+          <input type="number" required min="0" step="100">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Città*</label>
+          <input type="text" required>
+        </div>
+        <div class="form-group">
+          <label>Provincia</label>
+          <input type="text" placeholder="es: MI">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Prezzo (€)*</label>
+          <input type="number" required min="0" step="100">
+        </div>
+        <div class="form-group">
+          <label>Alimentazione*</label>
+          <select required>
+            <option value="">Scegli...</option>
+            <option value="elettrica">Elettrica</option>
+            <option value="plug-in">Plug-in Hybrid</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Batteria (kWh)</label>
+          <input type="number" min="0" step="0.1">
+        </div>
+        <div class="form-group">
+          <label>Potenza (kW)</label>
+          <input type="number" min="0" step="0.1">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Autonomia (km)</label>
+          <input type="number" min="0" step="10">
+        </div>
+        <div class="form-group">
+          <label>SOH Batteria (%)</label>
+          <input type="number" min="0" max="100">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Descrizione</label>
+        <textarea placeholder="Descrivi le condizioni, gli accessori, etc..."></textarea>
+      </div>
+      <button type="submit" class="btn-submit">Pubblica Annuncio</button>
+    </form>
   </div>
 </div>
 
 <footer>
-  Auto Elettriche Usate <span class="sep">&middot;</span> annunci di privati e rivenditori
+  Auto Elettriche Usate <span class="sep">·</span> annunci privati e professionali
 </footer>
 
 <script type="module">
@@ -772,29 +885,39 @@ const SUPABASE_URL = 'https://komvmedptbcsiiswoaja.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_W1l56uhiAnI6g7rhvkqtZg_WesZk_rd';
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-const app = document.getElementById('app');
-const countEl = document.getElementById('count');
-const statsEl = document.getElementById('stats');
-const filtersEl = document.getElementById('filters');
-const searchMarca = document.getElementById('search-marca');
-const searchAnnoMin = document.getElementById('search-anno-min');
-const searchAnnoMax = document.getElementById('search-anno-max');
-const searchPrezzoMin = document.getElementById('search-prezzo-min');
-const searchPrezzoMax = document.getElementById('search-prezzo-max');
-const searchKmMax = document.getElementById('search-km-max');
-const searchAutonomiaSlider = document.getElementById('search-autonomia-slider');
-const autonomiaDisplay = document.getElementById('autonomia-display');
-const sliderTrack = document.getElementById('track');
-const btnReset = document.getElementById('btn-reset');
-
+// DOM Elements
 const homePage = document.getElementById('home-page');
-const detailPage = document.getElementById('detail-page');
+const listingPage = document.getElementById('listing-page');
+const authModal = document.getElementById('auth-modal');
+const publishModal = document.getElementById('publish-modal');
 const brandHome = document.getElementById('brand-home');
-const btnBack = document.getElementById('btn-back');
+const btnPublishHeader = document.getElementById('btn-publish-header');
+const btnLogin = document.getElementById('btn-login');
+const userMenu = document.getElementById('user-menu');
 
+// Filtri
+const filterType = document.getElementById('type-filters');
+const filterMarca = document.getElementById('filter-marca');
+const filterAnnoMin = document.getElementById('filter-anno-min');
+const filterAnnoMax = document.getElementById('filter-anno-max');
+const filterPrezzoMin = document.getElementById('filter-prezzo-min');
+const filterPrezzoMax = document.getElementById('filter-prezzo-max');
+const filterKmMax = document.getElementById('filter-km-max');
+const filterAutonomia = document.getElementById('filter-autonomia');
+const autonomiaTrack = document.getElementById('autonomia-track');
+const btnResetFilters = document.getElementById('btn-reset-filters');
+
+const grid = document.getElementById('grid');
+const premiumGrid = document.getElementById('premium-grid');
+const btnViewAll = document.getElementById('btn-view-all');
+const heroSearchBtn = document.getElementById('hero-search-btn');
+const heroSearch = document.getElementById('hero-search');
+const headerSearch = document.getElementById('header-search');
+
+// State
 let annunci = [];
-let filtro = 'tutti';
-let currentAnnuncio = null;
+let filtroTipo = 'tutti';
+let currentUser = null;
 
 const nf = new Intl.NumberFormat('it-IT');
 
@@ -806,180 +929,142 @@ function esc(s) {
     .replace(/"/g, '&quot;');
 }
 
-function skeletons(n) {
-  let out = '';
-  for (let i = 0; i < n; i++) out += '<div class="skeleton"></div>';
-  return out;
+// Navigation
+function showPage(page) {
+  homePage.classList.remove('active');
+  listingPage.classList.remove('active');
+  if (page === 'home') homePage.classList.add('active');
+  if (page === 'listing') listingPage.classList.add('active');
 }
 
-function card(a) {
+function showAuthModal(isLogin = true) {
+  document.getElementById('login-form').classList.toggle('active', isLogin);
+  document.getElementById('register-form').classList.toggle('active', !isLogin);
+  document.getElementById('auth-title').textContent = isLogin ? 'Accedi' : 'Registrati';
+  authModal.classList.add('active');
+}
+
+function hideAuthModal() {
+  authModal.classList.remove('active');
+}
+
+function showPublishModal() {
+  if (!currentUser) {
+    showAuthModal(true);
+    return;
+  }
+  publishModal.classList.add('active');
+}
+
+function hidePublishModal() {
+  publishModal.classList.remove('active');
+}
+
+function updateUserUI() {
+  if (currentUser) {
+    userMenu.innerHTML = `
+      <div class="user-profile">
+        <div class="user-avatar">${currentUser.email.charAt(0).toUpperCase()}</div>
+        <span style="font-size: 0.9rem;">${currentUser.email}</span>
+      </div>
+      <button class="btn-auth" id="btn-logout">Esci</button>
+    `;
+    document.getElementById('btn-logout')?.addEventListener('click', () => {
+      currentUser = null;
+      updateUserUI();
+      showPage('home');
+    });
+    btnPublishHeader.textContent = '+ Pubblica';
+  } else {
+    userMenu.innerHTML = '<button class="btn-auth" id="btn-login-new">Accedi</button>';
+    document.getElementById('btn-login-new')?.addEventListener('click', () => showAuthModal(true));
+    btnPublishHeader.textContent = '+ Pubblica';
+  }
+}
+
+// Cards
+function cardHTML(a) {
   const isPlugin = a.alimentazione === 'plug-in';
   const media = (a.foto && a.foto.length > 0)
-    ? '<img src="' + esc(a.foto[0]) + '" alt="' + esc(a.marca + ' ' + a.modello) + '" loading="lazy">'
+    ? '<img src="' + esc(a.foto[0]) + '" alt="' + esc(a.marca) + '">'
     : '&#128663;';
-  const luogo = esc(a.citta) + (a.prov ? ' (' + esc(a.prov) + ')' : '');
-  const specs = [
-    ['&#128336;', nf.format(a.km) + ' km'],
-    ['&#128205;', luogo],
-    ['&#9889;', isPlugin ? 'Plug-in hybrid' : 'Elettrica'],
-    ['&#128267;', a.batteria_kwh ? a.batteria_kwh + ' kWh' : (a.potenza_kw ? a.potenza_kw + ' kW' : '-')]
-  ];
-  let specsHtml = '';
-  for (const s of specs) {
-    specsHtml += '<div class="spec"><span class="ico">' + s[0] + '</span>' + esc(s[1]) + '</div>';
-  }
-  const autonomia = a.autonomia_km ? '<div class="spec"><span class="ico">&#128506;</span>' + nf.format(a.autonomia_km) + ' km autonomia</div>' : '';
-  const soh = a.soh ? '<div class="spec"><span class="ico">&#128138;</span>SOH ' + a.soh + '%</div>' : '';
-  const versione = a.versione ? '<p class="version">' + esc(a.versione) + '</p>' : '';
-  const desc = a.descrizione ? '<p class="desc">' + esc(a.descrizione) + '</p>' : '';
-  const tagCls = a.tipo_venditore === 'privato' ? 'tag priv' : 'tag';
-
-  return '<article class="card" data-id="' + a.id + '">' +
-    '<div class="card-media">' + media +
-      '<span class="badge' + (isPlugin ? ' plugin' : '') + '">' + (isPlugin ? 'Plug-in' : 'Elettrica') + '</span>' +
-      '<span class="year-tag">' + esc(a.anno) + '</span>' +
-    '</div>' +
-    '<div class="card-body">' +
-      '<h3>' + esc(a.marca) + ' ' + esc(a.modello) + '</h3>' +
-      versione +
-      '<div class="price">' + nf.format(a.prezzo) + ' &euro;</div>' +
-      '<div class="specs">' + specsHtml + autonomia + soh + '</div>' +
-      desc +
-      '<div class="card-foot">' +
-        '<span class="seller">&#128100; <strong>' + esc(a.nome) + '</strong></span>' +
-        '<span class="' + tagCls + '">' + esc(a.tipo_venditore) + '</span>' +
-      '</div>' +
-    '</div>' +
-  '</article>';
+  return `<article class="card" data-id="${a.id}">
+    <div class="card-media">
+      ${media}
+      <span class="badge${isPlugin ? '.plugin' : ''}">${isPlugin ? 'Plug-in' : 'EV'}</span>
+      <span class="year-tag">${a.anno}</span>
+    </div>
+    <div class="card-body">
+      <h3>${esc(a.marca)} ${esc(a.modello)}</h3>
+      ${a.versione ? '<p class="version">' + esc(a.versione) + '</p>' : ''}
+      <div class="card-price">${nf.format(a.prezzo)} €</div>
+      <div class="card-specs-mini">
+        <span>📍 ${esc(a.citta)}</span>
+        <span>🚗 ${nf.format(a.km)} km</span>
+        ${a.autonomia_km ? '<span>🔋 ' + nf.format(a.autonomia_km) + ' km</span>' : ''}
+      </div>
+    </div>
+  </article>`;
 }
 
-function showDetail(annuncio) {
-  currentAnnuncio = annuncio;
-  const isPlugin = annuncio.alimentazione === 'plug-in';
-  
-  homePage.style.display = 'none';
-  detailPage.classList.add('active');
-
-  document.getElementById('detail-header-title').textContent = annuncio.marca + ' ' + annuncio.modello;
-  document.getElementById('detail-title').textContent = annuncio.marca + ' ' + annuncio.modello;
-  document.getElementById('detail-price').textContent = nf.format(annuncio.prezzo) + ' €';
-  
-  const badge = document.getElementById('detail-type');
-  badge.textContent = isPlugin ? 'Plug-in' : 'Elettrica';
-  badge.classList.toggle('plugin', isPlugin);
-
-  // Galleria foto
-  const galleryMain = document.getElementById('gallery-main');
-  const galleryNav = document.getElementById('gallery-nav');
-  galleryNav.innerHTML = '';
-  
-  if (annuncio.foto && annuncio.foto.length > 0) {
-    galleryMain.innerHTML = '<img src="' + esc(annuncio.foto[0]) + '" alt="' + esc(annuncio.marca) + '">';
-    for (let i = 0; i < annuncio.foto.length; i++) {
-      const thumb = document.createElement('div');
-      thumb.className = 'gallery-thumb' + (i === 0 ? ' active' : '');
-      thumb.innerHTML = '<img src="' + esc(annuncio.foto[i]) + '" alt="foto">';
-      thumb.addEventListener('click', () => {
-        galleryMain.innerHTML = '<img src="' + esc(annuncio.foto[i]) + '" alt="' + esc(annuncio.marca) + '">';
-        document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('active'));
-        thumb.classList.add('active');
-      });
-      galleryNav.appendChild(thumb);
-    }
-  }
-
-  // Specifiche
-  const specsGrid = document.getElementById('detail-specs-grid');
-  const specs = [
-    ['Chilometri', nf.format(annuncio.km) + ' km'],
-    ['Anno', annuncio.anno],
-    ['Città', esc(annuncio.citta) + (annuncio.prov ? ' (' + esc(annuncio.prov) + ')' : '')],
-    ['Alimentazione', isPlugin ? 'Plug-in hybrid' : 'Elettrica'],
-    ['Batteria', annuncio.batteria_kwh ? annuncio.batteria_kwh + ' kWh' : (annuncio.potenza_kw ? annuncio.potenza_kw + ' kW' : '-')],
-    ['Autonomia', annuncio.autonomia_km ? nf.format(annuncio.autonomia_km) + ' km' : '-']
-  ];
-  if (annuncio.soh) specs.push(['Stato batteria (SOH)', annuncio.soh + '%']);
-
-  specsGrid.innerHTML = specs.map(s => 
-    '<div class="detail-spec-item">' +
-      '<span class="detail-spec-label">' + esc(s[0]) + '</span>' +
-      '<span class="detail-spec-value">' + esc(s[1]) + '</span>' +
-    '</div>'
-  ).join('');
-
-  // Descrizione
-  const descDiv = document.getElementById('detail-description');
-  if (annuncio.descrizione) {
-    descDiv.innerHTML = '<h3>Descrizione</h3><p>' + esc(annuncio.descrizione) + '</p>';
-  } else {
-    descDiv.innerHTML = '';
-  }
-
-  // Venditore
-  document.getElementById('seller-name').textContent = esc(annuncio.nome);
-  const sellerType = document.getElementById('seller-type');
-  sellerType.textContent = annuncio.tipo_venditore === 'privato' ? 'Privato' : 'Rivenditore';
-  sellerType.classList.toggle('rivenditore', annuncio.tipo_venditore !== 'privato');
-  document.getElementById('seller-city').textContent = esc(annuncio.citta) + (annuncio.prov ? ' (' + esc(annuncio.prov) + ')' : '');
-
-  window.scrollTo(0, 0);
+function premiumCardHTML(a) {
+  const isPlugin = a.alimentazione === 'plug-in';
+  const media = (a.foto && a.foto.length > 0)
+    ? '<img src="' + esc(a.foto[0]) + '" alt="' + esc(a.marca) + '">'
+    : '&#128663;';
+  return `<article class="card-premium" data-id="${a.id}">
+    <span class="premium-badge">Premium</span>
+    <div class="card-media">
+      ${media}
+      <span class="badge${isPlugin ? ' plugin' : ''}">${isPlugin ? 'Plug-in' : 'EV'}</span>
+    </div>
+    <div class="card-body">
+      <h3>${esc(a.marca)} ${esc(a.modello)}</h3>
+      ${a.versione ? '<p class="version">' + esc(a.versione) + '</p>' : ''}
+      <div class="card-price">${nf.format(a.prezzo)} €</div>
+      <div class="card-specs-mini">
+        <span>${nf.format(a.km)} km</span>
+        <span>${a.anno}</span>
+        ${a.autonomia_km ? '<span>' + nf.format(a.autonomia_km) + ' km</span>' : ''}
+      </div>
+    </div>
+  </article>`;
 }
 
-function hideDetail() {
-  homePage.style.display = 'block';
-  detailPage.classList.remove('active');
-  currentAnnuncio = null;
-}
-
-app.addEventListener('click', (e) => {
-  const card = e.target.closest('.card');
-  if (card) {
-    const id = card.dataset.id;
-    const annuncio = annunci.find(a => a.id == id);
-    if (annuncio) showDetail(annuncio);
-  }
-});
-
-brandHome.addEventListener('click', hideDetail);
-btnBack.addEventListener('click', hideDetail);
-
-document.getElementById('btn-contact').addEventListener('click', () => {
-  if (currentAnnuncio) {
-    alert('Contatta: ' + currentAnnuncio.nome + ' a proposito di ' + currentAnnuncio.marca + ' ' + currentAnnuncio.modello);
-  }
-});
-
-document.getElementById('btn-share').addEventListener('click', () => {
-  if (currentAnnuncio && navigator.share) {
-    navigator.share({
-      title: currentAnnuncio.marca + ' ' + currentAnnuncio.modello,
-      text: 'Guarda questo annuncio: ' + nf.format(currentAnnuncio.prezzo) + ' €',
-      url: window.location.href
-    });
-  }
-});
-
-function updateSliderTrack() {
-  const value = searchAutonomiaSlider.value;
-  const max = searchAutonomiaSlider.max;
+// Filtri
+function updateAutonomiaTrack() {
+  const value = filterAutonomia.value;
+  const max = filterAutonomia.max;
   const percent = (value / max) * 100;
-  sliderTrack.style.width = percent + '%';
-  autonomiaDisplay.textContent = value;
+  autonomiaTrack.style.width = percent + '%';
+}
+
+function updateMarcaSelect() {
+  const marche = [...new Set(annunci.map(a => a.marca).filter(Boolean))].sort();
+  const currentValue = filterMarca.value;
+  filterMarca.innerHTML = '<option value="">Tutte</option>';
+  marche.forEach(marca => {
+    const opt = document.createElement('option');
+    opt.value = marca.toLowerCase();
+    opt.textContent = marca;
+    filterMarca.appendChild(opt);
+  });
+  filterMarca.value = currentValue;
 }
 
 function getFilteredList() {
-  let lista = filtro === 'tutti' ? annunci : annunci.filter(a => a.alimentazione === filtro);
+  let lista = filtroTipo === 'tutti' ? annunci : annunci.filter(a => a.alimentazione === filtroTipo);
   
-  const marca = searchMarca.value.toLowerCase();
-  const annoMin = searchAnnoMin.value ? parseInt(searchAnnoMin.value) : null;
-  const annoMax = searchAnnoMax.value ? parseInt(searchAnnoMax.value) : null;
-  const prezzoMin = searchPrezzoMin.value ? parseInt(searchPrezzoMin.value) : null;
-  const prezzoMax = searchPrezzoMax.value ? parseInt(searchPrezzoMax.value) : null;
-  const kmMax = searchKmMax.value ? parseInt(searchKmMax.value) : null;
-  const autonomiaMin = parseInt(searchAutonomiaSlider.value);
+  const marca = filterMarca.value.toLowerCase();
+  const annoMin = filterAnnoMin.value ? parseInt(filterAnnoMin.value) : null;
+  const annoMax = filterAnnoMax.value ? parseInt(filterAnnoMax.value) : null;
+  const prezzoMin = filterPrezzoMin.value ? parseInt(filterPrezzoMin.value) : null;
+  const prezzoMax = filterPrezzoMax.value ? parseInt(filterPrezzoMax.value) : null;
+  const kmMax = filterKmMax.value ? parseInt(filterKmMax.value) : null;
+  const autonomiaMin = parseInt(filterAutonomia.value);
 
-  lista = lista.filter(a => {
-    if (marca && !(a.marca && a.marca.toLowerCase().includes(marca))) return false;
+  return lista.filter(a => {
+    if (marca && !(a.marca?.toLowerCase().includes(marca))) return false;
     if (annoMin && a.anno < annoMin) return false;
     if (annoMax && a.anno > annoMax) return false;
     if (prezzoMin && a.prezzo < prezzoMin) return false;
@@ -988,102 +1073,113 @@ function getFilteredList() {
     if (autonomiaMin > 0 && (!a.autonomia_km || a.autonomia_km < autonomiaMin)) return false;
     return true;
   });
-
-  return lista;
 }
 
-function render() {
-  const lista = getFilteredList();
-  if (lista.length === 0) {
-    app.innerHTML = '<div class="state"><span class="big">&#128269;</span>Nessun annuncio per questo filtro.</div>';
-  } else {
-    app.innerHTML = lista.map(card).join('');
+function renderGrid() {
+  const filtered = getFilteredList();
+  grid.innerHTML = filtered.length ? filtered.map(cardHTML).join('') : '<div class="state"><span class="big">🔍</span>Nessun annuncio trovato</div>';
+}
+
+function renderPremium() {
+  const premium = annunci.filter(a => a.premium).slice(0, 6);
+  premiumGrid.innerHTML = premium.length ? premium.map(premiumCardHTML).join('') : '';
+}
+
+// Event Listeners
+brandHome.addEventListener('click', () => showPage('home'));
+btnViewAll.addEventListener('click', () => showPage('listing'));
+btnPublishHeader.addEventListener('click', showPublishModal);
+btnLogin.addEventListener('click', () => showAuthModal(true));
+document.getElementById('btn-close-modal').addEventListener('click', hideAuthModal);
+document.getElementById('btn-close-publish').addEventListener('click', hidePublishModal);
+document.getElementById('link-register').addEventListener('click', (e) => {
+  e.preventDefault();
+  showAuthModal(false);
+});
+document.getElementById('link-login').addEventListener('click', (e) => {
+  e.preventDefault();
+  showAuthModal(true);
+});
+
+heroSearchBtn.addEventListener('click', () => {
+  if (heroSearch.value) showPage('listing');
+});
+
+// Filtri
+filterType.addEventListener('click', (e) => {
+  if (e.target.classList.contains('filter-chip')) {
+    filterType.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+    e.target.classList.add('active');
+    filtroTipo = e.target.dataset.type;
+    renderGrid();
   }
-  countEl.textContent = lista.length + (lista.length === 1 ? ' annuncio trovato' : ' annunci trovati');
-}
-
-function renderStats() {
-  const ev = annunci.filter(a => a.alimentazione === 'elettrica').length;
-  const ph = annunci.filter(a => a.alimentazione === 'plug-in').length;
-  const prezzi = annunci.map(a => a.prezzo).filter(p => p > 0);
-  const min = prezzi.length ? Math.min.apply(null, prezzi) : 0;
-  statsEl.innerHTML =
-    '<span class="pill">' + annunci.length + ' annunci online</span>' +
-    '<span class="pill">' + ev + ' elettriche</span>' +
-    '<span class="pill">' + ph + ' plug-in</span>' +
-    (min ? '<span class="pill">da ' + nf.format(min) + ' &euro;</span>' : '');
-}
-
-function updateMarcaSelect() {
-  const marche = [...new Set(annunci.map(a => a.marca).filter(Boolean))].sort();
-  const currentValue = searchMarca.value;
-  searchMarca.innerHTML = '<option value="">Tutte</option>';
-  for (const marca of marche) {
-    const opt = document.createElement('option');
-    opt.value = marca.toLowerCase();
-    opt.textContent = marca;
-    searchMarca.appendChild(opt);
-  }
-  searchMarca.value = currentValue;
-}
-
-filtersEl.addEventListener('click', (e) => {
-  const btn = e.target.closest('.chip');
-  if (!btn) return;
-  filtro = btn.dataset.f;
-  for (const c of filtersEl.querySelectorAll('.chip')) c.classList.remove('active');
-  btn.classList.add('active');
-  render();
 });
 
-searchMarca.addEventListener('change', render);
-searchAnnoMin.addEventListener('change', render);
-searchAnnoMax.addEventListener('change', render);
-searchPrezzoMin.addEventListener('change', render);
-searchPrezzoMax.addEventListener('change', render);
-searchKmMax.addEventListener('change', render);
-searchAutonomiaSlider.addEventListener('input', () => {
-  updateSliderTrack();
-  render();
+filterMarca.addEventListener('change', renderGrid);
+filterAnnoMin.addEventListener('change', renderGrid);
+filterAnnoMax.addEventListener('change', renderGrid);
+filterPrezzoMin.addEventListener('change', renderGrid);
+filterPrezzoMax.addEventListener('change', renderGrid);
+filterKmMax.addEventListener('change', renderGrid);
+filterAutonomia.addEventListener('input', () => {
+  updateAutonomiaTrack();
+  renderGrid();
 });
 
-btnReset.addEventListener('click', () => {
-  searchMarca.value = '';
-  searchAnnoMin.value = '';
-  searchAnnoMax.value = '';
-  searchPrezzoMin.value = '';
-  searchPrezzoMax.value = '';
-  searchKmMax.value = '';
-  searchAutonomiaSlider.value = '0';
-  filtro = 'tutti';
-  for (const c of filtersEl.querySelectorAll('.chip')) c.classList.remove('active');
-  filtersEl.querySelector('[data-f="tutti"]').classList.add('active');
-  updateSliderTrack();
-  render();
+btnResetFilters.addEventListener('click', () => {
+  filterMarca.value = '';
+  filterAnnoMin.value = '';
+  filterAnnoMax.value = '';
+  filterPrezzoMin.value = '';
+  filterPrezzoMax.value = '';
+  filterKmMax.value = '';
+  filterAutonomia.value = '0';
+  filtroTipo = 'tutti';
+  filterType.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  filterType.querySelector('[data-type="tutti"]').classList.add('active');
+  updateAutonomiaTrack();
+  renderGrid();
 });
 
+document.getElementById('form-login').addEventListener('submit', (e) => {
+  e.preventDefault();
+  currentUser = { email: e.target.querySelector('input[type="email"]').value };
+  updateUserUI();
+  hideAuthModal();
+});
+
+document.getElementById('form-register').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const email = e.target.querySelector('input[type="email"]').value;
+  const tipo = e.target.querySelector('select').value;
+  currentUser = { email, tipo };
+  updateUserUI();
+  hideAuthModal();
+});
+
+document.getElementById('form-publish').addEventListener('submit', (e) => {
+  e.preventDefault();
+  alert('Annuncio pubblicato con successo!');
+  hidePublishModal();
+});
+
+// Load Data
 async function loadAnnunci() {
-  app.innerHTML = skeletons(6);
   const { data, error } = await supabase
     .from('annunci')
     .select('*')
     .eq('stato', 'attivo')
     .order('creato_il', { ascending: false });
 
-  if (error) {
-    console.error(error);
-    app.innerHTML = '<div class="state"><span class="big">&#9888;</span>Errore nel caricamento degli annunci.</div>';
-    countEl.textContent = '';
-    return;
+  if (!error && data) {
+    annunci = data;
+    updateMarcaSelect();
+    renderPremium();
+    renderGrid();
   }
-
-  annunci = data || [];
-  updateMarcaSelect();
-  renderStats();
-  updateSliderTrack();
-  render();
 }
 
+updateUserUI();
 loadAnnunci();
 </script>
 </body>
