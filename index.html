@@ -25,7 +25,7 @@
     margin: 0;
     -webkit-font-smoothing: antialiased;
   }
-  a { color: inherit; }
+  a { color: inherit; text-decoration: none; }
 
   /* ---------- HEADER ---------- */
   header {
@@ -55,6 +55,7 @@
     margin: 0;
     position: relative;
     z-index: 1;
+    cursor: pointer;
   }
   .brand .bolt {
     display: inline-flex;
@@ -301,6 +302,7 @@
     flex-direction: column;
     box-shadow: 0 4px 14px rgba(16,40,30,0.05);
     transition: transform 0.22s ease, box-shadow 0.22s ease;
+    cursor: pointer;
   }
   .card:hover { transform: translateY(-6px); box-shadow: 0 18px 38px rgba(16,40,30,0.13); }
   .card-media {
@@ -366,6 +368,247 @@
   .tag { background: #edf6f1; color: var(--green); padding: 4px 10px; border-radius: 8px; font-weight: 700; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.4px; white-space: nowrap; }
   .tag.priv { background: #f1f3f7; color: #4a5568; }
 
+  /* ---------- DETAIL PAGE ---------- */
+  .detail-page { display: none; }
+  .detail-page.active { display: block; }
+  .detail-header {
+    background: #fff;
+    border-bottom: 1px solid var(--line);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 0;
+  }
+  .detail-header button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--ink);
+  }
+  .detail-header h1 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+  .detail-container {
+    max-width: 1000px;
+    margin: -56px auto 56px;
+    padding: 0 24px;
+    position: relative;
+    z-index: 2;
+  }
+  .detail-gallery {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    box-shadow: 0 8px 26px rgba(16,40,30,0.07);
+  }
+  .gallery-main {
+    width: 100%;
+    height: 400px;
+    background: linear-gradient(135deg, #dff2e8, #b9e4cf);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    position: relative;
+  }
+  .gallery-main img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .gallery-nav {
+    display: flex;
+    gap: 8px;
+    padding: 12px;
+    overflow-x: auto;
+    background: #f4f7f5;
+  }
+  .gallery-thumb {
+    width: 80px;
+    height: 80px;
+    border: 2px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: border-color 0.15s ease;
+  }
+  .gallery-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .gallery-thumb.active {
+    border-color: var(--green);
+  }
+
+  .detail-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 24px;
+  }
+  .detail-info {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 8px 26px rgba(16,40,30,0.07);
+  }
+  .detail-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .detail-title h2 {
+    margin: 0;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.8rem;
+    flex: 1;
+  }
+  .detail-badge {
+    background: var(--green);
+    color: #fff;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    height: fit-content;
+  }
+  .detail-badge.plugin { background: var(--amber); }
+  .detail-price {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--green);
+    margin-bottom: 20px;
+  }
+
+  .detail-specs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--line);
+  }
+  .detail-spec-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .detail-spec-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+  .detail-spec-value {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .detail-description {
+    margin-bottom: 20px;
+  }
+  .detail-description h3 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    margin: 0 0 12px;
+    font-size: 1rem;
+  }
+  .detail-description p {
+    margin: 0;
+    line-height: 1.6;
+    color: #4a5a52;
+  }
+
+  .detail-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .seller-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+    box-shadow: 0 8px 26px rgba(16,40,30,0.07);
+  }
+  .seller-card h3 {
+    margin: 0 0 8px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.1rem;
+  }
+  .seller-badge {
+    display: inline-block;
+    background: #edf6f1;
+    color: var(--green);
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    margin-bottom: 12px;
+  }
+  .seller-badge.rivenditore { background: #f1f3f7; color: #4a5568; }
+  .seller-desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .action-buttons {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    box-shadow: 0 8px 26px rgba(16,40,30,0.07);
+  }
+  .btn {
+    padding: 12px 16px;
+    border: none;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .btn-primary {
+    background: var(--green);
+    color: #fff;
+  }
+  .btn-primary:hover {
+    background: var(--green-light);
+  }
+  .btn-secondary {
+    background: #f4f7f5;
+    color: var(--ink);
+    border: 1px solid var(--line);
+  }
+  .btn-secondary:hover {
+    background: var(--line);
+  }
+
   /* ---------- STATES / FOOTER ---------- */
   .state { grid-column: 1 / -1; text-align: center; padding: 70px 20px; color: var(--muted); }
   .state .big { font-size: 2.4rem; display: block; margin-bottom: 12px; }
@@ -375,23 +618,32 @@
   footer { text-align: center; padding: 34px 20px 44px; color: var(--muted); font-size: 0.85rem; }
   footer .sep { opacity: 0.5; margin: 0 8px; }
 
+  @media (max-width: 768px) {
+    .detail-content { grid-template-columns: 1fr; }
+    .detail-title h2 { font-size: 1.4rem; }
+    .gallery-main { height: 300px; }
+  }
+
   @media (max-width: 560px) {
     .brand { font-size: 1.9rem; }
     header { padding: 48px 18px 84px; }
     .container { padding: 0 16px 44px; }
     .toolbar { justify-content: center; text-align: center; }
     .search-grid { grid-template-columns: 1fr; }
+    .detail-container { padding: 0 16px; }
+    .detail-specs { grid-template-columns: 1fr; }
   }
 </style>
 </head>
 <body>
 <header>
-  <h1 class="brand"><span class="bolt">&#9889;</span> Auto Elettriche Usate</h1>
-  <p class="tagline">Il mercato delle auto elettriche e plug-in hybrid di seconda mano</p>
+  <h1 class="brand" id="brand-home"><span class="bolt">&#9889;</span> Auto Elettriche Usate</h1>
+  <p class="tagline" id="tagline">Il mercato delle auto elettriche e plug-in hybrid di seconda mano</p>
   <div class="stats" id="stats"></div>
 </header>
 
-<div class="container">
+<!-- HOME PAGE -->
+<div id="home-page" class="container">
   <div class="toolbar">
     <div>
       <h2>Annunci disponibili</h2>
@@ -461,6 +713,54 @@
   <div id="app" class="grid"></div>
 </div>
 
+<!-- DETAIL PAGE -->
+<div id="detail-page" class="detail-page">
+  <div class="detail-header">
+    <button id="btn-back">← Indietro</button>
+    <h1 id="detail-header-title"></h1>
+  </div>
+  
+  <div class="detail-container">
+    <div class="detail-gallery">
+      <div class="gallery-main" id="gallery-main">
+        &#128663;
+      </div>
+      <div class="gallery-nav" id="gallery-nav"></div>
+    </div>
+
+    <div class="detail-content">
+      <div class="detail-info">
+        <div class="detail-title">
+          <h2 id="detail-title"></h2>
+          <span class="detail-badge" id="detail-type"></span>
+        </div>
+        <div class="detail-price" id="detail-price"></div>
+
+        <div class="detail-specs" id="detail-specs-grid"></div>
+
+        <div class="detail-description" id="detail-description"></div>
+      </div>
+
+      <div class="detail-sidebar">
+        <div class="seller-card">
+          <h3 id="seller-name"></h3>
+          <span class="seller-badge" id="seller-type"></span>
+          <p class="seller-desc" id="seller-city"></p>
+        </div>
+
+        <div class="action-buttons">
+          <button class="btn btn-primary" id="btn-contact">
+            ✉️ Contatta venditore
+          </button>
+          <button class="btn btn-secondary" id="btn-share">
+            🔗 Condividi
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <footer>
   Auto Elettriche Usate <span class="sep">&middot;</span> annunci di privati e rivenditori
 </footer>
@@ -487,8 +787,14 @@ const autonomiaDisplay = document.getElementById('autonomia-display');
 const sliderTrack = document.getElementById('track');
 const btnReset = document.getElementById('btn-reset');
 
+const homePage = document.getElementById('home-page');
+const detailPage = document.getElementById('detail-page');
+const brandHome = document.getElementById('brand-home');
+const btnBack = document.getElementById('btn-back');
+
 let annunci = [];
 let filtro = 'tutti';
+let currentAnnuncio = null;
 
 const nf = new Intl.NumberFormat('it-IT');
 
@@ -528,7 +834,7 @@ function card(a) {
   const desc = a.descrizione ? '<p class="desc">' + esc(a.descrizione) + '</p>' : '';
   const tagCls = a.tipo_venditore === 'privato' ? 'tag priv' : 'tag';
 
-  return '<article class="card">' +
+  return '<article class="card" data-id="' + a.id + '">' +
     '<div class="card-media">' + media +
       '<span class="badge' + (isPlugin ? ' plugin' : '') + '">' + (isPlugin ? 'Plug-in' : 'Elettrica') + '</span>' +
       '<span class="year-tag">' + esc(a.anno) + '</span>' +
@@ -546,6 +852,112 @@ function card(a) {
     '</div>' +
   '</article>';
 }
+
+function showDetail(annuncio) {
+  currentAnnuncio = annuncio;
+  const isPlugin = annuncio.alimentazione === 'plug-in';
+  
+  homePage.style.display = 'none';
+  detailPage.classList.add('active');
+
+  document.getElementById('detail-header-title').textContent = annuncio.marca + ' ' + annuncio.modello;
+  document.getElementById('detail-title').textContent = annuncio.marca + ' ' + annuncio.modello;
+  document.getElementById('detail-price').textContent = nf.format(annuncio.prezzo) + ' €';
+  
+  const badge = document.getElementById('detail-type');
+  badge.textContent = isPlugin ? 'Plug-in' : 'Elettrica';
+  badge.classList.toggle('plugin', isPlugin);
+
+  // Galleria foto
+  const galleryMain = document.getElementById('gallery-main');
+  const galleryNav = document.getElementById('gallery-nav');
+  galleryNav.innerHTML = '';
+  
+  if (annuncio.foto && annuncio.foto.length > 0) {
+    galleryMain.innerHTML = '<img src="' + esc(annuncio.foto[0]) + '" alt="' + esc(annuncio.marca) + '">';
+    for (let i = 0; i < annuncio.foto.length; i++) {
+      const thumb = document.createElement('div');
+      thumb.className = 'gallery-thumb' + (i === 0 ? ' active' : '');
+      thumb.innerHTML = '<img src="' + esc(annuncio.foto[i]) + '" alt="foto">';
+      thumb.addEventListener('click', () => {
+        galleryMain.innerHTML = '<img src="' + esc(annuncio.foto[i]) + '" alt="' + esc(annuncio.marca) + '">';
+        document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('active'));
+        thumb.classList.add('active');
+      });
+      galleryNav.appendChild(thumb);
+    }
+  }
+
+  // Specifiche
+  const specsGrid = document.getElementById('detail-specs-grid');
+  const specs = [
+    ['Chilometri', nf.format(annuncio.km) + ' km'],
+    ['Anno', annuncio.anno],
+    ['Città', esc(annuncio.citta) + (annuncio.prov ? ' (' + esc(annuncio.prov) + ')' : '')],
+    ['Alimentazione', isPlugin ? 'Plug-in hybrid' : 'Elettrica'],
+    ['Batteria', annuncio.batteria_kwh ? annuncio.batteria_kwh + ' kWh' : (annuncio.potenza_kw ? annuncio.potenza_kw + ' kW' : '-')],
+    ['Autonomia', annuncio.autonomia_km ? nf.format(annuncio.autonomia_km) + ' km' : '-']
+  ];
+  if (annuncio.soh) specs.push(['Stato batteria (SOH)', annuncio.soh + '%']);
+
+  specsGrid.innerHTML = specs.map(s => 
+    '<div class="detail-spec-item">' +
+      '<span class="detail-spec-label">' + esc(s[0]) + '</span>' +
+      '<span class="detail-spec-value">' + esc(s[1]) + '</span>' +
+    '</div>'
+  ).join('');
+
+  // Descrizione
+  const descDiv = document.getElementById('detail-description');
+  if (annuncio.descrizione) {
+    descDiv.innerHTML = '<h3>Descrizione</h3><p>' + esc(annuncio.descrizione) + '</p>';
+  } else {
+    descDiv.innerHTML = '';
+  }
+
+  // Venditore
+  document.getElementById('seller-name').textContent = esc(annuncio.nome);
+  const sellerType = document.getElementById('seller-type');
+  sellerType.textContent = annuncio.tipo_venditore === 'privato' ? 'Privato' : 'Rivenditore';
+  sellerType.classList.toggle('rivenditore', annuncio.tipo_venditore !== 'privato');
+  document.getElementById('seller-city').textContent = esc(annuncio.citta) + (annuncio.prov ? ' (' + esc(annuncio.prov) + ')' : '');
+
+  window.scrollTo(0, 0);
+}
+
+function hideDetail() {
+  homePage.style.display = 'block';
+  detailPage.classList.remove('active');
+  currentAnnuncio = null;
+}
+
+app.addEventListener('click', (e) => {
+  const card = e.target.closest('.card');
+  if (card) {
+    const id = card.dataset.id;
+    const annuncio = annunci.find(a => a.id == id);
+    if (annuncio) showDetail(annuncio);
+  }
+});
+
+brandHome.addEventListener('click', hideDetail);
+btnBack.addEventListener('click', hideDetail);
+
+document.getElementById('btn-contact').addEventListener('click', () => {
+  if (currentAnnuncio) {
+    alert('Contatta: ' + currentAnnuncio.nome + ' a proposito di ' + currentAnnuncio.marca + ' ' + currentAnnuncio.modello);
+  }
+});
+
+document.getElementById('btn-share').addEventListener('click', () => {
+  if (currentAnnuncio && navigator.share) {
+    navigator.share({
+      title: currentAnnuncio.marca + ' ' + currentAnnuncio.modello,
+      text: 'Guarda questo annuncio: ' + nf.format(currentAnnuncio.prezzo) + ' €',
+      url: window.location.href
+    });
+  }
+});
 
 function updateSliderTrack() {
   const value = searchAutonomiaSlider.value;
