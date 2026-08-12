@@ -125,6 +125,78 @@
   .chip:hover { border-color: var(--green); color: var(--green); }
   .chip.active { background: var(--green); border-color: var(--green); color: #fff; }
 
+  /* ---------- SEARCH PANEL ---------- */
+  .search-panel {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 20px 18px;
+    box-shadow: 0 8px 26px rgba(16,40,30,0.07);
+    margin-bottom: 26px;
+  }
+  .search-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 16px;
+    color: var(--ink);
+  }
+  .search-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .form-group label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+  .form-group input,
+  .form-group select {
+    padding: 8px 12px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    color: var(--ink);
+    background: #fff;
+    transition: border-color 0.15s ease;
+  }
+  .form-group input:focus,
+  .form-group select:focus {
+    outline: none;
+    border-color: var(--green);
+    box-shadow: 0 0 0 3px rgba(10, 122, 74, 0.1);
+  }
+  .search-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+  .btn-reset {
+    padding: 8px 16px;
+    border: 1px solid var(--line);
+    background: #fff;
+    color: var(--muted);
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .btn-reset:hover {
+    border-color: var(--green);
+    color: var(--green);
+  }
+
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 24px; }
 
   /* ---------- CARD ---------- */
@@ -216,6 +288,7 @@
     header { padding: 48px 18px 84px; }
     .container { padding: 0 16px 44px; }
     .toolbar { justify-content: center; text-align: center; }
+    .search-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -238,6 +311,42 @@
       <button class="chip" data-f="plug-in">Plug-in</button>
     </div>
   </div>
+
+  <div class="search-panel">
+    <h3 class="search-title">🔍 Filtra annunci</h3>
+    <div class="search-grid">
+      <div class="form-group">
+        <label for="search-marca">Marca</label>
+        <select id="search-marca">
+          <option value="">Tutte</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="search-anno-min">Anno da</label>
+        <input type="number" id="search-anno-min" placeholder="es: 2020" min="2010">
+      </div>
+      <div class="form-group">
+        <label for="search-anno-max">Anno a</label>
+        <input type="number" id="search-anno-max" placeholder="es: 2024" max="2030">
+      </div>
+      <div class="form-group">
+        <label for="search-prezzo-min">Prezzo da (€)</label>
+        <input type="number" id="search-prezzo-min" placeholder="es: 10000" min="0" step="1000">
+      </div>
+      <div class="form-group">
+        <label for="search-prezzo-max">Prezzo a (€)</label>
+        <input type="number" id="search-prezzo-max" placeholder="es: 50000" min="0" step="1000">
+      </div>
+      <div class="form-group">
+        <label for="search-km-max">Km massimi</label>
+        <input type="number" id="search-km-max" placeholder="es: 50000" min="0" step="5000">
+      </div>
+    </div>
+    <div class="search-actions">
+      <button class="btn-reset" id="btn-reset">Azzera filtri</button>
+    </div>
+  </div>
+
   <div id="app" class="grid"></div>
 </div>
 
@@ -256,6 +365,13 @@ const app = document.getElementById('app');
 const countEl = document.getElementById('count');
 const statsEl = document.getElementById('stats');
 const filtersEl = document.getElementById('filters');
+const searchMarca = document.getElementById('search-marca');
+const searchAnnoMin = document.getElementById('search-anno-min');
+const searchAnnoMax = document.getElementById('search-anno-max');
+const searchPrezzoMin = document.getElementById('search-prezzo-min');
+const searchPrezzoMax = document.getElementById('search-prezzo-max');
+const searchKmMax = document.getElementById('search-km-max');
+const btnReset = document.getElementById('btn-reset');
 
 let annunci = [];
 let filtro = 'tutti';
@@ -317,8 +433,31 @@ function card(a) {
   '</article>';
 }
 
+function getFilteredList() {
+  let lista = filtro === 'tutti' ? annunci : annunci.filter(a => a.alimentazione === filtro);
+  
+  const marca = searchMarca.value.toLowerCase();
+  const annoMin = searchAnnoMin.value ? parseInt(searchAnnoMin.value) : null;
+  const annoMax = searchAnnoMax.value ? parseInt(searchAnnoMax.value) : null;
+  const prezzoMin = searchPrezzoMin.value ? parseInt(searchPrezzoMin.value) : null;
+  const prezzoMax = searchPrezzoMax.value ? parseInt(searchPrezzoMax.value) : null;
+  const kmMax = searchKmMax.value ? parseInt(searchKmMax.value) : null;
+
+  lista = lista.filter(a => {
+    if (marca && !(a.marca && a.marca.toLowerCase().includes(marca))) return false;
+    if (annoMin && a.anno < annoMin) return false;
+    if (annoMax && a.anno > annoMax) return false;
+    if (prezzoMin && a.prezzo < prezzoMin) return false;
+    if (prezzoMax && a.prezzo > prezzoMax) return false;
+    if (kmMax && a.km > kmMax) return false;
+    return true;
+  });
+
+  return lista;
+}
+
 function render() {
-  const lista = filtro === 'tutti' ? annunci : annunci.filter(a => a.alimentazione === filtro);
+  const lista = getFilteredList();
   if (lista.length === 0) {
     app.innerHTML = '<div class="state"><span class="big">&#128269;</span>Nessun annuncio per questo filtro.</div>';
   } else {
@@ -339,12 +478,45 @@ function renderStats() {
     (min ? '<span class="pill">da ' + nf.format(min) + ' &euro;</span>' : '');
 }
 
+function updateMarcaSelect() {
+  const marche = [...new Set(annunci.map(a => a.marca).filter(Boolean))].sort();
+  const currentValue = searchMarca.value;
+  searchMarca.innerHTML = '<option value="">Tutte</option>';
+  for (const marca of marche) {
+    const opt = document.createElement('option');
+    opt.value = marca.toLowerCase();
+    opt.textContent = marca;
+    searchMarca.appendChild(opt);
+  }
+  searchMarca.value = currentValue;
+}
+
 filtersEl.addEventListener('click', (e) => {
   const btn = e.target.closest('.chip');
   if (!btn) return;
   filtro = btn.dataset.f;
   for (const c of filtersEl.querySelectorAll('.chip')) c.classList.remove('active');
   btn.classList.add('active');
+  render();
+});
+
+searchMarca.addEventListener('change', render);
+searchAnnoMin.addEventListener('change', render);
+searchAnnoMax.addEventListener('change', render);
+searchPrezzoMin.addEventListener('change', render);
+searchPrezzoMax.addEventListener('change', render);
+searchKmMax.addEventListener('change', render);
+
+btnReset.addEventListener('click', () => {
+  searchMarca.value = '';
+  searchAnnoMin.value = '';
+  searchAnnoMax.value = '';
+  searchPrezzoMin.value = '';
+  searchPrezzoMax.value = '';
+  searchKmMax.value = '';
+  filtro = 'tutti';
+  for (const c of filtersEl.querySelectorAll('.chip')) c.classList.remove('active');
+  filtersEl.querySelector('[data-f="tutti"]').classList.add('active');
   render();
 });
 
@@ -364,6 +536,7 @@ async function loadAnnunci() {
   }
 
   annunci = data || [];
+  updateMarcaSelect();
   renderStats();
   render();
 }
