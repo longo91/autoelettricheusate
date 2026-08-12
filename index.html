@@ -1,66 +1,371 @@
 <!DOCTYPE html>
-  <html lang="it">
-  <head>
-  <meta charset="UTF-8">
-  <title>Auto Elettriche Usate</title>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>Auto Elettriche Usate | Annunci EV e plug-in</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Annunci di auto elettriche e plug-in hybrid usate da privati e rivenditori.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-body { font-family: Arial, sans-serif; background:#f5f5f5; margin:0; padding:0; }
-header { background:#0a7a4a; color:#fff; padding:20px; text-align:center; }
-.grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap:20px; padding:20px; max-width:1200px; margin:0 auto; }
-.card { background:#fff; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.1); overflow:hidden; }
-  .card-body { padding:15px; }
-.card h3 { margin:0 0 8px; }
-.price { font-size:1.3em; font-weight:bold; color:#0a7a4a; }
-.meta { color:#666; font-size:0.9em; margin:8px 0; }
-.loading, .empty { text-align:center; padding:40px; color:#666; }
+  *, *::before, *::after { box-sizing: border-box; }
+  :root {
+    --green: #0a7a4a;
+    --green-light: #12a463;
+    --amber: #e08a00;
+    --ink: #16241d;
+    --muted: #6b7a73;
+    --line: #e6ebe8;
+  }
+  body {
+    font-family: 'Inter', system-ui, Arial, sans-serif;
+    background: #f4f7f5;
+    color: var(--ink);
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+
+  /* ---------- HEADER ---------- */
+  header {
+    position: relative;
+    background: linear-gradient(135deg, #075c38 0%, #0a7a4a 45%, #12a463 100%);
+    color: #fff;
+    padding: 64px 24px 96px;
+    text-align: center;
+    overflow: hidden;
+  }
+  header::after {
+    content: "";
+    position: absolute;
+    inset: auto -10% -60px -10%;
+    height: 140px;
+    background: #f4f7f5;
+    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 2.5rem;
+    letter-spacing: -1px;
+    margin: 0;
+    position: relative;
+    z-index: 1;
+  }
+  .brand .bolt {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.16);
+    backdrop-filter: blur(4px);
+    font-size: 1.5rem;
+  }
+  header p.tagline {
+    margin: 14px 0 0;
+    font-size: 1.05rem;
+    opacity: 0.92;
+    position: relative;
+    z-index: 1;
+  }
+  .stats {
+    position: relative;
+    z-index: 1;
+    margin: 26px 0 0;
+    display: inline-flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .pill {
+    background: rgba(255,255,255,0.16);
+    border: 1px solid rgba(255,255,255,0.22);
+    padding: 7px 16px;
+    border-radius: 999px;
+    font-size: 0.86rem;
+    font-weight: 600;
+  }
+
+  /* ---------- LAYOUT ---------- */
+  .container { max-width: 1180px; margin: -56px auto 0; padding: 0 24px 56px; position: relative; z-index: 2; }
+  .toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 14px 18px;
+    box-shadow: 0 8px 26px rgba(16,40,30,0.07);
+    margin-bottom: 26px;
+  }
+  .toolbar h2 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.05rem; margin: 0; }
+  .toolbar .count { color: var(--muted); font-size: 0.88rem; font-weight: 500; }
+  .filters { display: flex; gap: 8px; flex-wrap: wrap; }
+  .chip {
+    border: 1px solid var(--line);
+    background: #fff;
+    color: var(--muted);
+    border-radius: 999px;
+    padding: 7px 15px;
+    font: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .chip:hover { border-color: var(--green); color: var(--green); }
+  .chip.active { background: var(--green); border-color: var(--green); color: #fff; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 24px; }
+
+  /* ---------- CARD ---------- */
+  .card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 14px rgba(16,40,30,0.05);
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+  }
+  .card:hover { transform: translateY(-6px); box-shadow: 0 18px 38px rgba(16,40,30,0.13); }
+  .card-media {
+    position: relative;
+    height: 176px;
+    background: linear-gradient(135deg, #dff2e8, #b9e4cf);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+  }
+  .card-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: var(--green);
+    color: #fff;
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+  .badge.plugin { background: var(--amber); }
+  .year-tag {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(255,255,255,0.92);
+    color: var(--ink);
+    padding: 5px 11px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+  .card-body { padding: 18px 18px 16px; display: flex; flex-direction: column; flex: 1; }
+  .card h3 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.08rem;
+    line-height: 1.35;
+    margin: 0 0 4px;
+  }
+  .card .version { color: var(--muted); font-size: 0.85rem; margin: 0 0 12px; }
+  .price { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--green); margin-bottom: 14px; }
+  .specs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 10px;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 12px 0;
+    margin-bottom: 12px;
+  }
+  .spec { display: flex; align-items: center; gap: 7px; font-size: 0.85rem; color: #3d4d45; }
+  .spec .ico { font-size: 0.95rem; opacity: 0.75; }
+  .desc { color: #4a5a52; font-size: 0.88rem; line-height: 1.5; margin: 0 0 14px; flex: 1; }
+  .card-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 0.82rem; }
+  .seller { color: var(--muted); display: flex; align-items: center; gap: 6px; min-width: 0; }
+  .seller strong { color: var(--ink); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .tag { background: #edf6f1; color: var(--green); padding: 4px 10px; border-radius: 8px; font-weight: 700; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.4px; white-space: nowrap; }
+  .tag.priv { background: #f1f3f7; color: #4a5568; }
+
+  /* ---------- STATES / FOOTER ---------- */
+  .state { grid-column: 1 / -1; text-align: center; padding: 70px 20px; color: var(--muted); }
+  .state .big { font-size: 2.4rem; display: block; margin-bottom: 12px; }
+  .skeleton { background: #fff; border: 1px solid var(--line); border-radius: 18px; height: 380px; overflow: hidden; position: relative; }
+  .skeleton::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(0,0,0,0.045), transparent); animation: shine 1.2s infinite; }
+  @keyframes shine { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+  footer { text-align: center; padding: 34px 20px 44px; color: var(--muted); font-size: 0.85rem; }
+  footer .sep { opacity: 0.5; margin: 0 8px; }
+
+  @media (max-width: 560px) {
+    .brand { font-size: 1.9rem; }
+    header { padding: 48px 18px 84px; }
+    .container { padding: 0 16px 44px; }
+    .toolbar { justify-content: center; text-align: center; }
+  }
 </style>
-  </head>
-  <body>
-  <header>
-  <h1>Auto Elettriche Usate</h1>
-<p>Annunci di auto elettriche e plug-in hybrid usate</p>
+</head>
+<body>
+<header>
+  <h1 class="brand"><span class="bolt">&#9889;</span> Auto Elettriche Usate</h1>
+  <p class="tagline">Il mercato delle auto elettriche e plug-in hybrid di seconda mano</p>
+  <div class="stats" id="stats"></div>
 </header>
-<div id="app" class="grid">
-<p class="loading">Caricamento annunci...</p>
+
+<div class="container">
+  <div class="toolbar">
+    <div>
+      <h2>Annunci disponibili</h2>
+      <div class="count" id="count">Caricamento...</div>
+    </div>
+    <div class="filters" id="filters">
+      <button class="chip active" data-f="tutti">Tutte</button>
+      <button class="chip" data-f="elettrica">Elettriche</button>
+      <button class="chip" data-f="plug-in">Plug-in</button>
+    </div>
   </div>
-  <script type="module">
-  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+  <div id="app" class="grid"></div>
+</div>
+
+<footer>
+  Auto Elettriche Usate <span class="sep">&middot;</span> annunci di privati e rivenditori
+</footer>
+
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
 const SUPABASE_URL = 'https://komvmedptbcsiiswoaja.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_W1l56uhiAnI6g7rhvkqtZg_WesZk_rd';
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const app = document.getElementById('app');
+const countEl = document.getElementById('count');
+const statsEl = document.getElementById('stats');
+const filtersEl = document.getElementById('filters');
+
+let annunci = [];
+let filtro = 'tutti';
+
+const nf = new Intl.NumberFormat('it-IT');
+
+function esc(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function skeletons(n) {
+  let out = '';
+  for (let i = 0; i < n; i++) out += '<div class="skeleton"></div>';
+  return out;
+}
+
+function card(a) {
+  const isPlugin = a.alimentazione === 'plug-in';
+  const media = (a.foto && a.foto.length > 0)
+    ? '<img src="' + esc(a.foto[0]) + '" alt="' + esc(a.marca + ' ' + a.modello) + '" loading="lazy">'
+    : '&#128663;';
+  const luogo = esc(a.citta) + (a.prov ? ' (' + esc(a.prov) + ')' : '');
+  const specs = [
+    ['&#128336;', nf.format(a.km) + ' km'],
+    ['&#128205;', luogo],
+    ['&#9889;', isPlugin ? 'Plug-in hybrid' : 'Elettrica'],
+    ['&#128267;', a.batteria_kwh ? a.batteria_kwh + ' kWh' : (a.potenza_kw ? a.potenza_kw + ' kW' : '-')]
+  ];
+  let specsHtml = '';
+  for (const s of specs) {
+    specsHtml += '<div class="spec"><span class="ico">' + s[0] + '</span>' + esc(s[1]) + '</div>';
+  }
+  const autonomia = a.autonomia_km ? '<div class="spec"><span class="ico">&#128506;</span>' + nf.format(a.autonomia_km) + ' km autonomia</div>' : '';
+  const soh = a.soh ? '<div class="spec"><span class="ico">&#128138;</span>SOH ' + a.soh + '%</div>' : '';
+  const versione = a.versione ? '<p class="version">' + esc(a.versione) + '</p>' : '';
+  const desc = a.descrizione ? '<p class="desc">' + esc(a.descrizione) + '</p>' : '';
+  const tagCls = a.tipo_venditore === 'privato' ? 'tag priv' : 'tag';
+
+  return '<article class="card">' +
+    '<div class="card-media">' + media +
+      '<span class="badge' + (isPlugin ? ' plugin' : '') + '">' + (isPlugin ? 'Plug-in' : 'Elettrica') + '</span>' +
+      '<span class="year-tag">' + esc(a.anno) + '</span>' +
+    '</div>' +
+    '<div class="card-body">' +
+      '<h3>' + esc(a.marca) + ' ' + esc(a.modello) + '</h3>' +
+      versione +
+      '<div class="price">' + nf.format(a.prezzo) + ' &euro;</div>' +
+      '<div class="specs">' + specsHtml + autonomia + soh + '</div>' +
+      desc +
+      '<div class="card-foot">' +
+        '<span class="seller">&#128100; <strong>' + esc(a.nome) + '</strong></span>' +
+        '<span class="' + tagCls + '">' + esc(a.tipo_venditore) + '</span>' +
+      '</div>' +
+    '</div>' +
+  '</article>';
+}
+
+function render() {
+  const lista = filtro === 'tutti' ? annunci : annunci.filter(a => a.alimentazione === filtro);
+  if (lista.length === 0) {
+    app.innerHTML = '<div class="state"><span class="big">&#128269;</span>Nessun annuncio per questo filtro.</div>';
+  } else {
+    app.innerHTML = lista.map(card).join('');
+  }
+  countEl.textContent = lista.length + (lista.length === 1 ? ' annuncio trovato' : ' annunci trovati');
+}
+
+function renderStats() {
+  const ev = annunci.filter(a => a.alimentazione === 'elettrica').length;
+  const ph = annunci.filter(a => a.alimentazione === 'plug-in').length;
+  const prezzi = annunci.map(a => a.prezzo).filter(p => p > 0);
+  const min = prezzi.length ? Math.min.apply(null, prezzi) : 0;
+  statsEl.innerHTML =
+    '<span class="pill">' + annunci.length + ' annunci online</span>' +
+    '<span class="pill">' + ev + ' elettriche</span>' +
+    '<span class="pill">' + ph + ' plug-in</span>' +
+    (min ? '<span class="pill">da ' + nf.format(min) + ' &euro;</span>' : '');
+}
+
+filtersEl.addEventListener('click', (e) => {
+  const btn = e.target.closest('.chip');
+  if (!btn) return;
+  filtro = btn.dataset.f;
+  for (const c of filtersEl.querySelectorAll('.chip')) c.classList.remove('active');
+  btn.classList.add('active');
+  render();
+});
 
 async function loadAnnunci() {
-const { data, error } = await supabase.from('annunci').select('*').eq('stato', 'attivo').order('creato_il', { ascending: false });
+  app.innerHTML = skeletons(6);
+  const { data, error } = await supabase
+    .from('annunci')
+    .select('*')
+    .eq('stato', 'attivo')
+    .order('creato_il', { ascending: false });
 
-if (error) {
-app.innerHTML = '<p class="empty">Errore nel caricamento degli annunci.</p>';
-console.error(error);
-return;
-}
+  if (error) {
+    console.error(error);
+    app.innerHTML = '<div class="state"><span class="big">&#9888;</span>Errore nel caricamento degli annunci.</div>';
+    countEl.textContent = '';
+    return;
+  }
 
-if (!data || data.length === 0) {
-app.innerHTML = '<p class="empty">Nessun annuncio disponibile al momento.</p>';
-return;
-}
-
-app.innerHTML = data.map(annuncioCard).join('');
-}
-
-function annuncioCard(a) {
-const prezzo = new Intl.NumberFormat('it-IT').format(a.prezzo);
-const km = new Intl.NumberFormat('it-IT').format(a.km);
-const provinciaTxt = a.prov ? '(' + a.prov + ')' : '';
-return '<div class="card"><div class="card-body">' +
-'<h3>' + a.marca + ' ' + a.modello + ' ' + (a.versione || '') + '</h3>' +
-'<div class="price">' + prezzo + ' €</div>' +
-'<div class="meta">' + a.anno + ' · ' + km + ' km · ' + a.alimentazione + '</div>' +
-'<div class="meta">' + a.citta + ' ' + provinciaTxt + ' · ' + a.tipo_venditore + '</div>' +
-'<p>' + (a.descrizione || '') + '</p>' +
-'</div></div>';
+  annunci = data || [];
+  renderStats();
+  render();
 }
 
 loadAnnunci();
