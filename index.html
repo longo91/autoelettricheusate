@@ -2,866 +2,742 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<title>Auto Elettriche Usate | Annunci EV e plug-in</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Annunci di auto elettriche e plug-in hybrid usate da privati e rivenditori.">
+<title>Auto Elettriche Usate | Annunci di EV e ibride plug-in in Italia</title>
+<meta name="description" content="Annunci di auto elettriche e ibride plug-in usate: confronta prezzo, chilometri, autonomia, batteria e potenza di EV proposte da privati e concessionari in tutta Italia.">
+<meta name="theme-color" content="#00dda8">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Auto Elettriche Usate | Annunci EV e plug-in">
+<meta property="og:description" content="Il portale dedicato alle auto elettriche usate: autonomia, batteria e ricarica sempre in evidenza.">
+<meta property="og:locale" content="it_IT">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%2300dda8'/><path d='M18 3 8 19h5l-1 10 10-16h-6z' fill='%23103c33'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,500;0,600;0,700;0,800;1,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; }
   :root {
-    --green: #0a7a4a;
-    --green-light: #12a463;
-    --amber: #e08a00;
-    --ink: #16241d;
-    --muted: #6b7a73;
-    --line: #e6ebe8;
+    --accent: #00dda8;
+    --accent-d: #00b98d;
+    --mint: #e5faf5;
+    --mint-2: #d5f5ec;
+    --ink: #14312a;
+    --dark: #1d4a42;
+    --body: #212529;
+    --muted: #6f7d79;
+    --line: #e5e9e7;
+    --soft: #f8faf9;
+    --amber: #ffd166;
   }
+  html, body { max-width: 100%; overflow-x: hidden; }
   body {
-    font-family: 'Inter', system-ui, Arial, sans-serif;
-    background: #f4f7f5;
-    color: var(--ink);
     margin: 0;
+    font-family: 'Inter', system-ui, Arial, sans-serif;
+    color: var(--body);
+    background: #fff;
     -webkit-font-smoothing: antialiased;
   }
+  h1, h2, h3, h4, h5, .price, .logo, .num { font-family: 'Plus Jakarta Sans', 'Inter', sans-serif; }
   a { color: inherit; text-decoration: none; }
+  button { font: inherit; cursor: pointer; }
+  input, select { font: inherit; color: inherit; }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 0 20px; }
 
   /* ---------- HEADER ---------- */
-  header {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: #fff;
-    border-bottom: 1px solid var(--line);
-    padding: 12px 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 24px;
-    box-shadow: 0 2px 8px rgba(16,40,30,0.05);
-  }
-  .brand {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-weight: 800;
-    font-size: 1.3rem;
-    letter-spacing: -1px;
-    margin: 0;
-    cursor: pointer;
-    white-space: nowrap;
-  }
-  .brand .bolt {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 10px;
-    background: linear-gradient(135deg, #075c38 0%, #0a7a4a 45%, #12a463 100%);
-    color: #fff;
-    font-size: 1.2rem;
-  }
-  
-  .header-center {
-    flex: 1;
-    max-width: 500px;
-  }
-  .search-bar {
-    display: flex;
-    align-items: center;
-    background: #f4f7f5;
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    padding: 8px 12px;
-    gap: 8px;
-  }
-  .search-bar input {
-    border: none;
-    background: transparent;
-    flex: 1;
-    font-size: 0.9rem;
-    outline: none;
-    color: var(--ink);
-  }
-  .search-bar input::placeholder {
-    color: var(--muted);
-  }
+  header.site { position: sticky; top: 0; z-index: 60; background: #fff; border-bottom: 1px solid var(--line); }
+  .hrow { display: flex; align-items: center; gap: 26px; height: 68px; }
+  .logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 17px; color: var(--ink); line-height: 1.1; }
+  .logo .bolt { width: 34px; height: 34px; border-radius: 50%; background: var(--accent); display: grid; place-items: center; font-size: 17px; }
+  .logo small { display: block; font-size: 11px; font-weight: 600; color: var(--muted); letter-spacing: .01em; }
+  nav.main { display: flex; gap: 20px; font-size: 14.5px; font-weight: 500; color: var(--dark); }
+  nav.main a { padding: 8px 0; }
+  nav.main a:hover { color: var(--accent-d); }
+  .hright { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+  .btn { border-radius: 999px; border: 1px solid var(--line); background: #fff; padding: 10px 18px; font-weight: 600; font-size: 14px; color: var(--ink); white-space: nowrap; }
+  .btn:hover { border-color: var(--accent); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: #08312a; }
+  .btn.primary:hover { background: var(--accent-d); border-color: var(--accent-d); }
+  .btn.dark { background: var(--dark); border-color: var(--dark); color: #fff; }
+  .btn.dark:hover { background: #16382f; }
+  .btn.sm { padding: 8px 14px; font-size: 13.5px; }
 
-  .header-right {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .btn-publish {
-    background: var(--green);
-    color: #fff;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: background 0.15s ease;
-  }
-  .btn-publish:hover {
-    background: var(--green-light);
-  }
-  .user-menu {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .btn-auth {
-    background: #f4f7f5;
-    color: var(--ink);
-    border: 1px solid var(--line);
-    padding: 8px 14px;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: all 0.15s ease;
-  }
-  .btn-auth:hover {
-    background: var(--line);
-  }
-  .user-profile {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-  }
-  .user-avatar {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: var(--green);
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 600;
-    font-size: 0.85rem;
-  }
+  /* ---------- HERO ---------- */
+  .hero { background: var(--mint); padding: 52px 0 0; }
+  .hgrid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 24px; align-items: center; }
+  .hero h1 { font-size: 43px; line-height: 1.08; margin: 0 0 14px; color: var(--ink); }
+  .hero h1 em { font-style: italic; }
+  .hero p.sub { margin: 0; color: #3f574f; font-size: 16.5px; max-width: 440px; }
+  .hero-art { display: grid; place-items: center; }
+  .hero-art svg { width: 100%; max-width: 400px; height: auto; }
+  .searchcard { background: #fff; border-radius: 22px; box-shadow: 0 18px 44px rgba(20,49,42,.12); padding: 20px; margin: 36px 0 -48px; position: relative; z-index: 5; }
+  .tabs { display: flex; align-items: center; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
+  .tab { border: none; background: transparent; border-radius: 999px; padding: 9px 15px; font-size: 14px; font-weight: 600; color: var(--muted); }
+  .tab.on { background: var(--mint); color: var(--ink); }
+  .sbox { display: flex; gap: 10px; align-items: center; border: 2px solid var(--accent); border-radius: 14px; padding: 8px 8px 8px 16px; }
+  .sbox input { flex: 1; min-width: 0; border: none; outline: none; background: transparent; font-size: 16px; }
+  .chips { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 14px; font-size: 13px; color: var(--muted); }
+  .chip { border: none; background: var(--mint); border-radius: 999px; padding: 7px 14px; font-size: 13px; font-weight: 600; color: var(--ink); }
+  .chip:hover { background: var(--mint-2); }
 
-  /* ---------- HERO SECTION ---------- */
-  .hero {
-    background: linear-gradient(135deg, #075c38 0%, #0a7a4a 45%, #12a463 100%);
-    color: #fff;
-    padding: 64px 24px;
-    text-align: center;
-  }
-  .hero h1 {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 2.2rem;
-    font-weight: 800;
-    margin: 0 0 12px;
-    letter-spacing: -1px;
-  }
-  .hero p {
-    font-size: 1.05rem;
-    opacity: 0.92;
-    margin: 0 0 32px;
-  }
-  .hero-search {
-    display: flex;
-    gap: 12px;
-    max-width: 600px;
-    margin: 0 auto;
-  }
-  .hero-search input {
-    flex: 1;
-    padding: 14px 16px;
-    border: none;
-    border-radius: 12px;
-    font-size: 0.95rem;
-    outline: none;
-  }
-  .hero-search input::placeholder {
-    color: var(--muted);
-  }
-  .hero-search button {
-    padding: 14px 24px;
-    background: var(--amber);
-    color: #fff;
-    border: none;
-    border-radius: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.15s ease;
-  }
-  .hero-search button:hover {
-    background: #d67c00;
-  }
+  /* ---------- FILTER BAR ---------- */
+  .filterbar { position: sticky; top: 68px; z-index: 50; background: #fff; border-bottom: 1px solid var(--line); padding: 14px 0; margin-top: 66px; }
+  .fb { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .fsel, .finput { border: 1px solid var(--line); border-radius: 999px; background: #fff; padding: 10px 16px; font-size: 14px; font-weight: 600; color: var(--ink); max-width: 100%; }
+  .fsel { appearance: none; -webkit-appearance: none; padding-right: 34px; background-image: linear-gradient(45deg, transparent 50%, var(--dark) 50%), linear-gradient(135deg, var(--dark) 50%, transparent 50%); background-position: calc(100% - 19px) 18px, calc(100% - 14px) 18px; background-size: 5px 5px, 5px 5px; background-repeat: no-repeat; }
+  .finput { font-weight: 500; width: 132px; }
+  .finput::placeholder { color: #9aa8a4; }
+  .fsel:hover, .finput:hover { border-color: var(--accent); }
+  .reset { border: none; background: var(--mint); border-radius: 999px; padding: 10px 16px; font-size: 13.5px; font-weight: 600; color: var(--dark); }
 
-  /* ---------- FILTERS SECTION ---------- */
-  .filters-section {
-    background: #fff;
-    border-bottom: 1px solid var(--line);
-    padding: 24px;
-    position: sticky;
-    top: 68px;
-    z-index: 99;
-    box-shadow: 0 2px 8px rgba(16,40,30,0.03);
-  }
-  .container {
-    max-width: 1180px;
-    margin: 0 auto;
-  }
-  .filters-title {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 700;
-    margin: 0 0 16px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: var(--muted);
-  }
-  .filters-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 16px;
-  }
-  .filter-group {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-  .filter-label {
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.4px;
-  }
-  .filter-input,
-  .filter-select {
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    padding: 10px 12px;
-    font-size: 0.9rem;
-    font-family: inherit;
-    color: var(--ink);
-    background: #f4f7f5;
-    transition: all 0.15s ease;
-  }
-  .filter-input:focus,
-  .filter-select:focus {
-    outline: none;
-    border-color: var(--green);
-    background: #fff;
-    box-shadow: 0 0 0 3px rgba(10, 122, 74, 0.1);
-  }
-  .price-range {
-    display: flex;
-    gap: 10px;
-    align-items: flex-end;
-  }
-  .price-range .filter-group {
-    flex: 1;
-  }
-  .price-range-separator {
-    color: var(--muted);
-    font-size: 0.9rem;
-    margin-top: 22px;
-  }
-  .btn-reset {
-    background: transparent;
-    border: 1px solid var(--line);
-    color: var(--muted);
-    padding: 10px 16px;
-    border-radius: 8px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.15s ease;
-    align-self: flex-end;
-  }
-  .btn-reset:hover {
-    border-color: var(--green);
-    color: var(--green);
-  }
+  /* ---------- LIFESTYLE ---------- */
+  .life { padding: 30px 0 4px; }
+  .life h2 { font-size: 20px; margin: 0 0 14px; color: var(--ink); }
+  .lgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+  .lf { border: 1px solid var(--line); background: var(--soft); border-radius: 16px; padding: 16px 12px; text-align: center; font-weight: 600; font-size: 14px; color: var(--ink); }
+  .lf:hover { border-color: var(--accent); background: var(--mint); }
+  .lf b { display: block; font-size: 24px; font-weight: 400; margin-bottom: 6px; }
+  .lf small { display: block; color: var(--muted); font-weight: 500; font-size: 12px; margin-top: 3px; }
 
-  /* ---------- MAIN CONTENT ---------- */
-  .content {
-    max-width: 1180px;
-    margin: 0 auto;
-    padding: 24px;
-  }
-  .toolbar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    align-items: center;
-    justify-content: space-between;
-    background: #fff;
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    padding: 14px 18px;
-    box-shadow: 0 4px 14px rgba(16,40,30,0.05);
-    margin-bottom: 26px;
-  }
-  .toolbar h2 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.05rem; margin: 0; }
-  .toolbar .count { color: var(--muted); font-size: 0.88rem; font-weight: 500; }
-  .sort-control {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .sort-control label {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--muted);
-  }
-  .sort-select {
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    padding: 6px 10px;
-    font-size: 0.85rem;
-    background: #f4f7f5;
-    cursor: pointer;
-  }
+  /* ---------- RESULTS ---------- */
+  .results { padding: 26px 0 6px; }
+  .rhead { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .rhead h2 { font-size: 26px; margin: 0 0 6px; color: var(--ink); }
+  .rsub { margin: 0; color: var(--muted); font-size: 14px; max-width: 660px; }
+  .rcount { font-weight: 700; color: var(--ink); font-size: 15px; margin-top: 14px; }
+  .sortwrap { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--muted); }
 
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 24px; }
+  /* ---------- AD CARD ---------- */
+  .list { display: flex; flex-direction: column; gap: 18px; margin: 18px 0 8px; }
+  .ad { border: 1px solid var(--line); border-radius: 18px; overflow: hidden; background: #fff; transition: box-shadow .18s ease; }
+  .ad:hover { box-shadow: 0 12px 30px rgba(20,49,42,.10); }
+  .ad-top { display: grid; grid-template-columns: 358px 1fr; }
+  .media { position: relative; min-height: 254px; display: grid; place-items: center; cursor: pointer; }
+  .media svg { width: 78%; height: auto; }
+  .badges { position: absolute; top: 12px; left: 12px; display: flex; gap: 6px; flex-wrap: wrap; }
+  .bdg { border-radius: 999px; padding: 5px 11px; font-size: 11.5px; font-weight: 700; letter-spacing: .02em; background: rgba(255,255,255,.92); color: var(--ink); }
+  .bdg.ev { background: var(--accent); color: #08312a; }
+  .bdg.phev { background: var(--amber); color: #4a3600; }
+  .yeartag { position: absolute; top: 12px; right: 12px; background: rgba(255,255,255,.92); border-radius: 999px; padding: 5px 11px; font-size: 12px; font-weight: 700; color: var(--ink); }
+  .thumbs { position: absolute; bottom: 10px; left: 12px; right: 12px; display: flex; gap: 6px; }
+  .thumbs i { flex: 1; height: 36px; border-radius: 8px; background: rgba(255,255,255,.5); border: 1px solid rgba(255,255,255,.7); }
+  .info { padding: 20px 22px; }
+  .itop { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
+  .price { font-size: 30px; font-weight: 800; color: var(--ink); letter-spacing: -.02em; }
+  .price span { font-size: 15px; font-weight: 600; color: var(--muted); }
+  .verified { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--dark); }
+  .ad h3 { margin: 12px 0 2px; font-size: 21px; color: var(--ink); }
+  .ad .ver { margin: 0; color: var(--muted); font-size: 14px; }
+  .specs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px 18px; margin-top: 18px; }
+  .sp label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 2px; }
+  .sp b { font-size: 14.5px; font-weight: 600; color: var(--ink); }
+  .feat { margin-top: 18px; }
+  .feat p { margin: 0 0 8px; font-size: 12.5px; color: var(--muted); }
+  .tags { display: flex; gap: 8px; flex-wrap: wrap; }
+  .tag { background: var(--mint); border-radius: 9px; padding: 6px 10px; font-size: 12.5px; font-weight: 600; color: var(--dark); }
+  .ad-foot { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; background: var(--mint); padding: 12px 22px; }
+  .seller { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; color: var(--ink); }
+  .avatar { width: 34px; height: 34px; border-radius: 50%; background: var(--dark); color: #fff; display: grid; place-items: center; font-weight: 700; font-size: 14px; }
+  .seller small { display: block; font-weight: 500; font-size: 12px; color: var(--muted); }
+  .acts { margin-left: auto; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .icon { width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--line); background: #fff; display: grid; place-items: center; font-size: 15px; }
+  .icon.on { background: #ffe9ef; border-color: #ffc6d5; }
+  .more { display: block; margin: 8px auto 0; }
+  .empty { border: 1px dashed var(--line); border-radius: 18px; padding: 40px 20px; text-align: center; color: var(--muted); }
 
-  /* ---------- CARD ---------- */
-  .card {
-    background: #fff;
-    border: 1px solid var(--line);
-    border-radius: 18px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 4px 14px rgba(16,40,30,0.05);
-    transition: transform 0.22s ease, box-shadow 0.22s ease;
-  }
-  .card:hover { transform: translateY(-6px); box-shadow: 0 18px 38px rgba(16,40,30,0.13); }
-  .card-media {
-    position: relative;
-    height: 176px;
-    background: linear-gradient(135deg, #dff2e8, #b9e4cf);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 3rem;
-  }
-  .card-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .badge {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    background: var(--green);
-    color: #fff;
-    padding: 5px 12px;
-    border-radius: 999px;
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.6px;
-    text-transform: uppercase;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-  }
-  .badge.plugin { background: var(--amber); }
-  .year-tag {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    background: rgba(255,255,255,0.92);
-    color: var(--ink);
-    padding: 5px 11px;
-    border-radius: 999px;
-    font-size: 0.75rem;
-    font-weight: 700;
-  }
-  .card-body { padding: 18px 18px 16px; display: flex; flex-direction: column; flex: 1; }
-  .card h3 {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 1.08rem;
-    line-height: 1.35;
-    margin: 0 0 4px;
-  }
-  .card .version { color: var(--muted); font-size: 0.85rem; margin: 0 0 12px; }
-  .price { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--green); margin-bottom: 14px; }
-  .specs {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px 10px;
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
-    padding: 12px 0;
-    margin-bottom: 12px;
-  }
-  .spec { display: flex; align-items: center; gap: 7px; font-size: 0.85rem; color: #3d4d45; }
-  .spec .ico { font-size: 0.95rem; opacity: 0.75; }
-  .desc { color: #4a5a52; font-size: 0.88rem; line-height: 1.5; margin: 0 0 14px; flex: 1; }
-  .card-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 0.82rem; }
-  .seller { color: var(--muted); display: flex; align-items: center; gap: 6px; min-width: 0; }
-  .seller-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .like-btn {
-    background: transparent;
-    border: 1px solid var(--line);
-    color: var(--muted);
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.15s ease;
-  }
-  .like-btn:hover { border-color: var(--green); color: var(--green); }
-  .like-btn.liked { background: var(--green); border-color: var(--green); color: #fff; }
+  /* ---------- CTA ---------- */
+  .ctas { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 40px 0 10px; }
+  .cta { background: var(--mint); border-radius: 18px; padding: 28px; }
+  .cta h3 { margin: 0 0 8px; font-size: 23px; color: var(--ink); }
+  .cta p { margin: 0 0 18px; font-size: 14.5px; color: #3f574f; }
 
-  /* ---------- EMPTY STATE ---------- */
-  .empty-state {
-    grid-column: 1 / -1;
-    text-align: center;
-    padding: 64px 24px;
-  }
-  .empty-state h3 {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 1.3rem;
-    margin: 0 0 8px;
-  }
-  .empty-state p {
-    color: var(--muted);
-    margin: 0;
-  }
+  /* ---------- SEO LINKS ---------- */
+  .seo { border-top: 1px solid var(--line); margin-top: 34px; padding: 30px 0 10px; }
+  .seo h4 { font-size: 16px; color: var(--dark); margin: 20px 0 8px; }
+  .cols { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0 26px; }
+  .cols a { display: block; padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 13.5px; color: var(--body); }
+  .cols a:hover { color: var(--accent-d); }
 
-  /* ---------- RESPONSIVE ---------- */
-  @media (max-width: 768px) {
-    header {
-      flex-wrap: wrap;
-      padding: 12px;
-    }
-    .header-center {
-      max-width: 100%;
-      order: 3;
-      width: 100%;
-    }
-    .hero { padding: 40px 24px; }
-    .hero h1 { font-size: 1.7rem; }
-    .hero-search { flex-direction: column; }
-    .filters-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    .grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
-  }
+  /* ---------- FOOTER ---------- */
+  footer.site { background: var(--dark); color: #cfe6df; padding: 42px 0 24px; margin-top: 34px; font-size: 14px; }
+  footer.site .fgrid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 26px; }
+  footer.site h5 { color: #fff; font-size: 15px; margin: 0 0 12px; }
+  footer.site p { margin: 0; line-height: 1.6; }
+  footer.site a { display: block; padding: 5px 0; color: #cfe6df; }
+  footer.site a:hover { color: var(--accent); }
+  .fbottom { border-top: 1px solid rgba(255,255,255,.15); margin-top: 28px; padding-top: 18px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: 12.5px; color: #a6c8bf; }
 
-  @media (max-width: 480px) {
-    .hero h1 { font-size: 1.4rem; }
-    .filters-grid {
-      grid-template-columns: 1fr;
-    }
-    .toolbar { flex-direction: column; align-items: flex-start; }
+  /* ---------- MODAL ---------- */
+  .overlay { position: fixed; inset: 0; background: rgba(9,28,23,.55); z-index: 100; display: none; overflow: auto; padding: 20px; }
+  .overlay.open { display: block; }
+  .modal { background: #fff; border-radius: 20px; max-width: 880px; margin: 20px auto; overflow: hidden; }
+  .mhead { position: relative; min-height: 260px; display: grid; place-items: center; }
+  .mhead svg { width: 62%; height: auto; }
+  .mclose { position: absolute; top: 14px; right: 14px; width: 40px; height: 40px; border-radius: 50%; border: none; background: rgba(255,255,255,.92); font-size: 18px; }
+  .mbody { padding: 24px; }
+  .mbody .specs { grid-template-columns: repeat(4, 1fr); }
+  .mbody h3 { font-size: 26px; margin: 10px 0 2px; }
+  .mbody .desc { margin: 18px 0 0; font-size: 14.5px; line-height: 1.6; color: #40514c; }
+  .mfoot { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; background: var(--mint); padding: 16px 24px; }
+
+  @media (max-width: 980px) {
+    nav.main { display: none; }
+    .hgrid { grid-template-columns: 1fr; }
+    .hero-art { display: none; }
+    .ad-top { grid-template-columns: 1fr; }
+    .media { min-height: 210px; }
+    .ctas { grid-template-columns: 1fr; }
+    footer.site .fgrid { grid-template-columns: 1fr 1fr; }
+    .mbody .specs { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .hero h1 { font-size: 31px; }
+    .hero { padding-top: 34px; }
+    .price { font-size: 26px; }
+    .specs { grid-template-columns: repeat(2, 1fr); }
+    .hrow { height: 60px; gap: 14px; }
+    .filterbar { top: 60px; }
+    .logo small { display: none; }
+    .searchcard { padding: 16px; }
   }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<header>
-  <div class="brand">
-    <div class="bolt">⚡</div>
-    <span>Auto EV</span>
-  </div>
-  <div class="header-center">
-    <div class="search-bar">
-      <span>🔍</span>
-      <input type="text" id="headerSearch" placeholder="Cerca per modello o marca...">
-    </div>
-  </div>
-  <div class="header-right">
-    <button class="btn-publish">+ Pubblica</button>
-    <div class="user-menu">
-      <button class="btn-auth">Accedi</button>
-      <div class="user-profile" style="display: none;">
-        <div class="user-avatar">M</div>
-        <span>Menu</span>
-      </div>
+<!-- ========== HEADER ========== -->
+<header class="site">
+  <div class="wrap hrow">
+    <a class="logo" href="#">
+      <span class="bolt">&#9889;</span>
+      <span>AutoElettriche<small>usate.eu</small></span>
+    </a>
+    <nav class="main">
+      <a href="#annunci">Ricerca</a>
+      <a href="#vendi">Vendi la tua EV</a>
+      <a href="#guide">Guide &amp; ricarica</a>
+    </nav>
+    <div class="hright">
+      <button class="btn sm" type="button">Accedi</button>
+      <button class="btn primary sm" type="button">+ Pubblica annuncio</button>
     </div>
   </div>
 </header>
 
-<!-- HERO SECTION -->
+<!-- ========== HERO ========== -->
 <section class="hero">
-  <h1>Trova la tua Auto Elettrica</h1>
-  <p>Annunci verificati di EV e plug-in hybrid usate da privati e concessionari</p>
-  <div class="hero-search">
-    <input type="text" id="heroSearch" placeholder="Marca o modello...">
-    <button>Cerca</button>
-  </div>
-</section>
-
-<!-- FILTERS SECTION -->
-<section class="filters-section">
-  <div class="container">
-    <h3 class="filters-title">Filtra Risultati</h3>
-    <div class="filters-grid">
-      <!-- Marca -->
-      <div class="filter-group">
-        <label class="filter-label">Marca</label>
-        <select class="filter-select" id="filterBrand">
-          <option value="">Tutte le marche</option>
-          <option value="tesla">Tesla</option>
-          <option value="nissan">Nissan</option>
-          <option value="renault">Renault</option>
-          <option value="volkswagen">Volkswagen</option>
-          <option value="hyundai">Hyundai</option>
-          <option value="kia">Kia</option>
-          <option value="fiat">Fiat</option>
-          <option value="bmw">BMW</option>
-          <option value="audi">Audi</option>
-          <option value="other">Altra marca</option>
-        </select>
+  <div class="wrap">
+    <div class="hgrid">
+      <div>
+        <h1>La tua prossima auto &egrave; <em>elettrica</em>.<br>Trovala usata.</h1>
+        <p class="sub">Il primo portale italiano di annunci dedicato solo a EV e ibride plug-in: autonomia, batteria e ricarica sempre in chiaro.</p>
       </div>
-
-      <!-- Modello -->
-      <div class="filter-group">
-        <label class="filter-label">Modello</label>
-        <input type="text" class="filter-input" id="filterModel" placeholder="Es. Model 3...">
+      <div class="hero-art">
+        <svg viewBox="0 0 420 260" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="215" cy="130" r="112" fill="#d5f5ec"/>
+          <rect x="24" y="86" width="52" height="104" rx="16" fill="#fff" stroke="#1d4a42" stroke-width="3"/>
+          <rect x="38" y="102" width="24" height="20" rx="5" fill="#00dda8"/>
+          <path d="M50 132v26" stroke="#1d4a42" stroke-width="3" stroke-linecap="round"/>
+          <path d="M78 122c26 0 22 34 44 34" stroke="#1d4a42" stroke-width="3" stroke-dasharray="6 8" stroke-linecap="round" fill="none"/>
+          <path d="M132 168c-9 0-15-7-13-15l6-24c2-9 9-15 18-16l40-6 30-21c9-6 20-10 31-10h34c13 0 25 5 34 14l19 20 24 6c11 3 19 13 19 25v11c0 9-7 16-16 16H132z" fill="#fff" stroke="#1d4a42" stroke-width="3"/>
+          <path d="M226 80h32c8 0 16 3 22 9l17 18h-71V80z" fill="#d5f5ec"/>
+          <path d="M214 80h-16c-8 0-15 2-22 7l-28 20h66V80z" fill="#e5faf5"/>
+          <circle cx="192" cy="168" r="22" fill="#1d4a42"/><circle cx="192" cy="168" r="9" fill="#fff"/>
+          <circle cx="322" cy="168" r="22" fill="#1d4a42"/><circle cx="322" cy="168" r="9" fill="#fff"/>
+          <path d="M262 108l-14 22h9l-2 17 15-24h-10z" fill="#00dda8"/>
+        </svg>
       </div>
+    </div>
 
-      <!-- Tipo -->
-      <div class="filter-group">
-        <label class="filter-label">Tipo</label>
-        <select class="filter-select" id="filterType">
-          <option value="">Tutti i tipi</option>
-          <option value="ev">Elettrica (EV)</option>
-          <option value="phev">Plug-in Hybrid (PHEV)</option>
-        </select>
+    <div class="searchcard">
+      <div class="tabs">
+        <button class="tab on" type="button">Ricerca rapida</button>
+        <button class="tab" type="button" data-scroll="filtri">Ricerca avanzata</button>
       </div>
-
-      <!-- Anno Da -->
-      <div class="filter-group">
-        <label class="filter-label">Anno Da</label>
-        <select class="filter-select" id="filterYearFrom">
-          <option value="">Qualsiasi anno</option>
-          <option value="2024">2024</option>
-          <option value="2023">2023</option>
-          <option value="2022">2022</option>
-          <option value="2021">2021</option>
-          <option value="2020">2020</option>
-          <option value="2019">2019</option>
-          <option value="2018">2018</option>
-          <option value="2017">2017</option>
-          <option value="2016">2016</option>
-        </select>
+      <div class="sbox">
+        <span aria-hidden="true">&#128269;</span>
+        <input type="text" id="q" placeholder="Cerca marca, modello o versione (es. Tesla Model 3, ID.3, Zoe)" aria-label="Cerca">
+        <button class="btn primary" type="button" id="searchBtn"><span id="btnCount">Cerca</span></button>
       </div>
-
-      <!-- Anno A -->
-      <div class="filter-group">
-        <label class="filter-label">Anno A</label>
-        <select class="filter-select" id="filterYearTo">
-          <option value="">Qualsiasi anno</option>
-          <option value="2024">2024</option>
-          <option value="2023">2023</option>
-          <option value="2022">2022</option>
-          <option value="2021">2021</option>
-          <option value="2020">2020</option>
-          <option value="2019">2019</option>
-          <option value="2018">2018</option>
-          <option value="2017">2017</option>
-          <option value="2016">2016</option>
-        </select>
+      <div class="chips">
+        <span>Marche pi&ugrave; cercate:</span>
+        <button class="chip" type="button" data-brand="Tesla">Tesla</button>
+        <button class="chip" type="button" data-brand="Volkswagen">Volkswagen</button>
+        <button class="chip" type="button" data-brand="Renault">Renault</button>
+        <button class="chip" type="button" data-brand="Fiat">Fiat</button>
+        <button class="chip" type="button" data-brand="Hyundai">Hyundai</button>
+        <button class="chip" type="button" data-brand="BMW">BMW</button>
+        <button class="chip" type="button" data-brand="Kia">Kia</button>
       </div>
-
-      <!-- Prezzo Da - A -->
-      <div class="filter-group">
-        <label class="filter-label">Prezzo (€)</label>
-        <div class="price-range">
-          <div class="filter-group">
-            <input type="number" class="filter-input" id="filterPriceFrom" placeholder="Da">
-          </div>
-          <span class="price-range-separator">-</span>
-          <div class="filter-group">
-            <input type="number" class="filter-input" id="filterPriceTo" placeholder="A">
-          </div>
-        </div>
-      </div>
-
-      <!-- Km da -->
-      <div class="filter-group">
-        <label class="filter-label">Km massimi</label>
-        <input type="number" class="filter-input" id="filterKm" placeholder="Es. 50000">
-      </div>
-
-      <!-- Stato -->
-      <div class="filter-group">
-        <label class="filter-label">Stato</label>
-        <select class="filter-select" id="filterState">
-          <option value="">Tutti gli stati</option>
-          <option value="excellent">Eccellente</option>
-          <option value="good">Buono</option>
-          <option value="fair">Discreto</option>
-        </select>
-      </div>
-
-      <!-- Reset Button -->
-      <button class="btn-reset" id="btnReset">Ripristina Filtri</button>
     </div>
   </div>
 </section>
 
-<!-- MAIN CONTENT -->
-<div class="content">
-  <div class="toolbar">
-    <h2>Annunci</h2>
-    <div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
-      <span class="count"><strong id="adCount">24</strong> annunci trovati</span>
-      <div class="sort-control">
-        <label>Ordina:</label>
-        <select class="sort-select" id="sortBy">
-          <option value="recent">Più recenti</option>
-          <option value="price-asc">Prezzo crescente</option>
-          <option value="price-desc">Prezzo decrescente</option>
-          <option value="km-asc">Km minori</option>
-        </select>
-      </div>
-    </div>
-  </div>
-
-  <div class="grid" id="grid">
-    <!-- Sample Cards -->
-    <div class="card">
-      <div class="card-media">
-        <span class="badge">EV</span>
-        <span class="year-tag">2023</span>
-      </div>
-      <div class="card-body">
-        <h3>Tesla Model 3</h3>
-        <p class="version">Standard Range</p>
-        <div class="price">€32.500</div>
-        <div class="specs">
-          <div class="spec"><span class="ico">📅</span> 2023</div>
-          <div class="spec"><span class="ico">🛞</span> 15.200 km</div>
-          <div class="spec"><span class="ico">⚡</span> 507 km</div>
-          <div class="spec"><span class="ico">🏎️</span> 6.1s 0-100</div>
-        </div>
-        <p class="desc">Ottima condizione, primo proprietario, manutenzione Tesla. Perfetta per pendolari.</p>
-        <div class="card-foot">
-          <div class="seller">
-            <span>👤</span>
-            <span class="seller-name">Marco R.</span>
-          </div>
-          <button class="like-btn" onclick="this.classList.toggle('liked')">❤️</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-media">
-        <span class="badge plugin">PHEV</span>
-        <span class="year-tag">2022</span>
-      </div>
-      <div class="card-body">
-        <h3>BMW X5 45e</h3>
-        <p class="version">xDrive45e Hybrid</p>
-        <div class="price">€48.900</div>
-        <div class="specs">
-          <div class="spec"><span class="ico">📅</span> 2022</div>
-          <div class="spec"><span class="ico">🛞</span> 32.100 km</div>
-          <div class="spec"><span class="ico">⚡</span> 67 km</div>
-          <div class="spec"><span class="ico">🏎️</span> 5.3s 0-100</div>
-        </div>
-        <p class="desc">SUV luxury con batteria ibrida. Consumo ridotto, lussuoso e performante.</p>
-        <div class="card-foot">
-          <div class="seller">
-            <span>👤</span>
-            <span class="seller-name">Concessionario</span>
-          </div>
-          <button class="like-btn" onclick="this.classList.toggle('liked')">❤️</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-media">
-        <span class="badge">EV</span>
-        <span class="year-tag">2021</span>
-      </div>
-      <div class="card-body">
-        <h3>Renault Zoe</h3>
-        <p class="version">R135</p>
-        <div class="price">€18.500</div>
-        <div class="specs">
-          <div class="spec"><span class="ico">📅</span> 2021</div>
-          <div class="spec"><span class="ico">🛞</span> 45.300 km</div>
-          <div class="spec"><span class="ico">⚡</span> 395 km</div>
-          <div class="spec"><span class="ico">🏎️</span> 8.4s 0-100</div>
-        </div>
-        <p class="desc">Piccola city car economica. Perfetta per l'ambiente urbano, ottimi consumi.</p>
-        <div class="card-foot">
-          <div class="seller">
-            <span>👤</span>
-            <span class="seller-name">Sarah P.</span>
-          </div>
-          <button class="like-btn" onclick="this.classList.toggle('liked')">❤️</button>
-        </div>
-      </div>
-    </div>
+<!-- ========== FILTRI ========== -->
+<div class="filterbar" id="filtri">
+  <div class="wrap fb" id="filters">
+    <select class="fsel" id="fBrand" aria-label="Marca"><option value="">Tutte le marche</option></select>
+    <select class="fsel" id="fBody" aria-label="Carrozzeria">
+      <option value="">Tutte le carrozzerie</option>
+      <option>City car</option><option>Compatta</option><option>Berlina</option><option>SUV</option>
+    </select>
+    <select class="fsel" id="fType" aria-label="Alimentazione">
+      <option value="">Elettriche e plug-in</option>
+      <option value="ev">100% elettrica</option>
+      <option value="phev">Ibrida plug-in</option>
+    </select>
+    <select class="fsel" id="fPrice" aria-label="Prezzo massimo">
+      <option value="">Prezzo: tutti</option>
+      <option value="15000">fino a 15.000 &euro;</option>
+      <option value="20000">fino a 20.000 &euro;</option>
+      <option value="30000">fino a 30.000 &euro;</option>
+      <option value="40000">fino a 40.000 &euro;</option>
+      <option value="60000">fino a 60.000 &euro;</option>
+    </select>
+    <select class="fsel" id="fKm" aria-label="Chilometri massimi">
+      <option value="">Km: tutti</option>
+      <option value="20000">fino a 20.000 km</option>
+      <option value="40000">fino a 40.000 km</option>
+      <option value="60000">fino a 60.000 km</option>
+      <option value="100000">fino a 100.000 km</option>
+    </select>
+    <select class="fsel" id="fYear" aria-label="Anno minimo">
+      <option value="">Anno: tutti</option>
+      <option value="2023">dal 2023</option>
+      <option value="2022">dal 2022</option>
+      <option value="2021">dal 2021</option>
+      <option value="2020">dal 2020</option>
+    </select>
+    <select class="fsel" id="fRange" aria-label="Autonomia minima">
+      <option value="">Autonomia: tutte</option>
+      <option value="300">oltre 300 km</option>
+      <option value="400">oltre 400 km</option>
+      <option value="450">oltre 450 km</option>
+      <option value="500">oltre 500 km</option>
+    </select>
+    <select class="fsel" id="fSeller" aria-label="Venditore">
+      <option value="">Tutti i venditori</option>
+      <option value="dealer">Concessionario</option>
+      <option value="private">Privato</option>
+    </select>
+    <button class="reset" type="button" id="resetBtn">Ripristina filtri</button>
   </div>
 </div>
 
-<script>
-// Sample data
-const ads = [
-  {
-    id: 1,
-    brand: 'tesla',
-    model: 'Model 3',
-    version: 'Standard Range',
-    type: 'ev',
-    year: 2023,
-    price: 32500,
-    km: 15200,
-    range: 507,
-    acceleration: 6.1,
-    condition: 'excellent',
-    description: 'Ottima condizione, primo proprietario, manutenzione Tesla. Perfetta per pendolari.',
-    seller: 'Marco R.',
-    date: '2 giorni fa'
-  },
-  {
-    id: 2,
-    brand: 'bmw',
-    model: 'X5 45e',
-    version: 'xDrive45e Hybrid',
-    type: 'phev',
-    year: 2022,
-    price: 48900,
-    km: 32100,
-    range: 67,
-    acceleration: 5.3,
-    condition: 'good',
-    description: 'SUV luxury con batteria ibrida. Consumo ridotto, lussuoso e performante.',
-    seller: 'Concessionario',
-    date: '5 giorni fa'
-  },
-  {
-    id: 3,
-    brand: 'renault',
-    model: 'Zoe',
-    version: 'R135',
-    type: 'ev',
-    year: 2021,
-    price: 18500,
-    km: 45300,
-    range: 395,
-    acceleration: 8.4,
-    condition: 'good',
-    description: 'Piccola city car economica. Perfetta per l\'ambiente urbano, ottimi consumi.',
-    seller: 'Sarah P.',
-    date: '1 settimana fa'
-  }
-];
+<!-- ========== LIFESTYLE ========== -->
+<section class="life wrap">
+  <h2>Cerca l&rsquo;elettrica giusta per te</h2>
+  <div class="lgrid">
+    <button class="lf" type="button" data-preset="city"><b>&#127961;</b>Per la citt&agrave;<small>city car agili</small></button>
+    <button class="lf" type="button" data-preset="famiglia"><b>&#128106;</b>Per la famiglia<small>SUV spaziosi</small></button>
+    <button class="lf" type="button" data-preset="viaggi"><b>&#128740;</b>Lunghi viaggi<small>oltre 450 km</small></button>
+    <button class="lf" type="button" data-preset="budget"><b>&#128176;</b>Primo prezzo<small>sotto 18.000 &euro;</small></button>
+    <button class="lf" type="button" data-preset="compatta"><b>&#128663;</b>Compatte<small>il giusto mezzo</small></button>
+    <button class="lf" type="button" data-preset="phev"><b>&#128268;</b>Plug-in<small>ibride ricaricabili</small></button>
+  </div>
+</section>
 
-const typeLabels = {
-  'ev': 'EV',
-  'phev': 'PHEV'
-};
+<!-- ========== RISULTATI ========== -->
+<section class="results wrap" id="annunci">
+  <div class="rhead">
+    <div>
+      <h2>Auto elettriche e plug-in usate in vendita</h2>
+      <p class="rsub">Confronta autonomia reale, capacit&agrave; della batteria, potenza di ricarica e chilometri delle EV proposte da concessionari e privati in tutta Italia.</p>
+      <div class="rcount"><span id="count">0</span> offerte disponibili</div>
+    </div>
+    <div class="sortwrap">
+      <label for="sort">Ordina</label>
+      <select class="fsel" id="sort">
+        <option value="recenti">Pi&ugrave; recenti</option>
+        <option value="prezzo-asc">Prezzo crescente</option>
+        <option value="prezzo-desc">Prezzo decrescente</option>
+        <option value="km-asc">Km crescenti</option>
+        <option value="range-desc">Autonomia maggiore</option>
+        <option value="anno-desc">Anno pi&ugrave; recente</option>
+      </select>
+    </div>
+  </div>
 
-function renderCards(data) {
-  const grid = document.getElementById('grid');
-  const count = document.getElementById('adCount');
-  
-  count.textContent = data.length;
+  <div class="list" id="list"></div>
+  <button class="btn dark more" type="button" id="moreBtn">Mostra altri annunci</button>
 
-  if (data.length === 0) {
-    grid.innerHTML = '<div class="empty-state"><h3>Nessun annuncio trovato</h3><p>Prova a modificare i filtri di ricerca</p></div>';
-    return;
-  }
+  <div class="ctas" id="vendi">
+    <div class="cta">
+      <h3>Sei un concessionario?</h3>
+      <p>Pubblica il tuo stock di auto elettriche e plug-in e raggiungi acquirenti gi&agrave; orientati all&rsquo;elettrico.</p>
+      <button class="btn primary" type="button">Richiedi informazioni</button>
+    </div>
+    <div class="cta">
+      <h3>Vendere la tua EV &egrave; semplice.</h3>
+      <p>Inserisci targa, chilometri e stato della batteria: l&rsquo;annuncio &egrave; online in pochi minuti.</p>
+      <button class="btn dark" type="button">Pubblica gratis</button>
+    </div>
+  </div>
+</section>
 
-  grid.innerHTML = data.map(ad => `
-    <div class="card">
-      <div class="card-media">
-        <span class="badge ${ad.type === 'phev' ? 'plugin' : ''}">${typeLabels[ad.type]}</span>
-        <span class="year-tag">${ad.year}</span>
+<!-- ========== SEO LINKS ========== -->
+<section class="seo wrap" id="guide">
+  <h2 style="font-size:22px;margin:0;color:var(--ink)">Trova la tua prossima elettrica</h2>
+  <h4>Marche elettriche pi&ugrave; cercate</h4>
+  <div class="cols" id="brandLinks"></div>
+  <h4>Ricerche frequenti</h4>
+  <div class="cols">
+    <a href="#annunci">Auto elettriche usate economiche</a>
+    <a href="#annunci">EV con autonomia oltre 500 km</a>
+    <a href="#annunci">City car elettriche usate</a>
+    <a href="#annunci">SUV elettrici usati</a>
+    <a href="#annunci">Ibride plug-in usate</a>
+    <a href="#annunci">Auto elettriche Km 0</a>
+    <a href="#annunci">EV con ricarica rapida 150 kW</a>
+    <a href="#annunci">Elettriche usate da privati</a>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer class="site">
+  <div class="wrap">
+    <div class="fgrid">
+      <div>
+        <a class="logo" href="#" style="color:#fff"><span class="bolt">&#9889;</span><span style="color:#fff">AutoElettriche<small style="color:#a6c8bf">usate.eu</small></span></a>
+        <p style="margin-top:12px;max-width:320px">Annunci di auto elettriche e ibride plug-in usate. Un progetto indipendente dedicato alla mobilit&agrave; elettrica in Italia.</p>
       </div>
-      <div class="card-body">
-        <h3>${ad.brand.charAt(0).toUpperCase() + ad.brand.slice(1)} ${ad.model}</h3>
-        <p class="version">${ad.version}</p>
-        <div class="price">€${ad.price.toLocaleString('it-IT')}</div>
-        <div class="specs">
-          <div class="spec"><span class="ico">📅</span> ${ad.year}</div>
-          <div class="spec"><span class="ico">🛞</span> ${ad.km.toLocaleString('it-IT')} km</div>
-          <div class="spec"><span class="ico">⚡</span> ${ad.range} km</div>
-          <div class="spec"><span class="ico">🏎️</span> ${ad.acceleration}s 0-100</div>
-        </div>
-        <p class="desc">${ad.description}</p>
-        <div class="card-foot">
-          <div class="seller">
-            <span>👤</span>
-            <span class="seller-name">${ad.seller}</span>
-          </div>
-          <button class="like-btn" onclick="this.classList.toggle('liked')">❤️</button>
-        </div>
+      <div>
+        <h5>Compra</h5>
+        <a href="#annunci">Tutti gli annunci</a>
+        <a href="#annunci">Elettriche usate</a>
+        <a href="#annunci">Plug-in usate</a>
+      </div>
+      <div>
+        <h5>Vendi</h5>
+        <a href="#vendi">Pubblica un annuncio</a>
+        <a href="#vendi">Area concessionari</a>
+      </div>
+      <div>
+        <h5>Info</h5>
+        <a href="#guide">Guide e ricarica</a>
+        <a href="#">Contatti</a>
+        <a href="#">Privacy</a>
       </div>
     </div>
-  `).join('');
+    <div class="fbottom">
+      <span>&copy; 2026 autoelettricheusate.eu &mdash; Tutti i diritti riservati.</span>
+      <span>Annunci dimostrativi: i veicoli mostrati sono esempi.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ========== MODALE DETTAGLIO ========== -->
+<div class="overlay" id="overlay">
+  <div class="modal" id="modal"></div>
+</div>
+
+<script>
+/* ================= DATI ANNUNCI (demo) ================= */
+var ads = [
+  {id:1,brand:'Tesla',model:'Model 3',version:'Standard Range Plus',type:'ev',body:'Berlina',year:2021,month:'Marzo',price:26900,km:62000,battery:60,range:448,kw:208,cv:283,charge:'170 kW DC',cond:'Usata',seller:'Elettrauto Milano Srl',stype:'dealer',city:'Milano (MI)',days:2,g:0,desc:'Primo proprietario, tagliandi certificati in rete Tesla, stato di salute della batteria 94%. Sempre ricaricata in AC.',feat:['Autopilot','Ricarica rapida 170 kW','Tetto panoramico','Sedili riscaldati']},
+  {id:2,brand:'Tesla',model:'Model Y',version:'Long Range AWD',type:'ev',body:'SUV',year:2022,month:'Giugno',price:38900,km:45000,battery:75,range:533,kw:324,cv:440,charge:'250 kW DC',cond:'Usata',seller:'EV Store Roma',stype:'dealer',city:'Roma (RM)',days:5,g:1,desc:'Trazione integrale, gancio di traino originale, cerchi 20 pollici. Garanzia batteria attiva fino al 2030.',feat:['Trazione integrale','Ricarica rapida 250 kW','Gancio traino','Guida autonoma avanzata']},
+  {id:3,brand:'Renault',model:'Zoe',version:'R135 Intens 52 kWh',type:'ev',body:'City car',year:2021,month:'Maggio',price:15400,km:45300,battery:52,range:395,kw:100,cv:135,charge:'46 kW DC',cond:'Usata',seller:'Sara P.',stype:'private',city:'Torino (TO)',days:1,g:2,desc:'Batteria di proprieta (non in noleggio), cavo Mode 3 incluso. Perfetta per uso urbano e tragitti casa-lavoro.',feat:['Batteria di proprieta','Cavo Mode 3 incluso','Telecamera posteriore']},
+  {id:4,brand:'Fiat',model:'500e',version:'Icon 42 kWh',type:'ev',body:'City car',year:2022,month:'Aprile',price:16900,km:28400,battery:42,range:320,kw:87,cv:118,charge:'85 kW DC',cond:'Usata',seller:'Autosalone Bologna EV',stype:'dealer',city:'Bologna (BO)',days:3,g:3,desc:'Allestimento Icon con navigatore, cerchi in lega 16 pollici e sensori di parcheggio. Wallbox domestica omaggio.',feat:['Apple CarPlay','Wallbox in omaggio','Sensori di parcheggio']},
+  {id:5,brand:'Volkswagen',model:'ID.3',version:'Pro Performance 58 kWh',type:'ev',body:'Compatta',year:2021,month:'Settembre',price:21900,km:51000,battery:58,range:425,kw:150,cv:204,charge:'120 kW DC',cond:'Usata',seller:'Verona Mobility',stype:'dealer',city:'Verona (VR)',days:7,g:4,desc:'Aggiornamento software 3.x installato, pompa di calore, matrix LED. Tagliandi regolari presso rete ufficiale.',feat:['Pompa di calore','Fari Matrix LED','Ricarica rapida 120 kW']},
+  {id:6,brand:'Volkswagen',model:'ID.4',version:'Pro 77 kWh',type:'ev',body:'SUV',year:2022,month:'Febbraio',price:29800,km:38000,battery:77,range:522,kw:150,cv:204,charge:'135 kW DC',cond:'Usata',seller:'Padova Auto Green',stype:'dealer',city:'Padova (PD)',days:4,g:5,desc:'SUV familiare con ampio bagagliaio, head-up display con realta aumentata e pompa di calore.',feat:['Head-up display AR','Pompa di calore','Portellone elettrico']},
+  {id:7,brand:'Hyundai',model:'Kona Electric',version:'64 kWh XLine',type:'ev',body:'SUV',year:2021,month:'Luglio',price:22500,km:47000,battery:64,range:484,kw:150,cv:204,charge:'77 kW DC',cond:'Usata',seller:'Luca M.',stype:'private',city:'Firenze (FI)',days:6,g:0,desc:'Autonomia reale superiore ai 400 km anche in inverno. Garanzia batteria 8 anni ancora valida.',feat:['Garanzia batteria 8 anni','Cruise control adattivo','Retrocamera']},
+  {id:8,brand:'Kia',model:'Niro EV',version:'64,8 kWh Evolution',type:'ev',body:'SUV',year:2022,month:'Ottobre',price:25900,km:36000,battery:64.8,range:460,kw:150,cv:204,charge:'80 kW DC',cond:'Usata',seller:'Napoli E-Motors',stype:'dealer',city:'Napoli (NA)',days:8,g:1,desc:'Unico proprietario, garanzia costruttore 7 anni fino al 2029. Interni in tessuto riciclato.',feat:['Garanzia 7 anni','Sedili riscaldati','Vehicle to Load']},
+  {id:9,brand:'Nissan',model:'Leaf',version:'e+ Tekna 62 kWh',type:'ev',body:'Compatta',year:2021,month:'Gennaio',price:17900,km:55000,battery:62,range:385,kw:160,cv:217,charge:'100 kW CHAdeMO',cond:'Usata',seller:'Bari Elettrica',stype:'dealer',city:'Bari (BA)',days:10,g:2,desc:'Sistema e-Pedal, ProPILOT e impianto audio Bose. Ottimo stato generale, gomme nuove.',feat:['e-Pedal','ProPILOT','Audio Bose']},
+  {id:10,brand:'Peugeot',model:'e-2008',version:'GT 50 kWh',type:'ev',body:'SUV',year:2022,month:'Marzo',price:21400,km:41000,battery:50,range:320,kw:100,cv:136,charge:'100 kW DC',cond:'Usata',seller:'Liguria Auto',stype:'dealer',city:'Genova (GE)',days:9,g:3,desc:'i-Cockpit 3D, fari full LED e cerchi 18 pollici. Ideale per uso misto citta-extraurbano.',feat:['i-Cockpit 3D','Full LED','Keyless']},
+  {id:11,brand:'Citroen',model:'e-C4',version:'Shine 50 kWh',type:'ev',body:'Compatta',year:2022,month:'Maggio',price:19500,km:33000,battery:50,range:350,kw:100,cv:136,charge:'100 kW DC',cond:'Usata',seller:'Marco T.',stype:'private',city:'Perugia (PG)',days:12,g:4,desc:'Sospensioni con smorzatori idraulici progressivi, sedili Advanced Comfort. Comodissima nei lunghi tragitti.',feat:['Sedili Advanced Comfort','Head-up display','Cerchi 18 pollici']},
+  {id:12,brand:'BMW',model:'i3',version:'120 Ah Advantage',type:'ev',body:'City car',year:2020,month:'Novembre',price:18900,km:42000,battery:42,range:310,kw:125,cv:170,charge:'50 kW DC',cond:'Usata',seller:'Brescia Motors',stype:'dealer',city:'Brescia (BS)',days:14,g:5,desc:'Telaio in carbonio, interni in materiali riciclati, raggio di sterzata da citycar. Batteria efficiente.',feat:['Telaio in carbonio','Navigatore Professional','Pompa di calore']},
+  {id:13,brand:'BMW',model:'iX3',version:'Impressive 80 kWh',type:'ev',body:'SUV',year:2022,month:'Luglio',price:42900,km:39000,battery:80,range:460,kw:210,cv:286,charge:'150 kW DC',cond:'Usata',seller:'Bergamo Premium EV',stype:'dealer',city:'Bergamo (BG)',days:11,g:0,desc:'Allestimento Impressive con tetto panoramico, Harman Kardon e Driving Assistant Professional.',feat:['Tetto panoramico','Harman Kardon','Driving Assistant Pro']},
+  {id:14,brand:'Polestar',model:'2',version:'Long Range Single Motor',type:'ev',body:'Berlina',year:2022,month:'Settembre',price:32900,km:34000,battery:78,range:540,kw:170,cv:231,charge:'155 kW DC',cond:'Usata',seller:'Modena Electric',stype:'dealer',city:'Modena (MO)',days:13,g:1,desc:'Infotainment Google integrato, pilot pack e plus pack. Autonomia dichiarata 540 km WLTP.',feat:['Google integrato','Pilot Pack','Plus Pack']},
+  {id:15,brand:'Mercedes-Benz',model:'EQA',version:'250 Premium',type:'ev',body:'SUV',year:2022,month:'Aprile',price:33900,km:29000,battery:66.5,range:426,kw:140,cv:190,charge:'100 kW DC',cond:'Usata',seller:'EV Store Roma',stype:'dealer',city:'Roma (RM)',days:6,g:2,desc:'Doppio display MBUX, fari LED High Performance, pacchetto parcheggio con telecamera 360.',feat:['MBUX','Telecamera 360','Pacchetto parcheggio']},
+  {id:16,brand:'Audi',model:'Q4 e-tron',version:'40 S line 77 kWh',type:'ev',body:'SUV',year:2022,month:'Giugno',price:36500,km:31000,battery:77,range:520,kw:150,cv:204,charge:'125 kW DC',cond:'Usata',seller:'Torino Green Cars',stype:'dealer',city:'Torino (TO)',days:15,g:3,desc:'Allestimento S line, virtual cockpit plus, sedili sportivi. Ricarica DC fino a 125 kW.',feat:['Virtual cockpit plus','Sedili sportivi','Matrix LED']},
+  {id:17,brand:'MG',model:'MG4',version:'Comfort 64 kWh',type:'ev',body:'Compatta',year:2023,month:'Maggio',price:20900,km:18000,battery:64,range:435,kw:150,cv:204,charge:'140 kW DC',cond:'Usata',seller:'Verona Mobility',stype:'dealer',city:'Verona (VR)',days:2,g:4,desc:'Trazione posteriore, ADAS di serie e garanzia costruttore 7 anni. Come nuova, pochi chilometri.',feat:['Garanzia 7 anni','ADAS di serie','Trazione posteriore']},
+  {id:18,brand:'Cupra',model:'Born',version:'58 kWh 204 CV',type:'ev',body:'Compatta',year:2022,month:'Novembre',price:27500,km:24000,battery:58,range:424,kw:150,cv:204,charge:'120 kW DC',cond:'Usata',seller:'Trentino EV',stype:'dealer',city:'Trento (TN)',days:5,g:5,desc:'Sedili sportivi in materiale riciclato, cerchi 20 pollici, pompa di calore. Divertente da guidare.',feat:['Pompa di calore','Cerchi 20 pollici','Sedili sportivi']},
+  {id:19,brand:'Smart',model:'EQ fortwo',version:'Passion 17,6 kWh',type:'ev',body:'City car',year:2021,month:'Marzo',price:11900,km:22000,battery:17.6,range:130,kw:60,cv:82,charge:'22 kW AC',cond:'Usata',seller:'Giulia R.',stype:'private',city:'Cagliari (CA)',days:4,g:0,desc:'Ideale per il centro citta, parcheggia dappertutto. Caricatore di bordo 22 kW, ricarica in 40 minuti.',feat:['Ricarica AC 22 kW','Cerchi in lega','Cruise control']},
+  {id:20,brand:'Volvo',model:'XC40 Recharge',version:'T4 Plug-in Inscription',type:'phev',body:'SUV',year:2022,month:'Gennaio',price:31500,km:47000,battery:10.7,range:46,kw:155,cv:211,charge:'3,7 kW AC',cond:'Usata',seller:'Torino Green Cars',stype:'dealer',city:'Torino (TO)',days:16,g:1,desc:'Ibrida plug-in ideale per chi percorre molti chilometri: in citta in elettrico, in autostrada senza pensieri.',feat:['Interni in pelle','Pilot Assist','Portellone elettrico']},
+  {id:21,brand:'Jeep',model:'Compass',version:'4xe S 1.3 240 CV',type:'phev',body:'SUV',year:2022,month:'Agosto',price:27900,km:52000,battery:11.4,range:50,kw:176,cv:240,charge:'7,4 kW AC',cond:'Usata',seller:'Sicilia Auto',stype:'dealer',city:'Palermo (PA)',days:18,g:2,desc:'Trazione integrale elettrificata, modalita Selec-Terrain. Perfetta per famiglia e tempo libero.',feat:['Trazione integrale','Selec-Terrain','Tetto apribile']},
+  {id:22,brand:'BMW',model:'X5',version:'xDrive45e 394 CV',type:'phev',body:'SUV',year:2022,month:'Maggio',price:48900,km:32100,battery:24,range:67,cv:394,kw:290,charge:'7,4 kW AC',cond:'Usata',seller:'Elettrauto Milano Srl',stype:'dealer',city:'Milano (MI)',days:20,g:3,desc:'SUV luxury con 67 km di autonomia elettrica reale, sospensioni pneumatiche e interni in pelle Vernasca.',feat:['Sospensioni pneumatiche','Pelle Vernasca','Laser light']}
+];
+
+/* ================= UTILITY ================= */
+var GRAD = [
+  'linear-gradient(135deg,#d9f7ec,#a5e9d3)',
+  'linear-gradient(135deg,#e3f4ff,#b7ddf4)',
+  'linear-gradient(135deg,#eaf7dd,#c4e8b1)',
+  'linear-gradient(135deg,#f1f1ff,#cdcff5)',
+  'linear-gradient(135deg,#fff3dd,#ffd9a6)',
+  'linear-gradient(135deg,#e9f1f0,#bed8d3)'
+];
+
+function fmt(n) { return Number(n).toLocaleString('it-IT'); }
+function alim(a) { return a.type === 'ev' ? 'Elettrica' : 'Ibrida plug-in'; }
+function autonomy(a) { return fmt(a.range) + ' km' + (a.type === 'phev' ? ' elettrici' : ''); }
+function battery(a) { return String(a.battery).replace('.', ',') + ' kWh'; }
+function initials(s) { return s.charAt(0).toUpperCase(); }
+function sellerType(a) { return a.stype === 'dealer' ? 'Concessionario' : 'Privato'; }
+
+function carSvg() {
+  return '<svg viewBox="0 0 240 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+    '<path d="M26 86c-7 0-12-6-10-13l6-19c3-8 10-13 18-14l34-5 26-16c8-5 17-8 26-8h30c11 0 22 4 30 12l16 16 20 5c9 3 16 11 16 21v9c0 7-6 12-13 12H26z" fill="rgba(255,255,255,.9)"/>' +
+    '<path d="M132 20h26c7 0 14 3 19 8l14 14h-59V20z" fill="rgba(20,49,42,.14)"/>' +
+    '<path d="M122 20h-14c-7 0-13 2-19 6l-24 16h57V20z" fill="rgba(20,49,42,.08)"/>' +
+    '<circle cx="76" cy="86" r="18" fill="rgba(20,49,42,.82)"/><circle cx="76" cy="86" r="7" fill="rgba(255,255,255,.92)"/>' +
+    '<circle cx="182" cy="86" r="18" fill="rgba(20,49,42,.82)"/><circle cx="182" cy="86" r="7" fill="rgba(255,255,255,.92)"/>' +
+    '<path d="M124 48l-11 18h7l-2 14 12-20h-8z" fill="#00b98d"/>' +
+    '</svg>';
 }
 
-function applyFilters() {
-  let filtered = [...ads];
+function specRow(a) {
+  return '<div class="specs">' +
+    '<div class="sp"><label>Chilometri</label><b>' + fmt(a.km) + ' km</b></div>' +
+    '<div class="sp"><label>Cambio</label><b>Automatico</b></div>' +
+    '<div class="sp"><label>Alimentazione</label><b>' + alim(a) + '</b></div>' +
+    '<div class="sp"><label>Immatricolazione</label><b>' + a.month + ' ' + a.year + '</b></div>' +
+    '<div class="sp"><label>Potenza</label><b>' + a.kw + ' kW (' + a.cv + ' CV)</b></div>' +
+    '<div class="sp"><label>Autonomia</label><b>' + autonomy(a) + '</b></div>' +
+    '</div>';
+}
 
-  const brand = document.getElementById('filterBrand').value;
-  const model = document.getElementById('filterModel').value.toLowerCase();
-  const type = document.getElementById('filterType').value;
-  const yearFrom = document.getElementById('filterYearFrom').value;
-  const yearTo = document.getElementById('filterYearTo').value;
-  const priceFrom = parseFloat(document.getElementById('filterPriceFrom').value) || 0;
-  const priceTo = parseFloat(document.getElementById('filterPriceTo').value) || Infinity;
-  const km = parseFloat(document.getElementById('filterKm').value) || Infinity;
-  const state = document.getElementById('filterState').value;
-  const search = document.getElementById('headerSearch').value.toLowerCase();
+function cardHtml(a) {
+  var badge = a.type === 'ev'
+    ? '<span class="bdg ev">100% elettrica</span>'
+    : '<span class="bdg phev">Ibrida plug-in</span>';
+  var verified = a.stype === 'dealer'
+    ? '<div class="verified">&#10003; Rivenditore verificato</div>'
+    : '<div class="verified">&#128100; Venditore privato</div>';
+  var tags = '';
+  for (var i = 0; i < a.feat.length; i++) { tags += '<span class="tag">&#9889; ' + a.feat[i] + '</span>'; }
 
-  filtered = filtered.filter(ad => {
-    if (brand && ad.brand !== brand) return false;
-    if (model && !ad.model.toLowerCase().includes(model)) return false;
-    if (type && ad.type !== type) return false;
-    if (yearFrom && ad.year < parseInt(yearFrom)) return false;
-    if (yearTo && ad.year > parseInt(yearTo)) return false;
-    if (ad.price < priceFrom || ad.price > priceTo) return false;
-    if (ad.km > km) return false;
-    if (state && ad.condition !== state) return false;
-    if (search && !ad.model.toLowerCase().includes(search) && !ad.brand.includes(search)) return false;
+  return '<article class="ad">' +
+    '<div class="ad-top">' +
+      '<div class="media" data-open="' + a.id + '" style="background:' + GRAD[a.g] + '">' +
+        carSvg() +
+        '<div class="badges">' + badge + '<span class="bdg">' + battery(a) + '</span></div>' +
+        '<span class="yeartag">' + a.year + '</span>' +
+        '<div class="thumbs"><i></i><i></i><i></i></div>' +
+      '</div>' +
+      '<div class="info">' +
+        '<div class="itop"><div class="price">' + fmt(a.price) + ' <span>&euro;</span></div>' + verified + '</div>' +
+        '<h3><a href="#annunci" data-open="' + a.id + '">' + a.brand + ' ' + a.model + '</a></h3>' +
+        '<p class="ver">' + a.version + ' &middot; ' + a.body + '</p>' +
+        specRow(a) +
+        '<div class="feat"><p>In evidenza</p><div class="tags">' + tags + '</div></div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="ad-foot">' +
+      '<div class="seller"><span class="avatar">' + initials(a.seller) + '</span>' +
+        '<span>' + a.seller + '<small>' + sellerType(a) + ' &middot; ' + a.city + '</small></span></div>' +
+      '<div class="acts">' +
+        '<button class="btn sm" type="button" data-open="' + a.id + '">Vedi dettagli</button>' +
+        '<button class="btn primary sm" type="button" data-open="' + a.id + '">Contatta</button>' +
+        '<button class="icon like" type="button" data-like="' + a.id + '" aria-label="Salva annuncio">&#10084;</button>' +
+      '</div>' +
+    '</div>' +
+    '</article>';
+}
+
+/* ================= FILTRI E RENDER ================= */
+var PAGE = 8;
+var shown = PAGE;
+var liked = {};
+
+function val(id) { return document.getElementById(id).value; }
+
+function getFiltered() {
+  var q = val('q').trim().toLowerCase();
+  var brand = val('fBrand'), body = val('fBody'), type = val('fType');
+  var price = parseInt(val('fPrice') || '0', 10);
+  var km = parseInt(val('fKm') || '0', 10);
+  var year = parseInt(val('fYear') || '0', 10);
+  var range = parseInt(val('fRange') || '0', 10);
+  var seller = val('fSeller');
+
+  var out = ads.filter(function (a) {
+    var text = (a.brand + ' ' + a.model + ' ' + a.version + ' ' + a.body).toLowerCase();
+    if (q && text.indexOf(q) === -1) return false;
+    if (brand && a.brand !== brand) return false;
+    if (body && a.body !== body) return false;
+    if (type && a.type !== type) return false;
+    if (price && a.price > price) return false;
+    if (km && a.km > km) return false;
+    if (year && a.year < year) return false;
+    if (range && a.range < range) return false;
+    if (seller && a.stype !== seller) return false;
     return true;
   });
 
-  // Apply sorting
-  const sortBy = document.getElementById('sortBy').value;
-  if (sortBy === 'price-asc') filtered.sort((a, b) => a.price - b.price);
-  if (sortBy === 'price-desc') filtered.sort((a, b) => b.price - a.price);
-  if (sortBy === 'km-asc') filtered.sort((a, b) => a.km - b.km);
-
-  renderCards(filtered);
+  var s = val('sort');
+  out.sort(function (x, y) {
+    if (s === 'prezzo-asc') return x.price - y.price;
+    if (s === 'prezzo-desc') return y.price - x.price;
+    if (s === 'km-asc') return x.km - y.km;
+    if (s === 'range-desc') return y.range - x.range;
+    if (s === 'anno-desc') return y.year - x.year;
+    return x.days - y.days;
+  });
+  return out;
 }
 
-// Event listeners
-document.getElementById('filterBrand').addEventListener('change', applyFilters);
-document.getElementById('filterModel').addEventListener('input', applyFilters);
-document.getElementById('filterType').addEventListener('change', applyFilters);
-document.getElementById('filterYearFrom').addEventListener('change', applyFilters);
-document.getElementById('filterYearTo').addEventListener('change', applyFilters);
-document.getElementById('filterPriceFrom').addEventListener('input', applyFilters);
-document.getElementById('filterPriceTo').addEventListener('input', applyFilters);
-document.getElementById('filterKm').addEventListener('input', applyFilters);
-document.getElementById('filterState').addEventListener('change', applyFilters);
-document.getElementById('headerSearch').addEventListener('input', applyFilters);
-document.getElementById('sortBy').addEventListener('change', applyFilters);
-document.getElementById('btnReset').addEventListener('click', () => {
-  document.querySelectorAll('.filter-select, .filter-input').forEach(el => el.value = '');
-  document.getElementById('headerSearch').value = '';
-  document.getElementById('sortBy').value = 'recent';
-  applyFilters();
-});
+function render() {
+  var data = getFiltered();
+  var list = document.getElementById('list');
+  document.getElementById('count').textContent = fmt(data.length);
+  document.getElementById('btnCount').textContent = 'Cerca';
 
-// Initial render
-renderCards(ads);
+  if (!data.length) {
+    list.innerHTML = '<div class="empty"><h3 style="margin:0 0 8px">Nessun annuncio trovato</h3>' +
+      '<p style="margin:0">Prova ad ampliare i filtri: prezzo, chilometri o autonomia.</p></div>';
+    document.getElementById('moreBtn').style.display = 'none';
+    return;
+  }
+
+  var slice = data.slice(0, shown);
+  var html = '';
+  for (var i = 0; i < slice.length; i++) { html += cardHtml(slice[i]); }
+  list.innerHTML = html;
+
+  var more = document.getElementById('moreBtn');
+  if (data.length > shown) {
+    more.style.display = 'block';
+    more.textContent = 'Mostra altri annunci (' + (data.length - shown) + ')';
+  } else {
+    more.style.display = 'none';
+  }
+
+  for (var k in liked) {
+    if (liked[k]) {
+      var el = list.querySelector('[data-like="' + k + '"]');
+      if (el) el.classList.add('on');
+    }
+  }
+}
+
+/* ================= MODALE ================= */
+function openModal(id) {
+  var a = null;
+  for (var i = 0; i < ads.length; i++) { if (ads[i].id === id) a = ads[i]; }
+  if (!a) return;
+  var tags = '';
+  for (var j = 0; j < a.feat.length; j++) { tags += '<span class="tag">&#9889; ' + a.feat[j] + '</span>'; }
+
+  document.getElementById('modal').innerHTML =
+    '<div class="mhead" style="background:' + GRAD[a.g] + '">' + carSvg() +
+      '<button class="mclose" type="button" id="mclose" aria-label="Chiudi">&#10005;</button></div>' +
+    '<div class="mbody">' +
+      '<div class="itop"><div class="price">' + fmt(a.price) + ' <span>&euro;</span></div>' +
+      '<div class="verified">' + sellerType(a) + ' &middot; ' + a.city + '</div></div>' +
+      '<h3>' + a.brand + ' ' + a.model + '</h3>' +
+      '<p class="ver">' + a.version + ' &middot; ' + a.body + '</p>' +
+      '<div class="specs">' +
+        '<div class="sp"><label>Chilometri</label><b>' + fmt(a.km) + ' km</b></div>' +
+        '<div class="sp"><label>Immatricolazione</label><b>' + a.month + ' ' + a.year + '</b></div>' +
+        '<div class="sp"><label>Alimentazione</label><b>' + alim(a) + '</b></div>' +
+        '<div class="sp"><label>Cambio</label><b>Automatico</b></div>' +
+        '<div class="sp"><label>Batteria</label><b>' + battery(a) + '</b></div>' +
+        '<div class="sp"><label>Autonomia</label><b>' + autonomy(a) + '</b></div>' +
+        '<div class="sp"><label>Ricarica max</label><b>' + a.charge + '</b></div>' +
+        '<div class="sp"><label>Potenza</label><b>' + a.kw + ' kW (' + a.cv + ' CV)</b></div>' +
+      '</div>' +
+      '<p class="desc">' + a.desc + '</p>' +
+      '<div class="feat"><p>Dotazioni in evidenza</p><div class="tags">' + tags + '</div></div>' +
+    '</div>' +
+    '<div class="mfoot">' +
+      '<div class="seller"><span class="avatar">' + initials(a.seller) + '</span>' +
+      '<span>' + a.seller + '<small>Annuncio pubblicato ' + a.days + ' giorni fa</small></span></div>' +
+      '<div class="acts"><button class="btn primary sm" type="button">Contatta il venditore</button>' +
+      '<button class="btn sm" type="button" id="mclose2">Chiudi</button></div>' +
+    '</div>';
+
+  document.getElementById('overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+/* ================= INIZIALIZZAZIONE ================= */
+(function init() {
+  var brands = [];
+  for (var i = 0; i < ads.length; i++) {
+    if (brands.indexOf(ads[i].brand) === -1) brands.push(ads[i].brand);
+  }
+  brands.sort();
+  var sel = document.getElementById('fBrand');
+  var links = '';
+  for (var b = 0; b < brands.length; b++) {
+    var o = document.createElement('option');
+    o.value = brands[b]; o.textContent = brands[b];
+    sel.appendChild(o);
+    links += '<a href="#annunci" data-brand="' + brands[b] + '">' + brands[b] + ' usate elettriche</a>';
+  }
+  document.getElementById('brandLinks').innerHTML = links;
+
+  var ctrls = ['fBrand', 'fBody', 'fType', 'fPrice', 'fKm', 'fYear', 'fRange', 'fSeller', 'sort'];
+  for (var c = 0; c < ctrls.length; c++) {
+    document.getElementById(ctrls[c]).addEventListener('change', function () { shown = PAGE; render(); });
+  }
+  document.getElementById('q').addEventListener('input', function () { shown = PAGE; render(); });
+  document.getElementById('searchBtn').addEventListener('click', function () {
+    shown = PAGE; render();
+    document.getElementById('annunci').scrollIntoView({ behavior: 'smooth' });
+  });
+  document.getElementById('moreBtn').addEventListener('click', function () { shown += PAGE; render(); });
+  document.getElementById('resetBtn').addEventListener('click', function () {
+    for (var c2 = 0; c2 < ctrls.length - 1; c2++) { document.getElementById(ctrls[c2]).value = ''; }
+    document.getElementById('q').value = '';
+    document.getElementById('sort').value = 'recenti';
+    shown = PAGE; render();
+  });
+
+  document.addEventListener('click', function (e) {
+    var brandEl = e.target.closest('[data-brand]');
+    if (brandEl) {
+      document.getElementById('fBrand').value = brandEl.getAttribute('data-brand');
+      shown = PAGE; render();
+      document.getElementById('annunci').scrollIntoView({ behavior: 'smooth' });
+      return;
+    }
+    var preset = e.target.closest('[data-preset]');
+    if (preset) {
+      var p = preset.getAttribute('data-preset');
+      document.getElementById('fBody').value = '';
+      document.getElementById('fType').value = '';
+      document.getElementById('fPrice').value = '';
+      document.getElementById('fRange').value = '';
+      if (p === 'city') document.getElementById('fBody').value = 'City car';
+      if (p === 'famiglia') document.getElementById('fBody').value = 'SUV';
+      if (p === 'compatta') document.getElementById('fBody').value = 'Compatta';
+      if (p === 'viaggi') document.getElementById('fRange').value = '450';
+      if (p === 'budget') document.getElementById('fPrice').value = '20000';
+      if (p === 'phev') document.getElementById('fType').value = 'phev';
+      shown = PAGE; render();
+      document.getElementById('annunci').scrollIntoView({ behavior: 'smooth' });
+      return;
+    }
+    var scrollEl = e.target.closest('[data-scroll]');
+    if (scrollEl) {
+      document.getElementById(scrollEl.getAttribute('data-scroll')).scrollIntoView({ behavior: 'smooth' });
+      return;
+    }
+    var likeEl = e.target.closest('[data-like]');
+    if (likeEl) {
+      var id = likeEl.getAttribute('data-like');
+      liked[id] = !liked[id];
+      likeEl.classList.toggle('on');
+      return;
+    }
+    var openEl = e.target.closest('[data-open]');
+    if (openEl) {
+      e.preventDefault();
+      openModal(parseInt(openEl.getAttribute('data-open'), 10));
+      return;
+    }
+    if (e.target.id === 'mclose' || e.target.id === 'mclose2' || e.target.id === 'overlay') closeModal();
+  });
+
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+
+  render();
+})();
 </script>
-
 </body>
 </html>
