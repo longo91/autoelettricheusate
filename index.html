@@ -215,6 +215,10 @@
 .authmsg.err { background:#ffe9ef; color:#8a1f3b; }
 .authmsg.ok { background:var(--mint); color:var(--dark); }
 #authModal { position:relative; }
+
+.frow { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.frow3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; }
+@media (max-width: 640px) { .frow, .frow3 { grid-template-columns:1fr; } }
 </style>
 </head>
 <body>
@@ -475,6 +479,83 @@
 </div>
 </div>
 
+<!-- ========== MODALE PUBBLICA ANNUNCIO ========== -->
+<div class="overlay" id="publishOverlay">
+<div class="modal" id="publishModal" style="max-width:640px;">
+<div style="padding:26px;max-height:86vh;overflow:auto;position:relative;">
+<button class="mclose" type="button" id="publishClose" aria-label="Chiudi" style="position:absolute;top:14px;right:14px;">&#10005;</button>
+<h3 style="margin:0 0 4px;font-size:22px;color:var(--ink)">Pubblica il tuo annuncio</h3>
+<p style="margin:0 0 18px;color:var(--muted);font-size:14px">Compila i dati del veicolo: sar&agrave; visibile subito tra i risultati.</p>
+<div id="publishMsg"></div>
+<form id="publishForm">
+<h4 style="margin:18px 0 10px;font-size:15px;color:var(--dark)">Dati di contatto</h4>
+<div class="field"><label>Nome / Ragione sociale</label><input type="text" id="pNome" required></div>
+<div class="frow">
+<div class="field"><label>Citt&agrave;</label><input type="text" id="pCitta" required></div>
+<div class="field"><label>Provincia</label><input type="text" id="pProv" maxlength="2" placeholder="es. MI"></div>
+</div>
+<div class="frow">
+<div class="field"><label>Telefono</label><input type="text" id="pTelefono"></div>
+<div class="field"><label>Email</label><input type="email" id="pEmail" required></div>
+</div>
+<h4 style="margin:18px 0 10px;font-size:15px;color:var(--dark)">Dati del veicolo</h4>
+<div class="frow">
+<div class="field"><label>Marca</label><input type="text" id="pMarca" required></div>
+<div class="field"><label>Modello</label><input type="text" id="pModello" required></div>
+</div>
+<div class="field"><label>Versione / Allestimento</label><input type="text" id="pVersione"></div>
+<div class="frow">
+<div class="field"><label>Alimentazione</label>
+<select id="pAlimentazione" class="fsel" style="width:100%">
+<option value="elettrica">100% elettrica</option>
+<option value="ibrida plug-in">Ibrida plug-in</option>
+</select>
+</div>
+<div class="field"><label>Carrozzeria</label>
+<select id="pCarrozzeria" class="fsel" style="width:100%">
+<option>City car</option><option>Compatta</option><option>Berlina</option><option>SUV</option>
+</select>
+</div>
+</div>
+<div class="frow3">
+<div class="field"><label>Anno</label><input type="number" id="pAnno" min="2000" max="2026" required></div>
+<div class="field"><label>Chilometri</label><input type="number" id="pKm" min="0" required></div>
+<div class="field"><label>Prezzo (&euro;)</label><input type="number" id="pPrezzo" min="0" required></div>
+</div>
+<div class="frow">
+<div class="field"><label>Colore</label><input type="text" id="pColore"></div>
+<div class="field"><label>Numero proprietari</label><input type="number" id="pProprietari" min="1" value="1"></div>
+</div>
+<h4 style="margin:18px 0 10px;font-size:15px;color:var(--dark)">Dettagli tecnici</h4>
+<div class="frow3">
+<div class="field"><label>Potenza (kW)</label><input type="number" id="pPotenza" min="0"></div>
+<div class="field"><label>Batteria (kWh)</label><input type="number" id="pBatteria" min="0" step="0.1"></div>
+<div class="field"><label>Autonomia (km)</label><input type="number" id="pAutonomia" min="0"></div>
+</div>
+<div class="frow3">
+<div class="field"><label>Ricarica AC (kW)</label><input type="number" id="pRicaricaAc" min="0" step="0.1"></div>
+<div class="field"><label>Ricarica DC (kW)</label><input type="number" id="pRicaricaDc" min="0"></div>
+<div class="field"><label>Salute batteria (%)</label><input type="number" id="pSoh" min="0" max="100"></div>
+</div>
+<div class="frow">
+<div class="field"><label>Trazione</label>
+<select id="pTrazione" class="fsel" style="width:100%">
+<option value="anteriore">Anteriore</option>
+<option value="posteriore">Posteriore</option>
+<option value="integrale">Integrale</option>
+</select>
+</div>
+<div class="field"><label>Tipo presa</label><input type="text" id="pPresa" placeholder="es. Type 2 + CCS"></div>
+</div>
+<h4 style="margin:18px 0 10px;font-size:15px;color:var(--dark)">Altre informazioni</h4>
+<div class="field"><label>Dotazioni (separate da virgola)</label><input type="text" id="pOptional" placeholder="es. Autopilot, Tetto panoramico"></div>
+<div class="field"><label>Descrizione</label><textarea id="pDescrizione" rows="4" required style="width:100%;border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:14px;font-family:inherit"></textarea></div>
+<button class="btn primary" type="submit" style="width:100%;margin-top:6px">Pubblica annuncio</button>
+</form>
+</div>
+</div>
+</div>
+
 <script>
 /* ================= DATI ANNUNCI (demo) ================= */
 var ads = [
@@ -501,6 +582,74 @@ var ads = [
   {id:21,brand:'Jeep',model:'Compass',version:'4xe S 1.3 240 CV',type:'phev',body:'SUV',year:2022,month:'Agosto',price:27900,km:52000,battery:11.4,range:50,kw:176,cv:240,charge:'7,4 kW AC',cond:'Usata',seller:'Sicilia Auto',stype:'dealer',city:'Palermo (PA)',days:18,g:2,desc:'Trazione integrale elettrificata, modalita Selec-Terrain. Perfetta per famiglia e tempo libero.',feat:['Trazione integrale','Selec-Terrain','Tetto apribile']},
   {id:22,brand:'BMW',model:'X5',version:'xDrive45e 394 CV',type:'phev',body:'SUV',year:2022,month:'Maggio',price:48900,km:32100,battery:24,range:67,cv:394,kw:290,charge:'7,4 kW AC',cond:'Usata',seller:'Elettrauto Milano Srl',stype:'dealer',city:'Milano (MI)',days:20,g:3,desc:'SUV luxury con 67 km di autonomia elettrica reale, sospensioni pneumatiche e interni in pelle Vernasca.',feat:['Sospensioni pneumatiche','Pelle Vernasca','Laser light']}
 ];
+
+var realAds = [];
+function allAds() { return realAds.concat(ads); }
+
+function mapRealAd(row) {
+  var days = Math.max(0, Math.floor((Date.now() - new Date(row.creato_il).getTime()) / 86400000));
+  var monthNames = ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'];
+  var createdDate = new Date(row.creato_il);
+  return {
+    id: 1000000 + row.id,
+    brand: row.marca,
+    model: row.modello,
+    version: row.versione || '',
+    type: row.alimentazione === 'ibrida plug-in' ? 'phev' : 'ev',
+    body: row.carrozzeria || '',
+    year: row.anno,
+    month: monthNames[createdDate.getMonth()],
+    price: row.prezzo,
+    km: row.km,
+    battery: row.batteria_kwh || 0,
+    range: row.autonomia_km || 0,
+    kw: row.potenza_kw || 0,
+    cv: row.potenza_kw ? Math.round(row.potenza_kw / 0.7355) : 0,
+    charge: row.ricarica_dc_kw ? (row.ricarica_dc_kw + ' kW DC') : (row.ricarica_ac_kw ? (row.ricarica_ac_kw + ' kW AC') : 'N/D'),
+    cond: 'Usata',
+    seller: row.nome,
+    stype: row.tipo_venditore === 'rivenditore' ? 'dealer' : 'private',
+    city: row.citta + (row.prov ? ' (' + row.prov + ')' : ''),
+    days: days,
+    g: row.id % 6,
+    desc: row.descrizione || '',
+    feat: row.optional || []
+  };
+}
+
+function refreshBrandsFromAds() {
+  var brands = [];
+  var all = allAds();
+  for (var i = 0; i < all.length; i++) {
+    if (brands.indexOf(all[i].brand) === -1) brands.push(all[i].brand);
+  }
+  brands.sort();
+  var sel = document.getElementById('fBrand');
+  var currentVal = sel.value;
+  sel.innerHTML = '<option value="">Tutte le marche</option>';
+  var links = '';
+  for (var b = 0; b < brands.length; b++) {
+    var o = document.createElement('option');
+    o.value = brands[b]; o.textContent = brands[b];
+    sel.appendChild(o);
+    links += '<a href="#annunci" data-brand="' + brands[b] + '">' + brands[b] + ' usate elettriche</a>';
+  }
+  sel.value = currentVal;
+  document.getElementById('brandLinks').innerHTML = links;
+}
+
+function loadRealAds() {
+  var sbc = supabase.createClient('https://komvmedptbcsiiswoaja.supabase.co', 'sb_publishable_W1l56uhiAnI6g7rhvkqtZg_WesZk_rd');
+  window.__reloadRealAds = loadRealAds;
+  sbc.from('annunci').select('*').eq('stato', 'attivo').order('creato_il', { ascending: false }).then(function (res) {
+    if (!res.error && res.data) {
+      realAds = res.data.map(mapRealAd);
+      refreshBrandsFromAds();
+      shown = PAGE;
+      render();
+    }
+  });
+}
 
 /* ================= UTILITY ================= */
 var GRAD = [
@@ -595,7 +744,7 @@ function getFiltered() {
   var range = parseInt(val('fRange') || '0', 10);
   var seller = val('fSeller');
 
-  var out = ads.filter(function (a) {
+  var out = allAds().filter(function (a) {
     var text = (a.brand + ' ' + a.model + ' ' + a.version + ' ' + a.body).toLowerCase();
     if (q && text.indexOf(q) === -1) return false;
     if (brand && a.brand !== brand) return false;
@@ -658,7 +807,8 @@ function render() {
 /* ================= MODALE ================= */
 function openModal(id) {
   var a = null;
-  for (var i = 0; i < ads.length; i++) { if (ads[i].id === id) a = ads[i]; }
+  var __all = allAds();
+for (var i = 0; i < __all.length; i++) { if (__all[i].id === id) a = __all[i]; }
   if (!a) return;
   var tags = '';
   for (var j = 0; j < a.feat.length; j++) { tags += '<span class="tag">&#9889; ' + a.feat[j] + '</span>'; }
@@ -702,20 +852,7 @@ function closeModal() {
 
 /* ================= INIZIALIZZAZIONE ================= */
 (function init() {
-  var brands = [];
-  for (var i = 0; i < ads.length; i++) {
-    if (brands.indexOf(ads[i].brand) === -1) brands.push(ads[i].brand);
-  }
-  brands.sort();
-  var sel = document.getElementById('fBrand');
-  var links = '';
-  for (var b = 0; b < brands.length; b++) {
-    var o = document.createElement('option');
-    o.value = brands[b]; o.textContent = brands[b];
-    sel.appendChild(o);
-    links += '<a href="#annunci" data-brand="' + brands[b] + '">' + brands[b] + ' usate elettriche</a>';
-  }
-  document.getElementById('brandLinks').innerHTML = links;
+  refreshBrandsFromAds();
 
   var ctrls = ['fBrand', 'fBody', 'fType', 'fPrice', 'fKm', 'fYear', 'fRange', 'fSeller', 'sort'];
   for (var c = 0; c < ctrls.length; c++) {
@@ -783,6 +920,7 @@ function closeModal() {
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
 
   render();
+loadRealAds();
 })();
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -921,7 +1059,7 @@ function closeModal() {
         openAuth('register');
         showMsg('Registrati o accedi per pubblicare un annuncio.', 'ok');
       } else {
-        alert('Form di pubblicazione annuncio in arrivo a breve!');
+        if (window.__openPublishModal) { window.__openPublishModal(); }
       }
     });
   }
@@ -951,6 +1089,111 @@ function closeModal() {
   });
 
   sb.auth.getSession().then(function (res) { updateAuthUI(res.data.session); });
+})();
+</script>
+<script>
+(function () {
+  var SUPABASE_URL = 'https://komvmedptbcsiiswoaja.supabase.co';
+  var SUPABASE_ANON_KEY = 'sb_publishable_W1l56uhiAnI6g7rhvkqtZg_WesZk_rd';
+  var sb2 = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  var publishOverlay = document.getElementById('publishOverlay');
+  var publishClose = document.getElementById('publishClose');
+  var publishForm = document.getElementById('publishForm');
+  var publishMsg = document.getElementById('publishMsg');
+
+  function showPublishMsg(text, type) {
+    publishMsg.innerHTML = '<div class="authmsg ' + (type || 'ok') + '">' + text + '</div>';
+  }
+  function clearPublishMsg() { publishMsg.innerHTML = ""; }
+
+  function closePublish() {
+    publishOverlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  async function openPublish() {
+    clearPublishMsg();
+    var current = await sb2.auth.getSession();
+    var session = current.data.session;
+    if (!session) return;
+    var prof = await sb2.from('profiles').select('*').eq('id', session.user.id).maybeSingle();
+    var p = prof.data || {};
+    var meta = session.user.user_metadata || {};
+    document.getElementById('pNome').value = p.nome || meta.nome || '';
+    document.getElementById('pEmail').value = p.email || session.user.email || '';
+    publishOverlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  publishClose.addEventListener('click', closePublish);
+  publishOverlay.addEventListener('click', function (e) { if (e.target === publishOverlay) closePublish(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closePublish(); });
+
+  publishForm.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    clearPublishMsg();
+    var current = await sb2.auth.getSession();
+    var session = current.data.session;
+    if (!session) { showPublishMsg('Devi accedere per pubblicare un annuncio.', 'err'); return; }
+
+    var prof = await sb2.from('profiles').select('*').eq('id', session.user.id).maybeSingle();
+    var meta = session.user.user_metadata || {};
+    var role = (prof.data && prof.data.role) || meta.role || 'private';
+    var tipoVenditore = role === 'dealer' ? 'rivenditore' : 'privato';
+
+    var optionalRaw = document.getElementById('pOptional').value.trim();
+    var optionalArr = optionalRaw ? optionalRaw.split(',').map(function (s) { return s.trim(); }).filter(Boolean) : [];
+
+    function numOrNull(id) {
+      var v = document.getElementById(id).value;
+      return v === '' ? null : parseFloat(v);
+    }
+
+    var payload = {
+      tipo_venditore: tipoVenditore,
+      nome: document.getElementById('pNome').value.trim(),
+      citta: document.getElementById('pCitta').value.trim(),
+      prov: document.getElementById('pProv').value.trim().toUpperCase() || null,
+      telefono: document.getElementById('pTelefono').value.trim() || null,
+      email: document.getElementById('pEmail').value.trim(),
+      alimentazione: document.getElementById('pAlimentazione').value,
+      marca: document.getElementById('pMarca').value.trim(),
+      modello: document.getElementById('pModello').value.trim(),
+      versione: document.getElementById('pVersione').value.trim() || null,
+      anno: numOrNull('pAnno'),
+      km: numOrNull('pKm'),
+      prezzo: numOrNull('pPrezzo'),
+      carrozzeria: document.getElementById('pCarrozzeria').value,
+      colore: document.getElementById('pColore').value.trim() || null,
+      potenza_kw: numOrNull('pPotenza'),
+      trazione: document.getElementById('pTrazione').value,
+      batteria_kwh: numOrNull('pBatteria'),
+      autonomia_km: numOrNull('pAutonomia'),
+      soh: numOrNull('pSoh'),
+      ricarica_ac_kw: numOrNull('pRicaricaAc'),
+      ricarica_dc_kw: numOrNull('pRicaricaDc'),
+      presa: document.getElementById('pPresa').value.trim() || null,
+      proprietari: numOrNull('pProprietari') || 1,
+      optional: optionalArr,
+      descrizione: document.getElementById('pDescrizione').value.trim(),
+      foto: []
+    };
+
+    var btn = publishForm.querySelector('button[type="submit"]');
+    btn.disabled = true; btn.textContent = 'Pubblicazione...';
+    var res = await sb2.from('annunci').insert([payload]).select();
+    btn.disabled = false; btn.textContent = 'Pubblica annuncio';
+
+    if (res.error) { showPublishMsg('Errore: ' + res.error.message, 'err'); return; }
+
+    showPublishMsg('Annuncio pubblicato con successo!', 'ok');
+    publishForm.reset();
+    if (typeof window.__reloadRealAds === 'function') window.__reloadRealAds();
+    setTimeout(closePublish, 1200);
+  });
+
+  window.__openPublishModal = openPublish;
 })();
 </script>
 </body>
