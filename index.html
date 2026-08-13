@@ -199,6 +199,22 @@
     .logo small { display: none; }
     .searchcard { padding: 16px; }
   }
+
+/* ---------- AUTH MODAL ---------- */
+.authtabs { display:flex; gap:6px; margin-bottom:18px; }
+.authtab { flex:1; border:none; background:var(--soft); border-radius:12px; padding:10px; font-weight:700; font-size:14px; color:var(--muted); }
+.authtab.on { background:var(--mint); color:var(--ink); }
+.field { margin-bottom:14px; }
+.field label { display:block; font-size:13px; font-weight:600; color:var(--dark); margin-bottom:6px; }
+.field input { width:100%; border:1px solid var(--line); border-radius:10px; padding:10px 14px; font-size:14px; }
+.field input:focus { outline: none; border-color: var(--accent); }
+.roles { display:flex; gap:10px; margin-bottom:16px; }
+.role-opt { flex:1; border:1px solid var(--line); border-radius:12px; padding:12px; text-align:center; font-weight:700; font-size:13.5px; color:var(--ink); cursor:pointer; }
+.role-opt.on { border-color:var(--accent); background:var(--mint); }
+.authmsg { font-size:13.5px; padding:10px 12px; border-radius:10px; margin-bottom:14px; }
+.authmsg.err { background:#ffe9ef; color:#8a1f3b; }
+.authmsg.ok { background:var(--mint); color:var(--dark); }
+#authModal { position:relative; }
 </style>
 </head>
 <body>
@@ -215,9 +231,9 @@
       <a href="#vendi">Vendi la tua EV</a>
       <a href="#guide">Guide &amp; ricarica</a>
     </nav>
-    <div class="hright">
-      <button class="btn sm" type="button">Accedi</button>
-      <button class="btn primary sm" type="button">+ Pubblica annuncio</button>
+    <div class="hright" id="hright">
+      <button class="btn sm" type="button" id="authBtn">Accedi</button>
+      <button class="btn primary sm" type="button" id="publishBtn">+ Pubblica annuncio</button>
     </div>
   </div>
 </header>
@@ -427,6 +443,36 @@
 <!-- ========== MODALE DETTAGLIO ========== -->
 <div class="overlay" id="overlay">
   <div class="modal" id="modal"></div>
+</div>
+
+<!-- ========== MODALE ACCEDI / REGISTRATI ========== -->
+<div class="overlay" id="authOverlay">
+<div class="modal" id="authModal" style="max-width:420px;">
+<div style="padding:26px;">
+<button class="mclose" type="button" id="authClose" aria-label="Chiudi" style="position:absolute;top:14px;right:14px;">&#10005;</button>
+<div class="authtabs">
+<button class="authtab on" type="button" id="tabLogin">Accedi</button>
+<button class="authtab" type="button" id="tabRegister">Registrati</button>
+</div>
+<div id="authMsg"></div>
+<form id="loginForm">
+<div class="field"><label>Email</label><input type="email" id="loginEmail" required></div>
+<div class="field"><label>Password</label><input type="password" id="loginPassword" required></div>
+<button class="btn primary" type="submit" style="width:100%">Accedi</button>
+</form>
+<form id="registerForm" style="display:none">
+<div class="roles">
+<div class="role-opt on" data-role="private">Privato</div>
+<div class="role-opt" data-role="dealer">Rivenditore</div>
+</div>
+<div class="field"><label id="nomeLabel">Nome e cognome</label><input type="text" id="regNome" required></div>
+<div class="field" id="pivaField" style="display:none"><label>Partita IVA</label><input type="text" id="regPiva"></div>
+<div class="field"><label>Email</label><input type="email" id="regEmail" required></div>
+<div class="field"><label>Password</label><input type="password" id="regPassword" required minlength="6"></div>
+<button class="btn primary" type="submit" style="width:100%">Crea account</button>
+</form>
+</div>
+</div>
 </div>
 
 <script>
@@ -737,6 +783,174 @@ function closeModal() {
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
 
   render();
+})();
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(function () {
+  var SUPABASE_URL = 'https://komvmedptbcsiiswoaja.supabase.co';
+  var SUPABASE_ANON_KEY = 'sb_publishable_W1l56uhiAnI6g7rhvkqtZg_WesZk_rd';
+  var sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  var authOverlay = document.getElementById('authOverlay');
+  var authClose = document.getElementById('authClose');
+  var tabLogin = document.getElementById('tabLogin');
+  var tabRegister = document.getElementById('tabRegister');
+  var loginForm = document.getElementById('loginForm');
+  var registerForm = document.getElementById('registerForm');
+  var authMsg = document.getElementById('authMsg');
+  var pivaField = document.getElementById('pivaField');
+  var nomeLabel = document.getElementById('nomeLabel');
+  var roleOpts = document.querySelectorAll('.role-opt');
+  var hright = document.getElementById('hright');
+  var selectedRole = 'private';
+
+  function showMsg(text, type) {
+    authMsg.innerHTML = '<div class="authmsg ' + (type || 'ok') + '">' + text + '</div>';
+  }
+  function clearMsg() { authMsg.innerHTML = ""; }
+
+  function switchTab(tab) {
+    if (tab === 'register') {
+      tabRegister.classList.add('on'); tabLogin.classList.remove('on');
+      registerForm.style.display = 'block'; loginForm.style.display = 'none';
+    } else {
+      tabLogin.classList.add('on'); tabRegister.classList.remove('on');
+      loginForm.style.display = 'block'; registerForm.style.display = 'none';
+    }
+    clearMsg();
+  }
+
+  function openAuth(tab) {
+    clearMsg();
+    authOverlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    switchTab(tab || 'login');
+  }
+  function closeAuth() {
+    authOverlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  authClose.addEventListener('click', closeAuth);
+  authOverlay.addEventListener('click', function (e) { if (e.target === authOverlay) closeAuth(); });
+  tabLogin.addEventListener('click', function () { switchTab('login'); });
+  tabRegister.addEventListener('click', function () { switchTab('register'); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeAuth(); });
+
+  roleOpts.forEach(function (opt) {
+    opt.addEventListener('click', function () {
+      roleOpts.forEach(function (o) { o.classList.remove('on'); });
+      opt.classList.add('on');
+      selectedRole = opt.getAttribute('data-role');
+      var isDealer = selectedRole === 'dealer';
+      pivaField.style.display = isDealer ? 'block' : 'none';
+      document.getElementById('regPiva').required = isDealer;
+      nomeLabel.textContent = isDealer ? 'Ragione sociale' : 'Nome e cognome';
+    });
+  });
+
+  loginForm.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    clearMsg();
+    var email = document.getElementById('loginEmail').value.trim();
+    var password = document.getElementById('loginPassword').value;
+    var btn = loginForm.querySelector('button[type="submit"]');
+    btn.disabled = true; btn.textContent = 'Accesso in corso...';
+    var res = await sb.auth.signInWithPassword({ email: email, password: password });
+    btn.disabled = false; btn.textContent = 'Accedi';
+    if (res.error) { showMsg(res.error.message, 'err'); return; }
+    showMsg('Accesso effettuato!', 'ok');
+    setTimeout(closeAuth, 600);
+  });
+
+  registerForm.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    clearMsg();
+    var nome = document.getElementById('regNome').value.trim();
+    var piva = document.getElementById('regPiva').value.trim();
+    var email = document.getElementById('regEmail').value.trim();
+    var password = document.getElementById('regPassword').value;
+
+    if (selectedRole === 'dealer' && !piva) {
+      showMsg('Inserisci la Partita IVA per registrarti come rivenditore.', 'err');
+      return;
+    }
+
+    var btn = registerForm.querySelector('button[type="submit"]');
+    btn.disabled = true; btn.textContent = 'Creazione account...';
+    var res = await sb.auth.signUp({
+      email: email,
+      password: password,
+      options: { data: {
+        nome: nome,
+        role: selectedRole,
+        partita_iva: selectedRole === 'dealer' ? piva : null
+      } }
+    });
+    btn.disabled = false; btn.textContent = 'Crea account';
+    if (res.error) { showMsg(res.error.message, 'err'); return; }
+
+    if (res.data.session) {
+      await upsertProfile(res.data.user);
+      showMsg('Registrazione completata!', 'ok');
+      setTimeout(closeAuth, 800);
+    } else {
+      showMsg('Controlla la tua email per confermare la registrazione prima di accedere.', 'ok');
+    }
+  });
+
+  async function upsertProfile(user) {
+    if (!user) return;
+    var meta = user.user_metadata || {};
+    await sb.from('profiles').upsert({
+      id: user.id,
+      email: user.email,
+      role: meta.role || 'private',
+      nome: meta.nome || '',
+      partita_iva: meta.partita_iva || null
+    });
+  }
+
+  function bindPublishBtn() {
+    var btn = document.getElementById('publishBtn');
+    if (!btn) return;
+    btn.addEventListener('click', async function () {
+      var current = await sb.auth.getSession();
+      if (!current.data.session) {
+        openAuth('register');
+        showMsg('Registrati o accedi per pubblicare un annuncio.', 'ok');
+      } else {
+        alert('Form di pubblicazione annuncio in arrivo a breve!');
+      }
+    });
+  }
+
+  function updateAuthUI(session) {
+    if (session && session.user) {
+      var meta = session.user.user_metadata || {};
+      var roleLabel = meta.role === 'dealer' ? 'Rivenditore' : 'Privato';
+      var label = (meta.nome || session.user.email) + ' &middot; ' + roleLabel;
+      hright.innerHTML =
+        '<span class="btn sm" style="cursor:default">' + label + '</span>' +
+        '<button class="btn sm" type="button" id="logoutBtn">Esci</button>' +
+        '<button class="btn primary sm" type="button" id="publishBtn">+ Pubblica annuncio</button>';
+      document.getElementById('logoutBtn').addEventListener('click', async function () { await sb.auth.signOut(); });
+    } else {
+      hright.innerHTML =
+        '<button class="btn sm" type="button" id="authBtn">Accedi</button>' +
+        '<button class="btn primary sm" type="button" id="publishBtn">+ Pubblica annuncio</button>';
+      document.getElementById('authBtn').addEventListener('click', function () { openAuth('login'); });
+    }
+    bindPublishBtn();
+  }
+
+  sb.auth.onAuthStateChange(function (event, session) {
+    updateAuthUI(session);
+    if (event === 'SIGNED_IN' && session) upsertProfile(session.user);
+  });
+
+  sb.auth.getSession().then(function (res) { updateAuthUI(res.data.session); });
 })();
 </script>
 </body>
