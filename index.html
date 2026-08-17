@@ -219,6 +219,26 @@
 .frow { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
 .frow3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; }
 @media (max-width: 640px) { .frow, .frow3 { grid-template-columns:1fr; } }
+
+.wizard-progress { display:flex; align-items:center; gap:6px; margin-bottom:22px; }
+.wstep { flex:1; text-align:center; font-size:12px; font-weight:700; color:var(--muted); position:relative; padding-bottom:10px; }
+.wstep::after { content:''; display:block; height:4px; border-radius:4px; background:var(--line); margin-top:8px; }
+.wstep.on { color:var(--ink); }
+.wstep.on::after, .wstep.done::after { background:var(--accent); }
+.wpanel { display:none; }
+.wpanel.on { display:block; }
+.wnav { display:flex; gap:10px; margin-top:20px; }
+.wnav .btn { flex:1; }
+.dropzone { display:block; border:2px dashed var(--line); border-radius:14px; padding:28px 16px; text-align:center; cursor:pointer; background:var(--soft); }
+.dropzone:hover, .dropzone.drag { border-color:var(--accent); background:var(--mint); }
+.dropzone b { display:block; color:var(--ink); font-size:14.5px; margin-bottom:4px; }
+.dropzone small { color:var(--muted); font-size:12.5px; }
+.photo-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(100px,1fr)); gap:10px; margin-top:14px; }
+.photo-thumb { position:relative; border-radius:12px; overflow:hidden; aspect-ratio:1/1; border:1px solid var(--line); }
+.photo-thumb img { width:100%; height:100%; object-fit:cover; display:block; }
+.photo-thumb .cover-tag { position:absolute; bottom:4px; left:4px; background:var(--accent); color:#08312a; font-size:10px; font-weight:700; padding:2px 6px; border-radius:999px; }
+.photo-thumb .rm { position:absolute; top:4px; right:4px; width:22px; height:22px; border-radius:50%; border:none; background:rgba(0,0,0,.55); color:#fff; font-size:12px; display:grid; place-items:center; }
+@media (max-width: 640px) { .wizard-progress { gap:3px; } .wstep { font-size:10.5px; } }
 </style>
 </head>
 <body>
@@ -482,23 +502,20 @@
 <!-- ========== MODALE PUBBLICA ANNUNCIO ========== -->
 <div class="overlay" id="publishOverlay">
 <div class="modal" id="publishModal" style="max-width:640px;">
-<div style="padding:26px;max-height:86vh;overflow:auto;position:relative;">
+<div style="padding:26px;max-height:86vh;overflow:auto;position:relative;" id="publishScroll">
 <button class="mclose" type="button" id="publishClose" aria-label="Chiudi" style="position:absolute;top:14px;right:14px;">&#10005;</button>
 <h3 style="margin:0 0 4px;font-size:22px;color:var(--ink)">Pubblica il tuo annuncio</h3>
-<p style="margin:0 0 18px;color:var(--muted);font-size:14px">Compila i dati del veicolo: sar&agrave; visibile subito tra i risultati.</p>
+<p style="margin:0 0 18px;color:var(--muted);font-size:14px">Segui i passaggi per pubblicare il tuo annuncio in pochi minuti.</p>
+<div class="wizard-progress">
+<div class="wstep on" data-step="1">1. Veicolo</div>
+<div class="wstep" data-step="2">2. Tecnica</div>
+<div class="wstep" data-step="3">3. Foto</div>
+<div class="wstep" data-step="4">4. Contatti</div>
+</div>
 <div id="publishMsg"></div>
 <form id="publishForm">
-<h4 style="margin:18px 0 10px;font-size:15px;color:var(--dark)">Dati di contatto</h4>
-<div class="field"><label>Nome / Ragione sociale</label><input type="text" id="pNome" required></div>
-<div class="frow">
-<div class="field"><label>Citt&agrave;</label><input type="text" id="pCitta" required></div>
-<div class="field"><label>Provincia</label><input type="text" id="pProv" maxlength="2" placeholder="es. MI"></div>
-</div>
-<div class="frow">
-<div class="field"><label>Telefono</label><input type="text" id="pTelefono"></div>
-<div class="field"><label>Email</label><input type="email" id="pEmail" required></div>
-</div>
-<h4 style="margin:18px 0 10px;font-size:15px;color:var(--dark)">Dati del veicolo</h4>
+
+<div class="wpanel on" data-panel="1">
 <div class="frow">
 <div class="field"><label>Marca</label><input type="text" id="pMarca" required></div>
 <div class="field"><label>Modello</label><input type="text" id="pModello" required></div>
@@ -526,7 +543,10 @@
 <div class="field"><label>Colore</label><input type="text" id="pColore"></div>
 <div class="field"><label>Numero proprietari</label><input type="number" id="pProprietari" min="1" value="1"></div>
 </div>
-<h4 style="margin:18px 0 10px;font-size:15px;color:var(--dark)">Dettagli tecnici</h4>
+<div class="wnav"><button class="btn primary" type="button" data-next="2" style="width:100%">Avanti</button></div>
+</div>
+
+<div class="wpanel" data-panel="2">
 <div class="frow3">
 <div class="field"><label>Potenza (kW)</label><input type="number" id="pPotenza" min="0"></div>
 <div class="field"><label>Batteria (kWh)</label><input type="number" id="pBatteria" min="0" step="0.1"></div>
@@ -547,10 +567,43 @@
 </div>
 <div class="field"><label>Tipo presa</label><input type="text" id="pPresa" placeholder="es. Type 2 + CCS"></div>
 </div>
-<h4 style="margin:18px 0 10px;font-size:15px;color:var(--dark)">Altre informazioni</h4>
 <div class="field"><label>Dotazioni (separate da virgola)</label><input type="text" id="pOptional" placeholder="es. Autopilot, Tetto panoramico"></div>
+<div class="wnav">
+<button class="btn" type="button" data-back="1" style="width:100%">Indietro</button>
+<button class="btn primary" type="button" data-next="3" style="width:100%">Avanti</button>
+</div>
+</div>
+
+<div class="wpanel" data-panel="3">
+<label class="dropzone" id="dropzone" for="pFotoInput">
+<b>Trascina qui le foto o clicca per selezionarle</b>
+<small>Fino a 8 foto, JPG/PNG/WEBP, max 5MB ciascuna</small>
+</label>
+<input type="file" id="pFotoInput" accept="image/png,image/jpeg,image/webp" multiple style="display:none">
+<div class="photo-grid" id="photoGrid"></div>
+<div class="wnav">
+<button class="btn" type="button" data-back="2" style="width:100%">Indietro</button>
+<button class="btn primary" type="button" data-next="4" style="width:100%">Avanti</button>
+</div>
+</div>
+
+<div class="wpanel" data-panel="4">
+<div class="field"><label>Nome / Ragione sociale</label><input type="text" id="pNome" required></div>
+<div class="frow">
+<div class="field"><label>Citt&agrave;</label><input type="text" id="pCitta" required></div>
+<div class="field"><label>Provincia</label><input type="text" id="pProv" maxlength="2" placeholder="es. MI"></div>
+</div>
+<div class="frow">
+<div class="field"><label>Telefono</label><input type="text" id="pTelefono"></div>
+<div class="field"><label>Email</label><input type="email" id="pEmail" required></div>
+</div>
 <div class="field"><label>Descrizione</label><textarea id="pDescrizione" rows="4" required style="width:100%;border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:14px;font-family:inherit"></textarea></div>
-<button class="btn primary" type="submit" style="width:100%;margin-top:6px">Pubblica annuncio</button>
+<div class="wnav">
+<button class="btn" type="button" data-back="3" style="width:100%">Indietro</button>
+<button class="btn primary" type="submit" style="width:100%">Pubblica annuncio</button>
+</div>
+</div>
+
 </form>
 </div>
 </div>
@@ -1093,107 +1146,229 @@ loadRealAds();
 </script>
 <script>
 (function () {
-  var SUPABASE_URL = 'https://komvmedptbcsiiswoaja.supabase.co';
-  var SUPABASE_ANON_KEY = 'sb_publishable_W1l56uhiAnI6g7rhvkqtZg_WesZk_rd';
-  var sb2 = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+var SUPABASE_URL = 'https://komvmedptbcsiiswoaja.supabase.co';
+var SUPABASE_ANON_KEY = 'sb_publishable_W1l56uhiAnI6g7rhvkqtZg_WesZk_rd';
+var sb2 = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  var publishOverlay = document.getElementById('publishOverlay');
-  var publishClose = document.getElementById('publishClose');
-  var publishForm = document.getElementById('publishForm');
-  var publishMsg = document.getElementById('publishMsg');
+var publishOverlay = document.getElementById('publishOverlay');
+var publishClose = document.getElementById('publishClose');
+var publishForm = document.getElementById('publishForm');
+var publishMsg = document.getElementById('publishMsg');
+var publishScroll = document.getElementById('publishScroll');
+var dropzone = document.getElementById('dropzone');
+var fotoInput = document.getElementById('pFotoInput');
+var photoGrid = document.getElementById('photoGrid');
+var wsteps = document.querySelectorAll('.wstep');
+var wpanels = document.querySelectorAll('.wpanel');
+var MAX_PHOTOS = 8;
+var MAX_SIZE = 5 * 1024 * 1024;
+var photos = [];
 
-  function showPublishMsg(text, type) {
-    publishMsg.innerHTML = '<div class="authmsg ' + (type || 'ok') + '">' + text + '</div>';
-  }
-  function clearPublishMsg() { publishMsg.innerHTML = ""; }
+function showPublishMsg(text, type) {
+publishMsg.innerHTML = '<div class="authmsg ' + (type || 'ok') + '">' + text + '</div>';
+}
+function clearPublishMsg() { publishMsg.innerHTML = ""; }
 
-  function closePublish() {
-    publishOverlay.classList.remove('open');
-    document.body.style.overflow = '';
-  }
+function goToStep(n) {
+wpanels.forEach(function (p) {
+p.classList.toggle('on', parseInt(p.getAttribute('data-panel'), 10) === n);
+});
+wsteps.forEach(function (s) {
+var sn = parseInt(s.getAttribute('data-step'), 10);
+s.classList.toggle('on', sn === n);
+s.classList.toggle('done', sn < n);
+});
+if (publishScroll) publishScroll.scrollTop = 0;
+}
 
-  async function openPublish() {
-    clearPublishMsg();
-    var current = await sb2.auth.getSession();
-    var session = current.data.session;
-    if (!session) return;
-    var prof = await sb2.from('profiles').select('*').eq('id', session.user.id).maybeSingle();
-    var p = prof.data || {};
-    var meta = session.user.user_metadata || {};
-    document.getElementById('pNome').value = p.nome || meta.nome || '';
-    document.getElementById('pEmail').value = p.email || session.user.email || '';
-    publishOverlay.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
+function validatePanel(n) {
+var panel = document.querySelector('.wpanel[data-panel="' + n + '"]');
+var inputs = panel.querySelectorAll('input[required], select[required], textarea[required]');
+for (var i = 0; i < inputs.length; i++) {
+if (!inputs[i].reportValidity()) return false;
+}
+return true;
+}
 
-  publishClose.addEventListener('click', closePublish);
-  publishOverlay.addEventListener('click', function (e) { if (e.target === publishOverlay) closePublish(); });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closePublish(); });
+document.addEventListener('click', function (e) {
+var nextBtn = e.target.closest('[data-next]');
+if (nextBtn && publishOverlay.classList.contains('open')) {
+var cur = nextBtn.closest('.wpanel');
+var curN = parseInt(cur.getAttribute('data-panel'), 10);
+if (!validatePanel(curN)) return;
+goToStep(parseInt(nextBtn.getAttribute('data-next'), 10));
+return;
+}
+var backBtn = e.target.closest('[data-back]');
+if (backBtn && publishOverlay.classList.contains('open')) {
+goToStep(parseInt(backBtn.getAttribute('data-back'), 10));
+return;
+}
+});
 
-  publishForm.addEventListener('submit', async function (e) {
-    e.preventDefault();
-    clearPublishMsg();
-    var current = await sb2.auth.getSession();
-    var session = current.data.session;
-    if (!session) { showPublishMsg('Devi accedere per pubblicare un annuncio.', 'err'); return; }
+function renderPhotoGrid() {
+var html = '';
+for (var i = 0; i < photos.length; i++) {
+html += '<div class="photo-thumb">' +
+'<img src="' + photos[i].url + '">' +
+(i === 0 ? '<span class="cover-tag">Copertina</span>' : '') +
+'<button type="button" class="rm" data-rm="' + i + '">&#10005;</button>' +
+'</div>';
+}
+photoGrid.innerHTML = html;
+}
 
-    var prof = await sb2.from('profiles').select('*').eq('id', session.user.id).maybeSingle();
-    var meta = session.user.user_metadata || {};
-    var role = (prof.data && prof.data.role) || meta.role || 'private';
-    var tipoVenditore = role === 'dealer' ? 'rivenditore' : 'privato';
+function addFiles(fileList) {
+var arr = Array.prototype.slice.call(fileList);
+for (var i = 0; i < arr.length; i++) {
+var f = arr[i];
+if (photos.length >= MAX_PHOTOS) { showPublishMsg('Puoi caricare al massimo ' + MAX_PHOTOS + ' foto.', 'err'); break; }
+if (!/^image\/(png|jpeg|webp)$/.test(f.type)) { showPublishMsg('Formato non supportato: ' + f.name, 'err'); continue; }
+if (f.size > MAX_SIZE) { showPublishMsg('Il file ' + f.name + ' supera i 5MB.', 'err'); continue; }
+photos.push({ file: f, url: URL.createObjectURL(f) });
+}
+renderPhotoGrid();
+}
 
-    var optionalRaw = document.getElementById('pOptional').value.trim();
-    var optionalArr = optionalRaw ? optionalRaw.split(',').map(function (s) { return s.trim(); }).filter(Boolean) : [];
+dropzone.addEventListener('click', function (e) { e.preventDefault(); fotoInput.click(); });
+fotoInput.addEventListener('change', function () { addFiles(fotoInput.files); fotoInput.value = ''; });
+dropzone.addEventListener('dragover', function (e) { e.preventDefault(); dropzone.classList.add('drag'); });
+dropzone.addEventListener('dragleave', function () { dropzone.classList.remove('drag'); });
+dropzone.addEventListener('drop', function (e) {
+e.preventDefault();
+dropzone.classList.remove('drag');
+addFiles(e.dataTransfer.files);
+});
+photoGrid.addEventListener('click', function (e) {
+var rm = e.target.closest('[data-rm]');
+if (rm) {
+var idx = parseInt(rm.getAttribute('data-rm'), 10);
+URL.revokeObjectURL(photos[idx].url);
+photos.splice(idx, 1);
+renderPhotoGrid();
+}
+});
 
-    function numOrNull(id) {
-      var v = document.getElementById(id).value;
-      return v === '' ? null : parseFloat(v);
-    }
+function closePublish() {
+publishOverlay.classList.remove('open');
+document.body.style.overflow = '';
+}
 
-    var payload = {
-      tipo_venditore: tipoVenditore,
-      nome: document.getElementById('pNome').value.trim(),
-      citta: document.getElementById('pCitta').value.trim(),
-      prov: document.getElementById('pProv').value.trim().toUpperCase() || null,
-      telefono: document.getElementById('pTelefono').value.trim() || null,
-      email: document.getElementById('pEmail').value.trim(),
-      alimentazione: document.getElementById('pAlimentazione').value,
-      marca: document.getElementById('pMarca').value.trim(),
-      modello: document.getElementById('pModello').value.trim(),
-      versione: document.getElementById('pVersione').value.trim() || null,
-      anno: numOrNull('pAnno'),
-      km: numOrNull('pKm'),
-      prezzo: numOrNull('pPrezzo'),
-      carrozzeria: document.getElementById('pCarrozzeria').value,
-      colore: document.getElementById('pColore').value.trim() || null,
-      potenza_kw: numOrNull('pPotenza'),
-      trazione: document.getElementById('pTrazione').value,
-      batteria_kwh: numOrNull('pBatteria'),
-      autonomia_km: numOrNull('pAutonomia'),
-      soh: numOrNull('pSoh'),
-      ricarica_ac_kw: numOrNull('pRicaricaAc'),
-      ricarica_dc_kw: numOrNull('pRicaricaDc'),
-      presa: document.getElementById('pPresa').value.trim() || null,
-      proprietari: numOrNull('pProprietari') || 1,
-      optional: optionalArr,
-      descrizione: document.getElementById('pDescrizione').value.trim(),
-      foto: []
-    };
+async function openPublish() {
+clearPublishMsg();
+var current = await sb2.auth.getSession();
+var session = current.data.session;
+if (!session) return;
+var prof = await sb2.from('profiles').select('*').eq('id', session.user.id).maybeSingle();
+var p = prof.data || {};
+var meta = session.user.user_metadata || {};
+document.getElementById('pNome').value = p.nome || meta.nome || '';
+document.getElementById('pEmail').value = p.email || session.user.email || '';
+photos.forEach(function (ph) { URL.revokeObjectURL(ph.url); });
+photos = [];
+renderPhotoGrid();
+goToStep(1);
+publishOverlay.classList.add('open');
+document.body.style.overflow = 'hidden';
+}
 
-    var btn = publishForm.querySelector('button[type="submit"]');
-    btn.disabled = true; btn.textContent = 'Pubblicazione...';
-    var res = await sb2.from('annunci').insert([payload]).select();
-    btn.disabled = false; btn.textContent = 'Pubblica annuncio';
+publishClose.addEventListener('click', closePublish);
+publishOverlay.addEventListener('click', function (e) { if (e.target === publishOverlay) closePublish(); });
+document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closePublish(); });
 
-    if (res.error) { showPublishMsg('Errore: ' + res.error.message, 'err'); return; }
+async function uploadPhotos(userId) {
+var urls = [];
+for (var i = 0; i < photos.length; i++) {
+var f = photos[i].file;
+var safeName = f.name.replace(/[^a-zA-Z0-9.\-_]/g, '_');
+var path = userId + '/' + Date.now() + '_' + i + '_' + safeName;
+var up = await sb2.storage.from('foto').upload(path, f);
+if (up.error) throw new Error(up.error.message);
+var pub = sb2.storage.from('foto').getPublicUrl(path);
+urls.push(pub.data.publicUrl);
+}
+return urls;
+}
 
-    showPublishMsg('Annuncio pubblicato con successo!', 'ok');
-    publishForm.reset();
-    if (typeof window.__reloadRealAds === 'function') window.__reloadRealAds();
-    setTimeout(closePublish, 1200);
-  });
+publishForm.addEventListener('submit', async function (e) {
+e.preventDefault();
+clearPublishMsg();
+if (!validatePanel(4)) return;
+var current = await sb2.auth.getSession();
+var session = current.data.session;
+if (!session) { showPublishMsg('Devi accedere per pubblicare un annuncio.', 'err'); return; }
 
-  window.__openPublishModal = openPublish;
+var prof = await sb2.from('profiles').select('*').eq('id', session.user.id).maybeSingle();
+var meta = session.user.user_metadata || {};
+var role = (prof.data && prof.data.role) || meta.role || 'private';
+var tipoVenditore = role === 'dealer' ? 'rivenditore' : 'privato';
+
+var optionalRaw = document.getElementById('pOptional').value.trim();
+var optionalArr = optionalRaw ? optionalRaw.split(',').map(function (s) { return s.trim(); }).filter(Boolean) : [];
+
+function numOrNull(id) {
+var v = document.getElementById(id).value;
+return v === '' ? null : parseFloat(v);
+}
+
+var btn = publishForm.querySelector('button[type="submit"]');
+btn.disabled = true; btn.textContent = 'Caricamento foto...';
+
+var fotoUrls = [];
+try {
+fotoUrls = await uploadPhotos(session.user.id);
+} catch (err) {
+btn.disabled = false; btn.textContent = 'Pubblica annuncio';
+showPublishMsg('Errore nel caricamento delle foto: ' + err.message, 'err');
+return;
+}
+
+var payload = {
+tipo_venditore: tipoVenditore,
+nome: document.getElementById('pNome').value.trim(),
+citta: document.getElementById('pCitta').value.trim(),
+prov: document.getElementById('pProv').value.trim().toUpperCase() || null,
+telefono: document.getElementById('pTelefono').value.trim() || null,
+email: document.getElementById('pEmail').value.trim(),
+alimentazione: document.getElementById('pAlimentazione').value,
+marca: document.getElementById('pMarca').value.trim(),
+modello: document.getElementById('pModello').value.trim(),
+versione: document.getElementById('pVersione').value.trim() || null,
+anno: numOrNull('pAnno'),
+km: numOrNull('pKm'),
+prezzo: numOrNull('pPrezzo'),
+carrozzeria: document.getElementById('pCarrozzeria').value,
+colore: document.getElementById('pColore').value.trim() || null,
+potenza_kw: numOrNull('pPotenza'),
+trazione: document.getElementById('pTrazione').value,
+batteria_kwh: numOrNull('pBatteria'),
+autonomia_km: numOrNull('pAutonomia'),
+soh: numOrNull('pSoh'),
+ricarica_ac_kw: numOrNull('pRicaricaAc'),
+ricarica_dc_kw: numOrNull('pRicaricaDc'),
+presa: document.getElementById('pPresa').value.trim() || null,
+proprietari: numOrNull('pProprietari') || 1,
+optional: optionalArr,
+descrizione: document.getElementById('pDescrizione').value.trim(),
+foto: fotoUrls
+};
+
+btn.textContent = 'Pubblicazione...';
+var res = await sb2.from('annunci').insert([payload]).select();
+btn.disabled = false; btn.textContent = 'Pubblica annuncio';
+
+if (res.error) { showPublishMsg('Errore: ' + res.error.message, 'err'); return; }
+
+showPublishMsg('Annuncio pubblicato con successo!', 'ok');
+publishForm.reset();
+photos.forEach(function (ph) { URL.revokeObjectURL(ph.url); });
+photos = [];
+renderPhotoGrid();
+if (typeof window.__reloadRealAds === 'function') window.__reloadRealAds();
+setTimeout(closePublish, 1200);
+});
+
+window.__openPublishModal = openPublish;
 })();
 </script>
 </body>
