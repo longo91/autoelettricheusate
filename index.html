@@ -643,7 +643,7 @@ function mapRealAd(row) {
     days: days,
     g: row.id % 6,
     desc: row.descrizione || '',
-    feat: row.optional || []
+    feat: row.optional || [],foto: row.foto || []
   };
 }
 
@@ -732,8 +732,8 @@ function cardHtml(a) {
 
   return '<article class="ad">' +
     '<div class="ad-top">' +
-      '<div class="media" data-open="' + a.id + '" style="background:' + GRAD[a.g] + '">' +
-        carSvg() +
+      '<div class="media" data-open="' + a.id + '" style="background:' + (a.foto && a.foto.length ? ('center/cover no-repeat url(\'' + a.foto[0] + '\')') : GRAD[a.g]) + '">' +
+              (a.foto && a.foto.length ? '' : carSvg()) +
         '<div class="badges">' + badge + '<span class="bdg">' + battery(a) + '</span></div>' +
         '<span class="yeartag">' + a.year + '</span>' +
         '<div class="thumbs"><i></i><i></i><i></i></div>' +
@@ -844,7 +844,7 @@ for (var i = 0; i < __all.length; i++) { if (__all[i].id === id) a = __all[i]; }
   for (var j = 0; j < a.feat.length; j++) { tags += '<span class="tag">&#9889; ' + a.feat[j] + '</span>'; }
 
   document.getElementById('modal').innerHTML =
-    '<div class="mhead" style="background:' + GRAD[a.g] + '">' + carSvg() +
+    '<div class="mhead" style="background:' + (a.foto && a.foto.length ? ('center/cover no-repeat url(\'' + a.foto[0] + '\')') : GRAD[a.g]) + '">' + (a.foto && a.foto.length ? '' : carSvg()) +
       '<button class="mclose" type="button" id="mclose" aria-label="Chiudi">&#10005;</button></div>' +
     '<div class="mbody">' +
       '<div class="itop"><div class="price">' + fmt(a.price) + ' <span>&euro;</span></div>' +
