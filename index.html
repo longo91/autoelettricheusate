@@ -938,7 +938,19 @@ function closeModal() {
   document.addEventListener('click', function (e) {
     var brandEl = e.target.closest('[data-brand]');
     if (brandEl) {
-      document.getElementById('fBrand').value = brandEl.getAttribute('data-brand');
+      var fBrandSel = document.getElementById('fBrand');
+     var wantedBrand = brandEl.getAttribute('data-brand');
+     var hasOption = false;
+     for (var oi = 0; oi < fBrandSel.options.length; oi++) {
+      if (fBrandSel.options[oi].value === wantedBrand) { hasOption = true; break; }
+     }
+     if (!hasOption) {
+      var newOpt = document.createElement('option');
+      newOpt.value = wantedBrand;
+      newOpt.textContent = wantedBrand;
+   fBrandSel.appendChild(newOpt);
+     }
+     fBrandSel.value = wantedBrand;
       shown = PAGE; render();
       document.getElementById('annunci').scrollIntoView({ behavior: 'smooth' });
       return;
