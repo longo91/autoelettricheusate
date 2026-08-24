@@ -627,7 +627,15 @@
 
 <script>
 /* ================= DATI ANNUNCI (demo) ================= */
-var ads = [];
+/* ================= SUPABASE CLIENT (singleton) ================= */
+ function getSupabaseClient() {
+    if (!window.__sbClient) {
+         window.__sbClient = supabase.createClient('https://komvmedptbcsiiswoaja.supabase.co', 'sb_publishable_W1l56uhiAnI6g7rhvkqtZg_WesZk_rd');
+ }
+    return window.__sbClient;
+ }
+ 
+ var ads = [];
 
 var realAds = [];
 function allAds() { return realAds.concat(ads); }
@@ -685,7 +693,7 @@ function refreshBrandsFromAds() {
 }
 
 function loadRealAds() {
-  var sbc = supabase.createClient('https://komvmedptbcsiiswoaja.supabase.co', 'sb_publishable_W1l56uhiAnI6g7rhvkqtZg_WesZk_rd');
+  var sbc = getSupabaseClient();
   window.__reloadRealAds = loadRealAds;
   sbc.from('annunci').select('*').eq('stato', 'attivo').order('creato_il', { ascending: false }).then(function (res) {
     if (!res.error && res.data) {
@@ -984,7 +992,7 @@ function closeModal() {
 (function () {
   var SUPABASE_URL = 'https://komvmedptbcsiiswoaja.supabase.co';
   var SUPABASE_ANON_KEY = 'sb_publishable_W1l56uhiAnI6g7rhvkqtZg_WesZk_rd';
-  var sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  var sb = getSupabaseClient();
 
   var authOverlay = document.getElementById('authOverlay');
   var authClose = document.getElementById('authClose');
@@ -1161,7 +1169,7 @@ function closeModal() {
 (function () {
 var SUPABASE_URL = 'https://komvmedptbcsiiswoaja.supabase.co';
 var SUPABASE_ANON_KEY = 'sb_publishable_W1l56uhiAnI6g7rhvkqtZg_WesZk_rd';
-var sb2 = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+var sb2 = getSupabaseClient();
 
 var publishOverlay = document.getElementById('publishOverlay');
 var publishClose = document.getElementById('publishClose');
