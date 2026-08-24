@@ -940,17 +940,18 @@ function closeModal() {
     if (brandEl) {
       var fBrandSel = document.getElementById('fBrand');
      var wantedBrand = brandEl.getAttribute('data-brand');
-     var hasOption = false;
+     var matchedValue = null;
      for (var oi = 0; oi < fBrandSel.options.length; oi++) {
-      if (fBrandSel.options[oi].value === wantedBrand) { hasOption = true; break; }
+ if (fBrandSel.options[oi].value.toLowerCase() === wantedBrand.toLowerCase()) { matchedValue = fBrandSel.options[oi].value; break; }
      }
-     if (!hasOption) {
+     if (matchedValue === null) {
       var newOpt = document.createElement('option');
       newOpt.value = wantedBrand;
-      newOpt.textContent = wantedBrand;
-   fBrandSel.appendChild(newOpt);
+ newOpt.textContent = wantedBrand;
+ fBrandSel.appendChild(newOpt);
+ matchedValue = wantedBrand;
      }
-     fBrandSel.value = wantedBrand;
+     fBrandSel.value = matchedValue;
       shown = PAGE; render();
       document.getElementById('annunci').scrollIntoView({ behavior: 'smooth' });
       return;
