@@ -520,7 +520,7 @@
 <div class="modal" id="publishModal" style="max-width:640px;">
 <div style="padding:26px;max-height:86vh;overflow:auto;position:relative;" id="publishScroll">
 <button class="mclose" type="button" id="publishClose" aria-label="Chiudi" style="position:absolute;top:14px;right:14px;">&#10005;</button>
-<h3 style="margin:0 0 4px;font-size:22px;color:var(--ink)">Pubblica il tuo annuncio</h3>
+<h3 id="publishTitle" style="margin:0 0 4px;font-size:22px;color:var(--ink)">Pubblica il tuo annuncio</h3>h3>
 <p style="margin:0 0 18px;color:var(--muted);font-size:14px">Segui i passaggi per pubblicare il tuo annuncio in pochi minuti.</p>
 <div class="wizard-progress">
 <div class="wstep on" data-step="1">1. Veicolo</div>
@@ -616,7 +616,7 @@
 <div class="field"><label>Descrizione</label><textarea id="pDescrizione" rows="4" required style="width:100%;border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:14px;font-family:inherit"></textarea></div>
 <div class="wnav">
 <button class="btn" type="button" data-back="3" style="width:100%">Indietro</button>
-<button class="btn primary" type="submit" style="width:100%">Pubblica annuncio</button>
+<button class="btn primary" id="publishSubmitBtn" type="submit" style="width:100%">Pubblica annuncio</button>button>
 </div>
 </div>
 
@@ -1211,6 +1211,7 @@ var wpanels = document.querySelectorAll('.wpanel');
 var MAX_PHOTOS = 8;
 var MAX_SIZE = 5 * 1024 * 1024;
 var photos = [];
+ var editingId = null;
 
 function showPublishMsg(text, type) {
 publishMsg.innerHTML = '<div class="authmsg ' + (type || 'ok') + '">' + text + '</div>';
@@ -1312,42 +1313,86 @@ document.body.style.overflow = '';
     if (cntEl) cntEl.textContent = (currentPhotoIdx + 1) + ' / ' + n;
   }
 
-async function openPublish() {
-clearPublishMsg();
-var current = await sb2.auth.getSession();
-var session = current.data.session;
-if (!session) return;
-var prof = await sb2.from('profiles').select('*').eq('id', session.user.id).maybeSingle();
-var p = prof.data || {};
-var meta = session.user.user_metadata || {};
-document.getElementById('pNome').value = p.nome || meta.nome || '';
-document.getElementById('pEmail').value = p.email || session.user.email || '';
-photos.forEach(function (ph) { URL.revokeObjectURL(ph.url); });
-photos = [];
-renderPhotoGrid();
-goToStep(1);
-publishOverlay.classList.add('open');
-document.body.style.overflow = 'hidden';
-}
+async function openPublish(editAd) {
+ clearPublishMsg();
+ var current = await sb2.auth.getSession();
+ var session = current.data.session;
+ if (!session) return;
+ var prof = await sb2.from('profiles').select('*').eq('id', session.user.id).maybeSingle();
+ var p = prof.data || {};
+ var meta = session.user.user_metadata || {};
 
+ publishForm.reset();
+     photos.forEach(function (ph) { if (!ph.existingUrl) URL.revokeObjectURL(ph.url); });
+ photos = [];
+ editingId = null;
+
+ var titleEl = document.getElementById('publishTitle');
+ var submitBtn = document.getElementById('publishSubmitBtn');
+
+ if (editAd && editAd.id) {
+ editingId = editAd.id;
+ if (titleEl) titleEl.textContent = 'Modifica annuncio';
+ if (submitBtn) submitBtn.textContent = 'Salva modifiche';
+ document.getElementById('pMarca').value = editAd.marca || '';
+ document.getElementById('pModello').value = editAd.modello || '';
+ document.getElementById('pVersione').value = editAd.versione || '';
+ if (editAd.alimentazione) document.getElementById('pAlimentazione').value = editAd.alimentazione;
+ if (editAd.carrozzeria) document.getElementById('pCarrozzeria').value = editAd.carrozzeria;
+ document.getElementById('pAnno').value = editAd.anno != null ? editAd.anno : '';
+ document.getElementById('pKm').value = editAd.km != null ? editAd.km : '';
+ document.getElementById('pPrezzo').value = editAd.prezzo != null ? editAd.prezzo : '';
+ document.getElementById('pColore').value = editAd.colore || '';
+ document.getElementById('pProprietari').value = editAd.proprietari != null ? editAd.proprietari : 1;
+ document.getElementById('pPotenza').value = editAd.potenza_kw != null ? editAd.potenza_kw : '';
+ document.getElementById('pBatteria').value = editAd.batteria_kwh != null ? editAd.batteria_kwh : '';
+ document.getElementById('pAutonomia').value = editAd.autonomia_km != null ? editAd.autonomia_km : '';
+ document.getElementById('pRicaricaAc').value = editAd.ricarica_ac_kw != null ? editAd.ricarica_ac_kw : '';
+ document.getElementById('pRicaricaDc').value = editAd.ricarica_dc_kw != null ? editAd.ricarica_dc_kw : '';
+ document.getElementById('pSoh').value = editAd.soh != null ? editAd.soh : '';
+ if (editAd.trazione) document.getElementById('pTrazione').value = editAd.trazione;
+ document.getElementById('pPresa').value = editAd.presa || '';
+ document.getElementById('pOptional').value = (editAd.optional || []).join(', ');
+ document.getElementById('pNome').value = editAd.nome || p.nome || meta.nome || '';
+ document.getElementById('pCitta').value = editAd.citta || '';
+ document.getElementById('pProv').value = editAd.prov || '';
+  document.getElementById('pTelefono').value = editAd.telefono || '';
+  document.getElementById('pEmail').value = editAd.email || p.email || session.user.email || '';
+ document.getElementById('pDescrizione').value = editAd.descrizione || '';
+ (editAd.foto || []).forEach(function (u) { photos.push({ url: u, existingUrl: u }); });
+ } else {
+  if (titleEl) titleEl.textContent = 'Pubblica il tuo annuncio';
+  if (submitBtn) submitBtn.textContent = 'Pubblica annuncio';
+ document.getElementById('pNome').value = p.nome || meta.nome || '';
+  document.getElementById('pEmail').value = p.email || session.user.email || '';
+ }
+
+ renderPhotoGrid();
+ goToStep(1);
+ publishOverlay.classList.add('open');
+ document.body.style.overflow = 'hidden';
+ }
+ 
 publishClose.addEventListener('click', closePublish);
 publishOverlay.addEventListener('click', function (e) { if (e.target === publishOverlay) closePublish(); });
 document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closePublish(); });
 
 async function uploadPhotos(userId) {
-var urls = [];
-for (var i = 0; i < photos.length; i++) {
-var f = photos[i].file;
-var safeName = f.name.replace(/[^a-zA-Z0-9.\-_]/g, '_');
-var path = userId + '/' + Date.now() + '_' + i + '_' + safeName;
-var up = await sb2.storage.from('foto').upload(path, f);
-if (up.error) throw new Error(up.error.message);
-var pub = sb2.storage.from('foto').getPublicUrl(path);
-urls.push(pub.data.publicUrl);
-}
-return urls;
-}
-
+ var urls = [];
+ for (var i = 0; i < photos.length; i++) {
+ var ph = photos[i];
+ if (ph.existingUrl) { urls.push(ph.existingUrl); continue; }
+ var f = ph.file;
+ var safeName = f.name.replace(/[^a-zA-Z0-9.\-_]/g, '_');
+ var path = userId + '/' + Date.now() + '_' + i + '_' + safeName;
+ var up = await sb2.storage.from('foto').upload(path, f);
+                          if (up.error) throw new Error(up.error.message);
+ var pub = sb2.storage.from('foto').getPublicUrl(path);
+ urls.push(pub.data.publicUrl);
+ }
+ return urls;
+ }
+ 
 publishForm.addEventListener('submit', async function (e) {
 e.preventDefault();
 clearPublishMsg();
@@ -1412,22 +1457,28 @@ descrizione: document.getElementById('pDescrizione').value.trim(),
 foto: fotoUrls
 };
 
-btn.textContent = 'Pubblicazione...';
-var res = await sb2.from('annunci').insert([payload]).select();
-btn.disabled = false; btn.textContent = 'Pubblica annuncio';
+var isEdit = !!editingId;
+ btn.textContent = isEdit ? 'Salvataggio...' : 'Pubblicazione...';
+ var res = isEdit
+ ? await sb2.from('annunci').update(payload).eq('id', editingId).select()
+ : await sb2.from('annunci').insert([payload]).select();
+ btn.disabled = false; btn.textContent = isEdit ? 'Salva modifiche' : 'Pubblica annuncio';
 
-if (res.error) { showPublishMsg('Errore: ' + res.error.message, 'err'); return; }
+ if (res.error) { showPublishMsg('Errore: ' + res.error.message, 'err'); return; }
 
-showPublishMsg('Annuncio pubblicato con successo!', 'ok');
-publishForm.reset();
-photos.forEach(function (ph) { URL.revokeObjectURL(ph.url); });
-photos = [];
-renderPhotoGrid();
-if (typeof window.__reloadRealAds === 'function') window.__reloadRealAds();
-setTimeout(closePublish, 1200);
-});
-
+ showPublishMsg(isEdit ? 'Annuncio aggiornato con successo!' : 'Annuncio pubblicato con successo!', 'ok');
+ publishForm.reset();
+ photos.forEach(function (ph) { if (!ph.existingUrl) URL.revokeObjectURL(ph.url); });
+ photos = [];
+ renderPhotoGrid();
+ if (typeof window.__reloadRealAds === 'function') window.__reloadRealAds();
+ var wasEdit = isEdit;
+ editingId = null;
+ setTimeout(function () { closePublish(); if (wasEdit && window.__openMyAdsModal) window.__openMyAdsModal(); }, 1200);
+ });
+ 
 window.__openPublishModal = openPublish;
+ window.__openEditModal = openPublish;
 })();
 </script>
 <script>
@@ -1437,6 +1488,7 @@ var myAdsOverlay = document.getElementById('myAdsOverlay');
 var myAdsClose = document.getElementById('myAdsClose');
 var myAdsList = document.getElementById('myAdsList');
 var myAdsMsg = document.getElementById('myAdsMsg');
+ var myAdsData = {};
 
 function closeMyAds() { myAdsOverlay.classList.remove('open'); }
 myAdsClose.addEventListener('click', closeMyAds);
@@ -1466,7 +1518,8 @@ return '' +
 '<span style="font-size:13px;color:var(--muted);">&euro;</span>' +
 '<button class="btn sm myad-save-price" type="button">Salva</button>' +
 '</div>' +
-'<button class="btn sm myad-toggle" type="button">' + (isActive ? 'Disattiva' : 'Riattiva') + '</button>' +
+'<button class="btn sm myad-edit" type="button">Modifica</button>' +
+ '<button class="btn sm myad-toggle" type="button">' + (isActive ? 'Disattiva' : 'Riattiva') + '</button>' +
 '<button class="btn sm myad-delete" type="button" style="color:#8a1f3b;">Elimina</button>' +
 '</div>';
 }
@@ -1479,7 +1532,9 @@ if (!session) { myAdsList.innerHTML = '<p style="color:var(--muted)">Devi accede
 var res = await sb3.from('annunci').select('*').eq('user_id', session.user.id).order('creato_il', { ascending: false });
 if (res.error) { myAdsList.innerHTML = '<p style="color:#8a1f3b">Errore: ' + escapeHtml(res.error.message) + '</p>'; return; }
 if (!res.data.length) { myAdsList.innerHTML = '<p style="color:var(--muted)">Non hai ancora pubblicato annunci.</p>'; return; }
-myAdsList.innerHTML = res.data.map(adRowHtml).join('');
+myAdsData = {};
+ res.data.forEach(function (ad) { myAdsData[ad.id] = ad; });
+ myAdsList.innerHTML = res.data.map(adRowHtml).join('');
 }
 
 myAdsList.addEventListener('click', async function (e) {
@@ -1487,7 +1542,15 @@ var row = e.target.closest('.myad-row');
 if (!row) return;
 var id = row.getAttribute('data-id');
 
-if (e.target.classList.contains('myad-save-price')) {
+if (e.target.classList.contains('myad-edit')) {
+ var adToEdit = myAdsData[id];
+ if (!adToEdit) return;
+ closeMyAds();
+ if (window.__openEditModal) window.__openEditModal(adToEdit);
+ return;
+ }
+ 
+ if (e.target.classList.contains('myad-save-price')) {
 var input = row.querySelector('.myad-price');
 var newPrice = parseFloat(input.value);
 if (isNaN(newPrice) || newPrice <= 0) { showMyAdsMsg('Inserisci un prezzo valido.', 'err'); return; }
