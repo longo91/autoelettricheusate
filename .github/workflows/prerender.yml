@@ -23,12 +23,15 @@ jobs:
       - name: Pre-render annunci
         run: node scripts/prerender.mjs
 
+      - name: Genera pagine annuncio e sitemap
+        run: node scripts/generate-listing-pages.mjs
+
       - name: Commit se ci sono modifiche
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          if ! git diff --quiet -- index.html; then
-            git add index.html
+          git add index.html annuncio/ sitemap.xml
+          if ! git diff --cached --quiet; then
             git commit -m "chore: aggiorna annunci pre-renderizzati per SEO [skip ci]"
             git push
           else
