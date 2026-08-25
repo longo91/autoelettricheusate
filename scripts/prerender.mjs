@@ -102,7 +102,7 @@ function cardHtml(a) {
     '</div>' +
     '<div class="info">' +
     '<div class="itop"><div class="price">' + fmt(a.price) + ' <span>&euro;</span></div>' + verified + '</div>' +
-    '<h3><a href="#annunci" data-open="' + a.id + '">' + escapeHtml(a.brand) + ' ' + escapeHtml(a.model) + '</a></h3>' +
+    '<h3><a href="/annuncio/' + a.id + '.html" data-open="' + a.id + '">' + escapeHtml(a.brand) + ' ' + escapeHtml(a.model) + '</a></h3>' +
     '<p class="ver">' + escapeHtml(a.version) + ' &middot; ' + escapeHtml(a.body) + '</p>' +
     '<div class="specs">' +
     '<div class="sp"><label>Chilometri</label><b>' + fmt(a.km) + ' km</b></div>' +
