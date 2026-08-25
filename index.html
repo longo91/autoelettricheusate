@@ -66,6 +66,7 @@
   nav.main a { padding: 8px 0; }
   nav.main a:hover { color: var(--accent-d); }
   .hright { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+  .btxt-short { display: none; }
   .btn { border-radius: 999px; border: 1px solid var(--line); background: #fff; padding: 10px 18px; font-weight: 600; font-size: 14px; color: var(--ink); white-space: nowrap; }
   .btn:hover { border-color: var(--accent); }
   .btn.primary { background: var(--accent); border-color: var(--accent); color: #08312a; }
@@ -211,6 +212,13 @@
     .filterbar { top: 60px; }
     .logo small { display: none; }
     .searchcard { padding: 16px; }
+    .hright { gap: 6px; }
+    .hright .btn.sm { padding: 7px 10px; font-size: 12px; }
+    .hlabel { display: none; }
+  }
+  @media (max-width: 420px) {
+    .btxt-full { display: none; }
+    .btxt-short { display: inline; }
   }
 
 /* ---------- AUTH MODAL ---------- */
@@ -270,7 +278,7 @@
     </nav>
     <div class="hright" id="hright">
       <button class="btn sm" type="button" id="authBtn">Accedi</button>
-      <button class="btn primary sm" type="button" id="publishBtn">+ Pubblica annuncio</button>
+      <button class="btn primary sm" type="button" id="publishBtn"><span class="btxt-full">+ Pubblica annuncio</span><span class="btxt-short">+ Pubblica</span></button>
     </div>
   </div>
 </header>
@@ -1174,16 +1182,16 @@ function closeModal() {
       var roleLabel = meta.role === 'dealer' ? 'Rivenditore' : 'Privato';
       var label = (meta.nome || session.user.email) + ' &middot; ' + roleLabel;
       hright.innerHTML =
-        '<span class="btn sm" style="cursor:default">' + label + '</span>' +
-        '<button class="btn sm" type="button" id="myAdsBtn">I miei annunci</button>' +
+        '<span class="btn sm hlabel" style="cursor:default">' + label + '</span>' +
+        '<button class="btn sm" type="button" id="myAdsBtn"><span class="btxt-full">I miei annunci</span><span class="btxt-short">Annunci</span></button>' +
         '<button class="btn sm" type="button" id="logoutBtn">Esci</button>' +
-        '<button class="btn primary sm" type="button" id="publishBtn">+ Pubblica annuncio</button>';
+        '<button class="btn primary sm" type="button" id="publishBtn"><span class="btxt-full">+ Pubblica annuncio</span><span class="btxt-short">+ Pubblica</span></button>';
       document.getElementById('logoutBtn').addEventListener('click', async function () { await sb.auth.signOut(); });
       document.getElementById('myAdsBtn').addEventListener('click', function () { if (window.__openMyAdsModal) window.__openMyAdsModal(); });
     } else {
       hright.innerHTML =
         '<button class="btn sm" type="button" id="authBtn">Accedi</button>' +
-        '<button class="btn primary sm" type="button" id="publishBtn">+ Pubblica annuncio</button>';
+        '<button class="btn primary sm" type="button" id="publishBtn"><span class="btxt-full">+ Pubblica annuncio</span><span class="btxt-short">+ Pubblica</span></button>';
       document.getElementById('authBtn').addEventListener('click', function () { openAuth('login'); });
     }
     bindPublishBtn();
