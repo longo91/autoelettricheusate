@@ -59,8 +59,17 @@ function mapRow(row) {
     desc: row.descrizione || '',
     feat: Array.isArray(row.optional) ? row.optional : [],
     foto: Array.isArray(row.foto) ? row.foto : [],
-    creatoIl: row.creato_il
+    creatoIl: row.creato_il,
+                                                                                              telefono: row.telefono || '',
+        email: row.email || ''
   };
+}
+
+function telDigits(t) {
+    const d = String(t || '').replace(/\D/g, '');
+    if (!d) return '';
+    if (d.length <= 10) return '39' + d.replace(/^0/, '');
+    return d;
 }
 
 function specRowHtml(a) {
@@ -172,11 +181,11 @@ function pageHtml(a) {
   .avatar { width:40px; height:40px; border-radius:50%; background:var(--dark); color:#fff; display:grid; place-items:center; font-weight:700; font-size:16px; }
   .seller-name { font-weight:700; font-size:15px; color:var(--ink); }
   .seller-sub { font-size:13px; color:var(--muted); }
-  .cta { margin-left:auto; background:var(--accent); border-color:var(--accent); color:#08312a; border-radius:999px; padding:12px 22px; font-weight:700; font-size:14.5px; display:inline-block; }
+  .cta-group { margin-left:auto; display:flex; gap:10px; flex-wrap:wrap; } .cta { background:var(--accent); border:1px solid var(--accent); color:#08312a; border-radius:999px; padding:12px 22px; font-weight:700; font-size:14.5px; display:inline-block; } .cta.secondary { background:#fff; border-color:var(--line); color:var(--ink); } .cta.secondary:hover { background:var(--soft); }
   .cta:hover { background:var(--accent-d); }
   .back { display:inline-block; margin-top:26px; font-size:13.5px; color:var(--muted); }
   .back:hover { color:var(--accent-d); }
-  @media (max-width:640px) { .specs { grid-template-columns:repeat(2,1fr); } .cta { margin-left:0; width:100%; text-align:center; } }
+  @media (max-width:640px) { .specs { grid-template-columns:repeat(2,1fr); } .cta-group { margin-left:0; width:100%; } .cta { flex:1; text-align:center; } }
 </style>
 </head>
 <body>
@@ -207,7 +216,11 @@ function pageHtml(a) {
       <div class="seller-name">${escapeHtml(a.seller)}</div>
       <div class="seller-sub">${a.stype === 'dealer' ? 'Concessionario' : 'Privato'} &middot; ${escapeHtml(a.city)}</div>
     </div>
-    <a class="cta" href="${SITE}/#annuncio-${a.id}">Vedi tutti i dettagli e contatta</a>
+        <div class="cta-group">
+              ${a.telefono ? `<a class="cta" href="https://wa.me/${telDigits(a.telefono)}" rel="nofollow">WhatsApp</a><a class="cta secondary" href="tel:+${telDigits(a.telefono)}" rel="nofollow">Chiama</a>` : ''}
+                    ${a.email ? `<a class="cta secondary" href="mailto:${escapeHtml(a.email)}" rel="nofollow">Email</a>` : ''}
+                          ${!a.telefono && !a.email ? `<a class="cta" href="${SITE}/#annuncio-${a.id}">Vedi tutti i dettagli e contatta</a>` : ''}
+                              </div>
   </div>
   <a class="back" href="${SITE}/#annunci">&larr; Torna a tutti gli annunci</a>
 </main>
