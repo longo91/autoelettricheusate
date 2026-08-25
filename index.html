@@ -532,6 +532,11 @@
 <form id="publishForm">
 
 <div class="wpanel on" data-panel="1">
+<div class="field"><label>Seleziona dal catalogo (opzionale)</label>
+<select id="pCatalog" class="fsel" style="width:100%">
+<option value="">-- Scegli marca, modello e versione per precompilare i dati --</option>
+</select>
+</div>
 <div class="frow">
 <div class="field"><label>Marca</label><input type="text" id="pMarca" required></div>
 <div class="field"><label>Modello</label><input type="text" id="pModello" required></div>
@@ -1212,6 +1217,93 @@ var MAX_PHOTOS = 8;
 var MAX_SIZE = 5 * 1024 * 1024;
 var photos = [];
  var editingId = null;
+var CAR_CATALOG = [
+{marca:'Tesla',modello:'Model 3',versione:'Standard Range Plus RWD',alimentazione:'elettrica',carrozzeria:'Berlina',potenza:208,batteria:57.5,autonomia:491,ac:11,dc:170,trazione:'posteriore',presa:'Type 2 + CCS',optional:'Autopilot, Schermo touch 15", Aggiornamenti OTA'},
+{marca:'Tesla',modello:'Model 3',versione:'Long Range AWD',alimentazione:'elettrica',carrozzeria:'Berlina',potenza:366,batteria:82,autonomia:629,ac:11,dc:250,trazione:'integrale',presa:'Type 2 + CCS',optional:'Autopilot, Tetto in vetro, Cerchi 19"'},
+{marca:'Tesla',modello:'Model Y',versione:'Long Range AWD',alimentazione:'elettrica',carrozzeria:'SUV',potenza:384,batteria:82,autonomia:533,ac:11,dc:250,trazione:'integrale',presa:'Type 2 + CCS',optional:'Autopilot, Tetto panoramico, 7 posti opzionale'},
+{marca:'Volkswagen',modello:'ID.3',versione:'Pro 58 kWh',alimentazione:'elettrica',carrozzeria:'Compatta',potenza:150,batteria:58,autonomia:426,ac:11,dc:120,trazione:'posteriore',presa:'Type 2 + CCS',optional:'Navigatore, Climatizzatore automatico'},
+{marca:'Volkswagen',modello:'ID.4',versione:'Pro Performance',alimentazione:'elettrica',carrozzeria:'SUV',potenza:150,batteria:77,autonomia:522,ac:11,dc:135,trazione:'posteriore',presa:'Type 2 + CCS',optional:'Assistente di parcheggio, Head-up display'},
+{marca:'Volkswagen',modello:'ID.5',versione:'Pro Performance',alimentazione:'elettrica',carrozzeria:'SUV',potenza:150,batteria:77,autonomia:520,ac:11,dc:135,trazione:'posteriore',presa:'Type 2 + CCS',optional:'Navigatore, Cerchi 20"'},
+{marca:'Volkswagen',modello:'Golf',versione:'GTE',alimentazione:'ibrida plug-in',carrozzeria:'Compatta',potenza:200,batteria:13,autonomia:62,ac:3.6,dc:0,trazione:'anteriore',presa:'Type 2',optional:'Cerchi 18", Sospensioni sportive'},
+{marca:'Renault',modello:'Zoe',versione:'Intens R135',alimentazione:'elettrica',carrozzeria:'City car',potenza:100,batteria:52,autonomia:395,ac:22,dc:50,trazione:'anteriore',presa:'Type 2 + CCS',optional:'Navigatore Easy Link, Climatizzatore automatico'},
+{marca:'Renault',modello:'Megane E-Tech',versione:'EV60',alimentazione:'elettrica',carrozzeria:'Compatta',potenza:160,batteria:60,autonomia:450,ac:22,dc:130,trazione:'anteriore',presa:'Type 2 + CCS',optional:'OpenR Link, Assistente guida livello 2'},
+{marca:'Renault',modello:'Captur',versione:'E-Tech Plug-in Hybrid',alimentazione:'ibrida plug-in',carrozzeria:'SUV',potenza:117,batteria:9.8,autonomia:49,ac:3.7,dc:0,trazione:'anteriore',presa:'Type 2',optional:'Navigatore, Sensori di parcheggio'},
+{marca:'Fiat',modello:'500e',versione:'Icon 42 kWh',alimentazione:'elettrica',carrozzeria:'City car',potenza:87,batteria:42,autonomia:320,ac:11,dc:85,trazione:'anteriore',presa:'Type 2 + CCS',optional:'Apple CarPlay/Android Auto, Cerchi 15"'},
+{marca:'Fiat',modello:'600e',versione:'La Prima',alimentazione:'elettrica',carrozzeria:'SUV',potenza:115,batteria:54,autonomia:406,ac:11,dc:100,trazione:'anteriore',presa:'Type 2 + CCS',optional:'Tetto panoramico, Navigatore'},
+{marca:'Hyundai',modello:'Kona Electric',versione:'XL 65.4 kWh',alimentazione:'elettrica',carrozzeria:'SUV',potenza:160,batteria:65.4,autonomia:490,ac:11,dc:102,trazione:'anteriore',presa:'Type 2 + CCS',optional:'Bose Audio, Assistente guida livello 2'},
+{marca:'Hyundai',modello:'Ioniq 5',versione:'73 kWh AWD',alimentazione:'elettrica',carrozzeria:'SUV',potenza:239,batteria:73,autonomia:460,ac:11,dc:220,trazione:'integrale',presa:'Type 2 + CCS',optional:'Guida autonoma livello 2, Tetto panoramico'},
+{marca:'Hyundai',modello:'Tucson',versione:'Plug-in Hybrid',alimentazione:'ibrida plug-in',carrozzeria:'SUV',potenza:195,batteria:13.8,autonomia:62,ac:3.3,dc:0,trazione:'integrale',presa:'Type 2',optional:'Cerchi 19", Sedili riscaldati'},
+{marca:'Kia',modello:'e-Niro',versione:'64 kWh',alimentazione:'elettrica',carrozzeria:'SUV',potenza:150,batteria:64,autonomia:455,ac:11,dc:77,trazione:'anteriore',presa:'Type 2 + CCS',optional:'Navigatore, Cruise control adattivo'},
+{marca:'Kia',modello:'EV6',versione:'GT-Line AWD',alimentazione:'elettrica',carrozzeria:'SUV',potenza:239,batteria:77.4,autonomia:505,ac:11,dc:240,trazione:'integrale',presa:'Type 2 + CCS',optional:'Tetto panoramico, Meridian Audio'},
+{marca:'Kia',modello:'Niro',versione:'Plug-in Hybrid',alimentazione:'ibrida plug-in',carrozzeria:'SUV',potenza:132,batteria:11.1,autonomia:65,ac:3.3,dc:0,trazione:'anteriore',presa:'Type 2',optional:'Navigatore, Climatizzatore automatico'},
+{marca:'BMW',modello:'i3',versione:'120 Ah',alimentazione:'elettrica',carrozzeria:'City car',potenza:125,batteria:42.2,autonomia:310,ac:11,dc:50,trazione:'posteriore',presa:'Type 2 + CCS',optional:'Navigatore Professional, Cerchi in lega'},
+{marca:'BMW',modello:'i4',versione:'eDrive40',alimentazione:'elettrica',carrozzeria:'Berlina',potenza:250,batteria:83.9,autonomia:590,ac:11,dc:205,trazione:'posteriore',presa:'Type 2 + CCS',optional:'iDrive, Head-up display'},
+{marca:'BMW',modello:'iX1',versione:'xDrive30',alimentazione:'elettrica',carrozzeria:'SUV',potenza:230,batteria:64.8,autonomia:440,ac:11,dc:130,trazione:'integrale',presa:'Type 2 + CCS',optional:'Tetto panoramico, Assistente guida'},
+{marca:'BMW',modello:'330e',versione:'Berlina',alimentazione:'ibrida plug-in',carrozzeria:'Berlina',potenza:215,batteria:12,autonomia:60,ac:3.7,dc:0,trazione:'posteriore',presa:'Type 2',optional:'Pacchetto M Sport, Navigatore Professional'},
+{marca:'Peugeot',modello:'e-208',versione:'GT 51 kWh',alimentazione:'elettrica',carrozzeria:'City car',potenza:115,batteria:51,autonomia:362,ac:11,dc:100,trazione:'anteriore',presa:'Type 2 + CCS',optional:'i-Cockpit, Cerchi 17"'},
+{marca:'Peugeot',modello:'e-2008',versione:'GT 54 kWh',alimentazione:'elettrica',carrozzeria:'SUV',potenza:115,batteria:54,autonomia:345,ac:11,dc:100,trazione:'anteriore',presa:'Type 2 + CCS',optional:'i-Cockpit, Telecamera 180°'},
+{marca:'Peugeot',modello:'3008',versione:'Hybrid4 300',alimentazione:'ibrida plug-in',carrozzeria:'SUV',potenza:221,batteria:13.2,autonomia:59,ac:3.7,dc:0,trazione:'integrale',presa:'Type 2',optional:'Pelle, Tetto panoramico'},
+{marca:'Citroen',modello:'e-C4',versione:'Shine 50 kWh',alimentazione:'elettrica',carrozzeria:'Compatta',potenza:115,batteria:50,autonomia:357,ac:11,dc:100,trazione:'anteriore',presa:'Type 2 + CCS',optional:'Navigatore, Sedili Advanced Comfort'},
+{marca:'Opel',modello:'Corsa-e',versione:'Elegance',alimentazione:'elettrica',carrozzeria:'City car',potenza:100,batteria:50,autonomia:359,ac:11,dc:100,trazione:'anteriore',presa:'Type 2 + CCS',optional:'Navigatore, Sedili riscaldati'},
+{marca:'Opel',modello:'Mokka-e',versione:'GS Line',alimentazione:'elettrica',carrozzeria:'SUV',potenza:100,batteria:50,autonomia:338,ac:11,dc:100,trazione:'anteriore',presa:'Type 2 + CCS',optional:'Cerchi 18", Telecamera posteriore'},
+{marca:'Audi',modello:'Q4 e-tron',versione:'40',alimentazione:'elettrica',carrozzeria:'SUV',potenza:150,batteria:77,autonomia:520,ac:11,dc:135,trazione:'posteriore',presa:'Type 2 + CCS',optional:'Virtual Cockpit, Matrix LED'},
+{marca:'Audi',modello:'e-tron GT',versione:'quattro',alimentazione:'elettrica',carrozzeria:'Berlina',potenza:350,batteria:93.4,autonomia:488,ac:11,dc:270,trazione:'integrale',presa:'Type 2 + CCS',optional:'Sospensioni pneumatiche, Matrix LED'},
+{marca:'Audi',modello:'A3',versione:'40 TFSI e',alimentazione:'ibrida plug-in',carrozzeria:'Compatta',potenza:150,batteria:13,autonomia:68,ac:3.6,dc:0,trazione:'anteriore',presa:'Type 2',optional:'Virtual Cockpit, Cerchi 18"'},
+{marca:'Mercedes',modello:'EQA',versione:'250',alimentazione:'elettrica',carrozzeria:'SUV',potenza:140,batteria:66.5,autonomia:426,ac:11,dc:100,trazione:'anteriore',presa:'Type 2 + CCS',optional:'MBUX, Pacchetto AMG Line'},
+{marca:'Mercedes',modello:'EQB',versione:'300 4MATIC',alimentazione:'elettrica',carrozzeria:'SUV',potenza:168,batteria:66.5,autonomia:419,ac:11,dc:100,trazione:'integrale',presa:'Type 2 + CCS',optional:'7 posti opzionale, MBUX'},
+{marca:'Mercedes',modello:'C300e',versione:'Berlina',alimentazione:'ibrida plug-in',carrozzeria:'Berlina',potenza:230,batteria:25.4,autonomia:100,ac:3.7,dc:0,trazione:'posteriore',presa:'Type 2',optional:'MBUX, Pacchetto AMG Line'},
+{marca:'Skoda',modello:'Enyaq',versione:'60',alimentazione:'elettrica',carrozzeria:'SUV',potenza:132,batteria:62,autonomia:411,ac:11,dc:120,trazione:'posteriore',presa:'Type 2 + CCS',optional:'Navigatore, Climatizzatore a 3 zone'},
+{marca:'Cupra',modello:'Born',versione:'58 kWh',alimentazione:'elettrica',carrozzeria:'Compatta',potenza:150,batteria:58,autonomia:424,ac:11,dc:120,trazione:'posteriore',presa:'Type 2 + CCS',optional:'Illuminazione ambientale, Navigatore'},
+{marca:'Ford',modello:'Mustang Mach-E',versione:'Extended Range AWD',alimentazione:'elettrica',carrozzeria:'SUV',potenza:258,batteria:91,autonomia:540,ac:11,dc:150,trazione:'integrale',presa:'Type 2 + CCS',optional:'Schermo 15,5", B&O Sound'},
+{marca:'Ford',modello:'Kuga',versione:'Plug-in Hybrid',alimentazione:'ibrida plug-in',carrozzeria:'SUV',potenza:165,batteria:14.4,autonomia:69,ac:3.5,dc:0,trazione:'anteriore',presa:'Type 2',optional:'Navigatore, Sedili riscaldati'},
+{marca:'Jeep',modello:'Avenger',versione:'Elettrica',alimentazione:'elettrica',carrozzeria:'SUV',potenza:115,batteria:54,autonomia:400,ac:11,dc:100,trazione:'anteriore',presa:'Type 2 + CCS',optional:'Uconnect 5, Telecamera 360°'},
+{marca:'Jeep',modello:'Compass',versione:'4xe',alimentazione:'ibrida plug-in',carrozzeria:'SUV',potenza:177,batteria:11.4,autonomia:45,ac:3.7,dc:0,trazione:'integrale',presa:'Type 2',optional:'Selettore terreni, Uconnect'},
+{marca:'Jeep',modello:'Renegade',versione:'4xe',alimentazione:'ibrida plug-in',carrozzeria:'SUV',potenza:140,batteria:11.4,autonomia:44,ac:3.7,dc:0,trazione:'integrale',presa:'Type 2',optional:'Selettore terreni, Uconnect'},
+{marca:'Mini',modello:'Cooper SE',versione:'Elettrica',alimentazione:'elettrica',carrozzeria:'City car',potenza:135,batteria:32.6,autonomia:234,ac:11,dc:50,trazione:'anteriore',presa:'Type 2 + CCS',optional:'Navigatore Plus, Cerchi 17"'},
+{marca:'Smart',modello:'EQ fortwo',versione:'Prime',alimentazione:'elettrica',carrozzeria:'City car',potenza:60,batteria:17.6,autonomia:132,ac:22,dc:22,trazione:'posteriore',presa:'Type 2',optional:'Climatizzatore, Radio Smart Audio'},
+{marca:'MG',modello:'MG4',versione:'Comfort 51 kWh',alimentazione:'elettrica',carrozzeria:'Compatta',potenza:125,batteria:51,autonomia:350,ac:7,dc:117,trazione:'posteriore',presa:'Type 2 + CCS',optional:'Cruise control adattivo, Schermo 10,25"'},
+{marca:'MG',modello:'ZS EV',versione:'Comfort',alimentazione:'elettrica',carrozzeria:'SUV',potenza:130,batteria:51.1,autonomia:320,ac:7,dc:94,trazione:'anteriore',presa:'Type 2 + CCS',optional:'Navigatore, Sedili in ecopelle'},
+{marca:'Volvo',modello:'XC40',versione:'Recharge Twin',alimentazione:'elettrica',carrozzeria:'SUV',potenza:300,batteria:78,autonomia:418,ac:11,dc:150,trazione:'integrale',presa:'Type 2 + CCS',optional:'Google built-in, Tetto panoramico'},
+{marca:'Volvo',modello:'C40',versione:'Recharge Single Motor',alimentazione:'elettrica',carrozzeria:'SUV',potenza:175,batteria:69,autonomia:434,ac:11,dc:130,trazione:'anteriore',presa:'Type 2 + CCS',optional:'Google built-in, Sedili in tessuto riciclato'},
+{marca:'DS',modello:'DS3',versione:'E-Tense',alimentazione:'elettrica',carrozzeria:'City car',potenza:115,batteria:51,autonomia:403,ac:11,dc:100,trazione:'anteriore',presa:'Type 2 + CCS',optional:'DS Iris System, Sedili in pelle'}
+];
+
+var pCatalogSel = document.getElementById('pCatalog');
+if (pCatalogSel) {
+var catMarche = [];
+CAR_CATALOG.forEach(function (c) { if (catMarche.indexOf(c.marca) === -1) catMarche.push(c.marca); });
+catMarche.sort();
+catMarche.forEach(function (m) {
+var og = document.createElement('optgroup');
+og.label = m;
+CAR_CATALOG.forEach(function (c, idx) {
+if (c.marca !== m) return;
+var opt = document.createElement('option');
+opt.value = String(idx);
+opt.textContent = c.modello + ' ' + c.versione;
+og.appendChild(opt);
+});
+pCatalogSel.appendChild(og);
+});
+pCatalogSel.addEventListener('change', function () {
+var idx = parseInt(pCatalogSel.value, 10);
+if (isNaN(idx)) return;
+var c = CAR_CATALOG[idx];
+document.getElementById('pMarca').value = c.marca;
+document.getElementById('pModello').value = c.modello;
+document.getElementById('pVersione').value = c.versione;
+document.getElementById('pAlimentazione').value = c.alimentazione;
+document.getElementById('pCarrozzeria').value = c.carrozzeria;
+document.getElementById('pPotenza').value = c.potenza;
+document.getElementById('pBatteria').value = c.batteria;
+document.getElementById('pAutonomia').value = c.autonomia;
+document.getElementById('pRicaricaAc').value = c.ac;
+document.getElementById('pRicaricaDc').value = c.dc;
+document.getElementById('pTrazione').value = c.trazione;
+document.getElementById('pPresa').value = c.presa;
+document.getElementById('pOptional').value = c.optional;
+});
+}
 
 function showPublishMsg(text, type) {
 publishMsg.innerHTML = '<div class="authmsg ' + (type || 'ok') + '">' + text + '</div>';
