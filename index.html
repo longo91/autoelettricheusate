@@ -714,9 +714,16 @@ function mapRealAd(row) {
     days: days,
     g: row.id % 6,
     desc: row.descrizione || '',
-    feat: row.optional || [],foto: row.foto || []
+    feat: row.optional || [],foto: row.foto || [], telefono: row.telefono || '', email: row.email || ''
   };
 }
+
+ function telDigits(t) {
+    var d = String(t || '').replace(/\D/g, '');
+    if (!d) return '';
+    if (d.length <= 10) return '39' + d.replace(/^0/, '');
+   return d;
+ }
 
 function refreshBrandsFromAds() {
   var brands = [];
@@ -943,7 +950,10 @@ for (var i = 0; i < __all.length; i++) { if (__all[i].id === id) a = __all[i]; }
     '<div class="mfoot">' +
       '<div class="seller"><span class="avatar">' + initials(a.seller) + '</span>' +
       '<span>' + a.seller + '<small>Annuncio pubblicato ' + a.days + ' giorni fa</small></span></div>' +
-      '<div class="acts"><button class="btn primary sm" type="button">Contatta il venditore</button>' +
+          '<div class="acts">' +
+       (a.telefono ? '<a class="btn primary sm" href="https://wa.me/' + telDigits(a.telefono) + '" target="_blank" rel="noopener nofollow">WhatsApp</a><a class="btn sm" href="tel:+' + telDigits(a.telefono) + '" rel="nofollow">Chiama</a>' : '') +
+       (a.email ? '<a class="btn sm" href="mailto:' + a.email + '" rel="nofollow">Email</a>' : '') +
+       (!a.telefono && !a.email ? '<button class="btn primary sm" type="button" disabled>Contatto non disponibile</button>' : '') +
       '<button class="btn sm" type="button" id="mclose2">Chiudi</button></div>' +
     '</div>';
 
