@@ -94,12 +94,12 @@ function cardHtml(a) {
 
   return '<article class="ad">' +
     '<div class="ad-top">' +
-    '<div class="media" data-open="' + a.id + '" style="background:' + media + '">' +
+    '<a class="media" href="/annuncio/' + a.id + '.html" data-open="' + a.id + '" aria-label="' + escapeHtml(a.brand) + ' ' + escapeHtml(a.model) + '" style="background:' + media + '">' +
     (a.foto.length ? '' : carSvgFallback()) +
     '<div class="badges">' + badge + '<span class="bdg">' + String(a.battery).replace('.', ',') + ' kWh</span></div>' +
     '<span class="yeartag">' + a.year + '</span>' +
     '<div class="thumbs"><i></i><i></i><i></i></div>' +
-    '</div>' +
+    '</a>' +
     '<div class="info">' +
     '<div class="itop"><div class="price">' + fmt(a.price) + ' <span>&euro;</span></div>' + verified + '</div>' +
     '<h3><a href="/annuncio/' + a.id + '.html" data-open="' + a.id + '">' + escapeHtml(a.brand) + ' ' + escapeHtml(a.model) + '</a></h3>' +
@@ -119,7 +119,7 @@ function cardHtml(a) {
     '<div class="seller"><span class="avatar">' + escapeHtml(a.seller.charAt(0).toUpperCase()) + '</span>' +
     '<span>' + escapeHtml(a.seller) + '<small>' + (a.stype === 'dealer' ? 'Concessionario' : 'Privato') + ' &middot; ' + escapeHtml(a.city) + '</small></span></div>' +
     '<div class="acts">' +
-    '<button class="btn sm" type="button" data-open="' + a.id + '">Vedi dettagli</button>' +
+        '<a class="btn sm" href="/annuncio/' + a.id + '.html" data-open="' + a.id + '">Vedi dettagli</a>' +
     '<button class="btn primary sm" type="button" data-open="' + a.id + '">Contatta</button>' +
     '<button class="icon like" type="button" data-like="' + a.id + '" aria-label="Salva annuncio">&#10084;</button>' +
     '</div>' +
